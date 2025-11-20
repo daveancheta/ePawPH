@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export default function AppHeader() {
     return (
-        <div className='h-full min-w-[20px] bg-neutral-900 dark:bg-neutral-100 flex items-center justify-between p-10 pl-30 pr-30'>
+        <div className='h-full min-w-[20px] bg-neutral-900 dark:bg-neutral-100 flex items-center justify-between p-10 pl-30 pr-30 py-5'>
             {/* Logo */}
             <div>
                 <h1 className='text-3xl font-extrabold'>
@@ -15,14 +16,16 @@ export default function AppHeader() {
             </div>
 
             {/* Navigation Links */}
-            <div className='text-white dark:dark-gray text-xl font-semibold'>
+            <div className='text-white text-sm font-medium flex flex-row gap-10 items-center'>
                 <Link to={'/'}>Home</Link>
+                <Link to={'/'}>Message</Link>
+                <Link to={'/'}>News</Link>
+                <Link to={'/'}>Notification</Link>
+                <Avatar>
+                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarFallback>UN</AvatarFallback>
+                </Avatar>
             </div>
-
-            {/* Settings & Profile */}
-            <div className='text-white dark:dark-gray text-xl font-semibold'>
-                 <Link to={'/profile'}>Profile</Link>
-                </div>
         </div>
     )
 }
