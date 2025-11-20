@@ -118,6 +118,11 @@
   color: #2F2F2F;
 }
 
+.auth-link {
+  @apply px-4 py-2 inline-block bg-[#58C185]/10 rounded-lg text-[#58C185]
+  hover:text-[#58C185]/80 text-sm transition-colors;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

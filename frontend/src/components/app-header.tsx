@@ -8,13 +8,13 @@ export default function AppHeader() {
 
     return (
         <div
-            className='bg-neutral-900 dark:bg-neutral-100 
-        flex items-center justify-between p-10 pl-30 pr-30 py-5 rounded-md'>
+            className='bg-neutral-900
+        flex items-center justify-between p-10 px-20 py-5 rounded-md'>
             {/* Logo */}
             <div>
                 <h1 className='text-3xl font-extrabold'>
                     <span className='fresh-green'>e</span>
-                    <span className='text-white dark:dark-gray'>
+                    <span className='text-white'>
                         Paw
                         <span className='text-sm'>PH</span>
                     </span>
