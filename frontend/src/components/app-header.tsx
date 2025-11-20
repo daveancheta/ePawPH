@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { UseAuthStore } from '@/store/UseAuthStore'
+import { Button } from './ui/button'
 
 export default function AppHeader() {
+    const { authUser } = UseAuthStore();
+
     return (
         <div
             className='bg-neutral-900 dark:bg-neutral-100 
@@ -23,10 +27,14 @@ export default function AppHeader() {
                 <Link to={'/'}>Message</Link>
                 <Link to={'/'}>News</Link>
                 <Link to={'/'}>Notification</Link>
-                <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>UN</AvatarFallback>
-                </Avatar>
+                {authUser ?
+                    <Avatar>
+                        <AvatarImage src="https://github.com/shadcn.png" />
+                        <AvatarFallback>UN</AvatarFallback>
+                    </Avatar>
+                    :
+                    <Link to={'/login'}><Button className='cursor-pointer' variant={'secondary'}>Login</Button></Link>
+                    }
             </div>
         </div>
     )
