@@ -2,7 +2,7 @@ import AppHeader from "@/components/app-header";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
     return (
-        <div className="min-h-screen bg-neutral-800">
+        <div className="">
             <header className="fixed w-full">
                 <div className="m-5 border border-white/20 rounded-md shadow-lg">
                     <AppHeader />

@@ -119,8 +119,18 @@
 }
 
 .auth-link {
-  @apply px-4 py-2 inline-block bg-[#58C185]/10 rounded-lg text-[#58C185]
-  hover:text-[#58C185]/80 text-sm transition-colors;
+  @apply px-4 py-2 inline-block bg-[#58C185]/10 rounded-lg text-[#58C185] hover:text-[#58C185]/80 text-sm transition-colors;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  /* for IE and Edge */
+  scrollbar-width: none;
+  /* for Firefox */
 }
 
 @layer base {

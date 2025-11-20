@@ -5,7 +5,7 @@ import SignUp from "./pages/auth/SignUp";
 
 function App() {
   return (
-    <div>
+    <div className="">
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />}></Route>
