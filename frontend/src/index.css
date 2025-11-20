@@ -110,10 +110,19 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+.fresh-green {
+  color: #58C185;
+}
+
+.dark-gray {
+  color: #2F2F2F;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }

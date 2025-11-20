@@ -5,7 +5,7 @@ import SignUp from "./pages/auth/SignUp";
 
 function App() {
   return (
-    <div className="min-h-screen bg-neutral-900 realtive flex items-center justify-center p-4 overflow-hidden">
+    <div>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />}></Route>
