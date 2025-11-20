@@ -1,8 +1,19 @@
-import React from 'react'
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import Home from "./layout/Home";
+import Login from "./layout/auth/Login";
+import SignUp from "./layout/auth/SignUp";
 
 function App() {
   return (
-    <div>App</div>
+    <div className="min-h-screen bg-neutral-900 realtive flex items-center justify-center p-4 overflow-hidden">
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Home />}></Route>
+          <Route path='/login' element={<Login />}></Route>
+          <Route path='/signup' element={<SignUp />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
   )
 }
 
