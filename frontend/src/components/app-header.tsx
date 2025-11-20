@@ -3,7 +3,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export default function AppHeader() {
     return (
-        <div className='h-full min-w-[20px] bg-neutral-900 dark:bg-neutral-100 flex items-center justify-between p-10 pl-30 pr-30 py-5'>
+        <div
+            className='bg-neutral-900 dark:bg-neutral-100 
+        flex items-center justify-between p-10 pl-30 pr-30 py-5 rounded-md'>
             {/* Logo */}
             <div>
                 <h1 className='text-3xl font-extrabold'>
