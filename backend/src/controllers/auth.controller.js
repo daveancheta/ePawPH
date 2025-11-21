@@ -49,5 +49,30 @@ export const signup = async (req, res) => {
         console.error("Error signup controller:", error)
         res.status(500).json({ message: 'Inertal server error' })
     }
+}
 
+export const login = async (req, res) => {
+    const { email, password } = req.body
+
+    try {
+        const user = await User.findOne({ email })
+        if (!user) return res.status(400).json({ message: "Invalid credentials" })
+
+        const isPasswordCorrect = await bcrypt.compare(password, user.password)
+        if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" })
+
+        generateToken(user._id, res)
+
+        res.status(200).json({
+            _id: user._id,
+            fullname: user.fullname,
+            gender: user.gender,
+            email: user.email,
+            profile: user.profile
+        })
+
+    } catch (error) {
+        console.error("Error login controller:", error)
+        res.status(500).json({ message: 'Inertal server error' })
+    }
 }

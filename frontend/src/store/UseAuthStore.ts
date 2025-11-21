@@ -6,13 +6,20 @@ interface AuthState {
     authUser: any;
     isCheckingAuth: boolean;
     isSigningUp: boolean;
+    isLoggingIn: boolean;
     checkAuth: () => Promise<void>;
-    signup: (data: UserData) => Promise<void>;
+    signup: (data: SignUpData) => Promise<void>;
+    login: (data: LoginData) => Promise<void>;
 }
 
-interface UserData {
+interface SignUpData {
     fullname: string;
     gender: string;
+    email: string;
+    password: string;
+}
+
+interface LoginData {
     email: string;
     password: string;
 }
@@ -21,6 +28,7 @@ export const UseAuthStore = create<AuthState>((set) => ({
     authUser: null,
     isCheckingAuth: true,
     isSigningUp: false,
+    isLoggingIn: false,
 
     checkAuth: async () => {
         try {
@@ -34,16 +42,33 @@ export const UseAuthStore = create<AuthState>((set) => ({
         }
     },
 
-    signup: async (data: UserData) => {
+    signup: async (data: SignUpData) => {
         set({ isSigningUp: true })
+
         try {
             const res = await AxiosInstance.post("/auth/signup", data)
             set({ authUser: res.data })
             toast.success("Account created successfully")
         } catch (error: any) {
+            set({ authUser: null })
             toast.error(error.response?.data?.message || "Something went wrong");
         } finally {
             set({ isSigningUp: false })
+        }
+    },
+
+    login: async (data: LoginData) => {
+        set({ isLoggingIn: true })
+
+        try {
+            const res = await AxiosInstance.post("/auth/login", data)
+            set({ authUser: res.data })
+            toast.success("Logged in successfully")
+        } catch (error: any) {
+            set({ authUser: null })
+            toast.error(error.response?.data?.message || "Something went wrong")
+        } finally {
+            set({ isLoggingIn: false })
         }
     }
 }));
