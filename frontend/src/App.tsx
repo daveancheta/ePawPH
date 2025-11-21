@@ -5,6 +5,7 @@ import SignUp from "./pages/auth/SignUp.js";
 import { useEffect } from "react";
 import { UseAuthStore } from "./store/UseAuthStore.ts"
 import { Toaster } from "react-hot-toast"
+import Pageloader from "./components/Pageloader.tsx";
 
 function App() {
   const { checkAuth, authUser, isCheckingAuth } = UseAuthStore();
@@ -13,6 +14,7 @@ function App() {
     checkAuth()
   }, [checkAuth])
 
+  if (isCheckingAuth) return <Pageloader />
   return (
     <div className="">
       <BrowserRouter>
