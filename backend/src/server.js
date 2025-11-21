@@ -10,7 +10,9 @@ dotenv.config();
 
 const app = express();
 
+app.use(express.json())
 app.use(cors());
+
 const __dirname = path.resolve();
 
 const PORT = ENV.PORT || 3000;
@@ -27,4 +29,5 @@ if (ENV.NODE_ENV === "production") {
 
 app.listen(PORT, () => {
     console.log("Server is running on port", PORT);
-connectDB()});
+    connectDB()
+});
