@@ -1,18 +1,33 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/auth/Login";
-import SignUp from "./pages/auth/SignUp";
+import Home from "./pages/Home.js";
+import Login from "./pages/auth/Login.js";
+import SignUp from "./pages/auth/SignUp.js";
+import { useEffect } from "react";
+import { UseAuthStore } from "./store/UseAuthStore.ts"
+import PageLoader from "./components/Pageloader.tsx";
+import { Toaster } from "react-hot-toast"
 
 function App() {
+  const { checkAuth, authUser, isCheckingAuth } = UseAuthStore();
+
+  useEffect(() => {
+    checkAuth()
+  }, [checkAuth])
+
+  if(isCheckingAuth) return <PageLoader/>
+
+
   return (
     <div className="">
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Home />}></Route>
-          <Route path='/login' element={<Login />}></Route>
-          <Route path='/signup' element={<SignUp />}></Route>
+          <Route path='/' element={authUser ? <Home/> : <Login/>}></Route>
+          <Route path='/login' element={authUser ? <Home /> : <Login/>}></Route>
+          <Route path='/signup' element={authUser ? <Home/> : <SignUp />}></Route>
         </Routes>
       </BrowserRouter>
+
+        <Toaster/>
     </div>
   )
 }

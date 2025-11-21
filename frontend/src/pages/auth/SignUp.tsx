@@ -3,7 +3,7 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/in
 import { Label } from '@/components/ui/label';
 import { useIsMobile } from '@/hooks/use-mobile';
 import AppLayout from '@/layout/app-layout'
-import { Lock, MessageCircle, UserRound } from 'lucide-react'
+import { LoaderIcon, Lock, MessageCircle, UserRound } from 'lucide-react'
 import { Link } from 'react-router-dom';
 import {
   Select,
@@ -12,9 +12,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useState } from 'react';
+import { UseAuthStore } from '@/store/UseAuthStore';
 
 function Signup() {
+  const { signup, isSigningUp } = UseAuthStore()
   const isMobile = useIsMobile();
+  const [formData, setFormData] = useState({
+    fullname: "",
+    gender: "",
+    email: "",
+    password: "",
+  });
+
+  const handleSignup = (e: any) => {
+    e.preventDefault()
+
+    signup(formData)
+  }
+
   return (
     <AppLayout>
       <div className={isMobile ? 'hidden' : 'bg-neutral-900 min-h-160 w-full rounded-lg flex flex-col md:flex-row items-center justify-center'}>
@@ -28,12 +44,13 @@ function Signup() {
               <p className='text-sm font-normal'>Enter your details below to get started</p>
             </div>
 
-            <form className='space-y-8 mx-8'>
+            <form onSubmit={handleSignup} className='space-y-8 mx-8'>
               <div className='space-y-2 w-full'>
                 <Label className='text-white'>Full Name</Label>
 
                 <InputGroup>
-                  <InputGroupInput type='text' className='text-white' placeholder="John Doe" />
+                  <InputGroupInput type='text' className='text-white' placeholder="John Doe"
+                    onChange={(e) => setFormData({ ...formData, fullname: e.target.value })} value={formData.fullname} />
                   <InputGroupAddon>
                     <UserRound />
                   </InputGroupAddon>
@@ -43,7 +60,7 @@ function Signup() {
               <div className='space-y-2 w-full'>
                 <Label className='text-white'>Gender</Label>
 
-                <Select>
+                <Select onValueChange={(value) => setFormData({ ...formData, gender: value })}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select Gender" />
                   </SelectTrigger>
@@ -60,7 +77,8 @@ function Signup() {
                 <Label className='text-white'>Email</Label>
 
                 <InputGroup>
-                  <InputGroupInput type='text' className='text-white' placeholder="johndoe@gmail.com" />
+                  <InputGroupInput type='text' className='text-white' placeholder="johndoe@gmail.com"
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })} value={formData.email} />
                   <InputGroupAddon>
                     <UserRound />
                   </InputGroupAddon>
@@ -71,14 +89,20 @@ function Signup() {
                 <Label className='text-white'>Password</Label>
 
                 <InputGroup>
-                  <InputGroupInput type='password' className='text-white' placeholder="••••••••" />
+                  <InputGroupInput type='password' className='text-white' placeholder="••••••••"
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })} value={formData.password} />
                   <InputGroupAddon>
                     <Lock />
                   </InputGroupAddon>
                 </InputGroup>
               </div>
+              {isSigningUp ?
+                <Button variant={'form'} className='flex flex-row gap-2' disabled>
+                  <LoaderIcon className='animate-spin' /><span>Create account</span>
+                </Button>
+                :
+                <Button variant={'form'}>Create account</Button>}
 
-              <Button variant={'form'}>Create account</Button>
             </form>
 
             <div className="mt-6 text-center relative">

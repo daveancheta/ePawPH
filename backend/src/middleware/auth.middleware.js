@@ -10,14 +10,15 @@ export const protectRoute = async (req, res, next) => {
         const decoded = jwt.verify(token, ENV.JWT_SECRET);
         if (!decoded) return res.status(401).json({ message: "Unauthorize - Invalid token" })
 
-        const user = await User.findOne(decoded.userId).select("-password")
-        if (user) return res.status(401).json({ message: "User not found" })
+        const user = await User.findById(decoded.userId).select("-password")
+        if (!user) return res.status(401).json({ message: "User not found" })
 
         req.user = user;
         next();
-        
+
     } catch (error) {
         console.log("Error protected route:", error)
         res.status(500).json({ message: "Internal server error" })
     }
 }
+
