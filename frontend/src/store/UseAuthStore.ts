@@ -1,7 +1,6 @@
 import { AxiosInstance } from '@/lib/axios.js';
 import { create } from 'zustand'
 import toast from "react-hot-toast"
-import type { AxiosError } from 'axios';
 
 interface AuthState {
     authUser: any;
