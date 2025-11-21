@@ -10,6 +10,7 @@ interface AuthState {
     checkAuth: () => Promise<void>;
     signup: (data: SignUpData) => Promise<void>;
     login: (data: LoginData) => Promise<void>;
+    logout: () => Promise<void>;
 }
 
 interface SignUpData {
@@ -69,6 +70,17 @@ export const UseAuthStore = create<AuthState>((set) => ({
             toast.error(error.response?.data?.message || "Something went wrong")
         } finally {
             set({ isLoggingIn: false })
+        }
+    },
+
+    logout: async () => {
+        try {
+            await AxiosInstance.post("/auth/logout")
+            set({ authUser: null })
+            toast.success("Logout successfuly")
+        } catch (error: any) {
+            console.log("Logout error", error)
+            toast.error("Something went wrong")
         }
     }
 }));

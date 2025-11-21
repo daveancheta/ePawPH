@@ -4,7 +4,7 @@ import { UseAuthStore } from "../store/UseAuthStore.ts"
 import { Button } from './ui/button'
 
 export default function AppHeader() {
-    const { authUser } = UseAuthStore();
+    const { authUser, logout } = UseAuthStore();
 
     return (
         <div
@@ -27,6 +27,8 @@ export default function AppHeader() {
                 <Link to={'/'}>Message</Link>
                 <Link to={'/'}>News</Link>
                 <Link to={'/'}>Notification</Link>
+                {authUser ?
+                <button onClick={logout}>Logout</button> : "    "}
                 {authUser ?
                     <Avatar>
                         <AvatarImage src="https://github.com/shadcn.png" />
