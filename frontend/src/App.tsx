@@ -4,8 +4,8 @@ import Login from "./pages/auth/Login.js";
 import SignUp from "./pages/auth/SignUp.js";
 import { useEffect } from "react";
 import { UseAuthStore } from "./store/UseAuthStore.ts"
-import PageLoader from "@/components/Pageloader.tsx";
 import { Toaster } from "react-hot-toast"
+import PageLoader from "./components/Pageloader";
 
 function App() {
   const { checkAuth, authUser, isCheckingAuth } = UseAuthStore();
@@ -14,20 +14,19 @@ function App() {
     checkAuth()
   }, [checkAuth])
 
-  if(isCheckingAuth) return <PageLoader/>
-
+  if (isCheckingAuth) return <PageLoader />
 
   return (
     <div className="">
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={authUser ? <Home/> : <Login/>}></Route>
-          <Route path='/login' element={authUser ? <Home /> : <Login/>}></Route>
-          <Route path='/signup' element={authUser ? <Home/> : <SignUp />}></Route>
+          <Route path='/' element={authUser ? <Home /> : <Login />}></Route>
+          <Route path='/login' element={authUser ? <Home /> : <Login />}></Route>
+          <Route path='/signup' element={authUser ? <Home /> : <SignUp />}></Route>
         </Routes>
       </BrowserRouter>
 
-        <Toaster/>
+      <Toaster />
     </div>
   )
 }
