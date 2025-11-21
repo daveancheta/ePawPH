@@ -101,7 +101,10 @@ function Signup() {
                   <LoaderIcon className='animate-spin' /><span>Create account</span>
                 </Button>
                 :
-                <Button variant={'form'}>Create account</Button>}
+                <Button variant={'form'} disabled={
+                  !formData.fullname.trim() || !formData.gender.trim() ||
+                  !formData.email.trim() || !formData.password.trim()
+                }>Create account</Button>}
 
             </form>
 
