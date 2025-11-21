@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { ENV } from "./lib/env.js";
 import AuthRoutes from "./routes/AuthRoutes.route.js";
+import PostRoutes from "./routes/PostRoutes.route.js";
 import path from "path";
 import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser"
@@ -20,6 +21,7 @@ const __dirname = path.resolve();
 const PORT = ENV.PORT || 3000;
 
 app.use("/api/auth", AuthRoutes);
+app.use("/api/post", PostRoutes);
 
 if (ENV.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../frontend/dist")));
