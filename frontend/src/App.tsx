@@ -4,7 +4,7 @@ import Login from "./pages/auth/Login.js";
 import SignUp from "./pages/auth/SignUp.js";
 import { useEffect } from "react";
 import { UseAuthStore } from "./store/UseAuthStore.ts"
-import PageLoader from "./components/Pageloader.tsx";
+import PageLoader from "@/components/Pageloader.tsx";
 import { Toaster } from "react-hot-toast"
 
 function App() {
