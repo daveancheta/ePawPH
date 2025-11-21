@@ -2,9 +2,20 @@ import { Link } from 'react-router-dom'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { UseAuthStore } from "../store/UseAuthStore.ts"
 import { Button } from './ui/button'
+"use client"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { useInitials } from '@/hooks/use-initials.tsx'
 
 export default function AppHeader() {
     const { authUser, logout } = UseAuthStore();
+    const getInitials = useInitials();
 
     return (
         <div
@@ -27,16 +38,31 @@ export default function AppHeader() {
                 <Link to={'/'}>Message</Link>
                 <Link to={'/'}>News</Link>
                 <Link to={'/'}>Notification</Link>
-                {authUser ?
-                <button onClick={logout}>Logout</button> : "    "}
-                {authUser ?
-                    <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png" />
-                        <AvatarFallback>UN</AvatarFallback>
-                    </Avatar>
-                    :
-                    <Link to={'/login'}><Button className='cursor-pointer' variant={'secondary'}>Login</Button></Link>
-                    }
+
+                {authUser ? <DropdownMenu modal={false}>
+                    <DropdownMenuTrigger asChild>
+                        <Avatar>
+                            <AvatarFallback className='text-white cursor-pointer'>{getInitials(authUser.fullname)}</AvatarFallback>
+                        </Avatar>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-auto" align="end">
+                        <DropdownMenuLabel className='flex flex-col'>
+                            <span>{authUser.fullname}</span>
+                            <span className='text-xs text-muted-foreground font-normal'>{authUser.email}</span>
+                        </DropdownMenuLabel>
+                        <hr />
+                        <DropdownMenuGroup>
+                            <DropdownMenuItem >
+                                Settings
+                            </DropdownMenuItem>
+                            <DropdownMenuItem variant='destructive' className='cursor-pointer'>
+                                <button className='cursor-pointer' onClick={logout}>Logout</button>
+                            </DropdownMenuItem>
+                        </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                </DropdownMenu> : ""}
+
+
             </div>
         </div>
     )
