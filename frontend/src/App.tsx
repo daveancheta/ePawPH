@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { UseAuthStore } from "./store/UseAuthStore.ts"
 import { Toaster } from "react-hot-toast"
 import Pageloader from "./components/PageLoader.tsx";
+import Lost from "./pages/store/Lost.tsx";
 
 function App() {
   const { checkAuth, authUser, isCheckingAuth } = UseAuthStore();
@@ -22,6 +23,7 @@ function App() {
           <Route path='/' element={authUser ? <Home /> : <Login />}></Route>
           <Route path='/login' element={authUser ? <Home /> : <Login />}></Route>
           <Route path='/signup' element={authUser ? <Home /> : <SignUp />}></Route>
+          <Route path='/lost' element={authUser ? <Lost /> : <Login />}></Route>
         </Routes>
       </BrowserRouter>
 
