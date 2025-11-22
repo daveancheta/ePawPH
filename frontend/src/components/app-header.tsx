@@ -49,7 +49,7 @@ export default function AppHeader() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-auto" align="end">
                         <DropdownMenuLabel className='flex flex-col'>
-                            <span>{authUser.fullname}</span>
+                            <span className='capitalize'>{authUser.fullname}</span>
                             <span className='text-xs text-muted-foreground font-normal'>{authUser.email}</span>
                         </DropdownMenuLabel>
                         <hr />
