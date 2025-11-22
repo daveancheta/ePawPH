@@ -6,12 +6,7 @@ export const post = async (req, res) => {
         color, lastSeenDate, lastSeenLocation, message, petPicture } = req.body
 
     try {
-        if (!posterId || !petName || !gender || !breed ||
-            !color || !lastSeenDate || !lastSeenLocation || !message || !petPicture) {
-            return res.status(400).json({ message: "All field are required" })
-        }
-
-        const profilePictureCloud = cloudinary.uploader.upload(petPicture)
+        const petPictureCloud = cloudinary.uploader.upload(petPicture)
         const newPost = new Post({
             posterId,
             petName,
@@ -21,7 +16,7 @@ export const post = async (req, res) => {
             lastSeenDate,
             lastSeenLocation,
             message,
-            petPicture: profilePictureCloud
+            petPicture: petPictureCloud
         })
 
         if (newPost) {
