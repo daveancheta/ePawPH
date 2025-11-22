@@ -10,7 +10,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </header>
 
             <main className="pt-28 mx-auto flex h-full w-full max-w-7xl flex-1 flex-col gap-4 rounded-xl">
-                <div className="m-5">
+                <div>
                     {children}
                 </div>
             </main>

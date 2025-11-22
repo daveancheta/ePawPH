@@ -19,7 +19,7 @@ function PostLayout() {
   const getInitials = useInitials()
 
   return (
-    <div className="flex justify-start items-center">
+    <div className="absolute left-5">
       <div className="flex flex-row items-center gap-4 bg-neutral-900 p-4 px-10 rounded-md">
         <Avatar>
           <AvatarFallback className='text-white cursor-pointer border'>
