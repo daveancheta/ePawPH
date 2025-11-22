@@ -29,7 +29,7 @@ function PostLayout() {
         <Dialog>
           <form>
             <DialogTrigger asChild>
-              <Button className="" variant='outline'>Create Pet Post</Button>
+              <Button className="text-muted-foreground cursor-pointer" variant='outline'>Create Pet Post</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
