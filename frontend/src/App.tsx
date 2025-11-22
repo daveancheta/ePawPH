@@ -27,7 +27,17 @@ function App() {
         </Routes>
       </BrowserRouter>
 
-      <Toaster />
+      <Toaster
+        toastOptions={{
+          className: '',
+          style: {
+            background: '#2F2F2F',
+            padding: '10px',
+            color: '#FFFFFF',
+          },
+        }}
+      />
+
     </div>
   )
 }
