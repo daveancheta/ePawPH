@@ -24,7 +24,7 @@ function UserDisplayLayout() {
             {userList.length > 0 ?
                 <div className='min-w-100 min-h-130 bg-neutral-900 rounded-md p-8 py-5 flex flex-col gap-4'>
                     {userList.map((users: User) => (
-                        <div className='flex justify-between items-center'>
+                        <div className='flex justify-between items-center' key={users._id}>
                             <div className='flex flex-row items-center gap-2.5'>
                                 <div className='relative'>
                                     <Avatar key={users._id} className='w-15 h-15'>
