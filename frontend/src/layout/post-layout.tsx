@@ -4,10 +4,8 @@ import { useInitials } from "@/hooks/use-initials"
 import { UseAuthStore } from "@/store/UseAuthStore"
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,

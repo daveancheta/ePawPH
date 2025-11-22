@@ -1,5 +1,4 @@
 import AppLayout from '@/layout/app-layout'
-import React from 'react'
 
 function Lost() {
     return (

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { UseAuthStore } from "../store/UseAuthStore.ts"
-import { Button } from './ui/button'
 "use client"
 import {
     DropdownMenu,
