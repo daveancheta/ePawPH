@@ -11,26 +11,38 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useInitials } from '@/hooks/use-initials.tsx'
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { useState } from 'react'
+
+
+
 
 export default function AppHeader() {
     const { authUser, logout } = UseAuthStore();
     const getInitials = useInitials();
-
+    const [open, setOpen] = useState(Boolean)
     return (
         <div
             className='bg-neutral-900
         flex items-center justify-between p-10 px-20 py-5 rounded-md'>
             {/* Logo */}
             <Link to={'/'}>
-            <div>
-                <h1 className='text-3xl font-extrabold'>
-                    <span className='fresh-green'>e</span>
-                    <span className='text-white'>
-                        Paw
-                        <span className='text-sm'>PH</span>
-                    </span>
-                </h1>
-            </div>
+                <div>
+                    <h1 className='text-3xl font-extrabold'>
+                        <span className='fresh-green'>e</span>
+                        <span className='text-white'>
+                            Paw
+                            <span className='text-sm'>PH</span>
+                        </span>
+                    </h1>
+                </div>
             </Link>
 
             {/* Navigation Links */}
@@ -53,17 +65,30 @@ export default function AppHeader() {
                         </DropdownMenuLabel>
                         <hr />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem >
-                                Settings
+                            <DropdownMenuItem className='cursor-pointer'>
+                                <button className='cursor-pointer w-full text-start'
+                                    onClick={() => setOpen(true)}>Settings</button>
                             </DropdownMenuItem>
                             <DropdownMenuItem variant='destructive' className='cursor-pointer'>
-                                <button className='cursor-pointer' onClick={logout}>Logout</button>
+                                <button className='cursor-pointer w-full text-start'
+                                    onClick={logout}>Logout</button>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                     </DropdownMenuContent>
                 </DropdownMenu> : ""}
+                <Dialog open={open} onOpenChange={setOpen}>
+                    <DialogContent className="sm:max-w-[425px]">
+                        <DialogHeader>
+                            <DialogTitle>Settings</DialogTitle>
+                            <DialogDescription>
+                              
+                            </DialogDescription>
+                        </DialogHeader>
+                        <div className="grid gap-4">
 
-
+                        </div>
+                    </DialogContent>
+                </Dialog>
             </div>
         </div>
     )
