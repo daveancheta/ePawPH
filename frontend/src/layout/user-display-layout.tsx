@@ -21,9 +21,8 @@ function UserDisplayLayout() {
     const getInitials = useInitials()
     return (
         <div className='absolute right-5'>
-
             {userList.length > 0 ?
-                <div className='min-w-100 min-h-130 bg-neutral-900 rounded-md p-8 py-5 flex flex-col justify-between'>
+                <div className='min-w-100 min-h-130 bg-neutral-900 rounded-md p-8 py-5 flex flex-col gap-4'>
                     {userList.map((users: User) => (
                         <div className='flex justify-between items-center'>
                             <div className='flex flex-row items-center gap-2.5'>
@@ -36,7 +35,7 @@ function UserDisplayLayout() {
                                     <div className='absolute bottom-2 right-0 w-3 h-3 bg-green-500 rounded-full'></div>
                                 </div>
                                 <div className='flex flex-col'>
-                                    <h1>{users.fullname}</h1>
+                                    <h1 className='capitalize'>{users.fullname}</h1>
                                     <span className='text-xs text-muted-foreground'>Sugessted for you</span>
                                 </div>
                             </div>
@@ -45,8 +44,8 @@ function UserDisplayLayout() {
                             </div>
                         </div>
                     ))}
-                    <div>
-                        <p className='flex justify-center text-muted-foreground text-xs'>
+                    <div className='flex justify-center'>
+                        <p className='absolute bottom-3 text-muted-foreground text-xs'>
                             {usersCount} user{usersCount > 1 ? "s" : ""} to connect with
                         </p>
                     </div>
