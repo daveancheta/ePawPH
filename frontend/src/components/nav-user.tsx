@@ -42,7 +42,7 @@ export function NavUser() {
                             </div>
                         </div>
                         <hr className='my-2' />
-                        <div className='flex flex-col gap-3'>
+                        <div className='flex flex-col gap-1'>
                         <Link to={'/account'} className='flex flex-row gap-2 items-center cursor-pointer text-sm p-2 hover-default'>
                             <BadgeCheck className='size-4' />Account
                         </Link>
