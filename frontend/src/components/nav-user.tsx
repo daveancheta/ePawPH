@@ -19,7 +19,7 @@ export function NavUser() {
                             <Avatar className='rounded-md'>
                                 {auth.profile.length > 0 ?
                                     <img src={auth.profile} alt="" /> :
-                                    <AvatarFallback className='bg-neutral-900'>
+                                    <AvatarFallback className='bg-neutral-800'>
                                         {getIntials(auth.fullname)}
                                     </AvatarFallback>}
                             </Avatar>
