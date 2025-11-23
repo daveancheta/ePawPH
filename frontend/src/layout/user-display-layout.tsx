@@ -24,9 +24,10 @@ function UserDisplayLayout() {
             <div className='flex items-center justify-between space-x-10 truncate mb-2'>
                 <h1 className='text-sm font-medium'>Suggested for you</h1>
             </div>
+
             {userList.length > 0 ?
                 <div className='flex flex-col gap-4'>
-                    {userList.map((users: User) => (
+                    {userList.slice(0, 5).map((users: User) => (
                         <div className='flex justify-between items-center' key={users._id}>
                             <div className='flex flex-row items-center gap-2.5'>
                                 <div className='relative'>
