@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 type User = {
     _id: string,
     fullname: string,
+    username: String
 }
 function UserDisplayLayout() {
     const { userList, users } = UseUserStore() as {
@@ -40,7 +41,7 @@ function UserDisplayLayout() {
                                 </div>
                                 <div className='flex flex-col'>
                                     <h1 className='capitalize font-medium text-sm'>{users.fullname}</h1>
-                                    <span className='text-xs text-muted-foreground'>@username</span>
+                                    <span className='text-xs text-muted-foreground'>{users.username}</span>
                                 </div>
                             </div>
 
