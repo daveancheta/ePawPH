@@ -21,7 +21,7 @@ interface SignUpData {
 }
 
 interface LoginData {
-    email: string;
+    identifier: string;
     password: string;
 }
 

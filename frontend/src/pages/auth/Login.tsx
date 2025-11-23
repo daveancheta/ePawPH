@@ -12,7 +12,7 @@ function Login() {
   const isMobile = useIsMobile();
   const { isLoggingIn, login } = UseAuthStore();
   const [formData, setFormData] = useState({
-    email: "",
+    identifier: "",
     password: "",
   });
 
@@ -36,11 +36,11 @@ function Login() {
 
             <form onSubmit={handleLogin} className='space-y-8 mx-8'>
               <div className='space-y-2 w-full'>
-                <Label className='text-white'>Email</Label>
+                <Label className='text-white'>Email or Username</Label>
 
                 <InputGroup>
-                  <InputGroupInput type='email' className='text-white' placeholder="johndoe@gmail.com"
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })} value={formData.email} />
+                  <InputGroupInput type='text' className='text-white' placeholder="Email or Username"
+                    onChange={(e) => setFormData({ ...formData, identifier: e.target.value })} value={formData.identifier} />
                   <InputGroupAddon>
                     <UserRound />
                   </InputGroupAddon>
@@ -66,7 +66,7 @@ function Login() {
                   <LoaderIcon className='animate-spin' /><span>Login</span>
                 </Button>
                 :
-                <Button variant={'form'} disabled={!formData.email.trim() || !formData.password.trim()}>Login</Button>}
+                <Button variant={'form'} disabled={!formData.identifier.trim() || !formData.password.trim()}>Login</Button>}
             </form>
 
             <div className="mt-6 text-center relative">
