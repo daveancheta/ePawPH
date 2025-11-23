@@ -61,7 +61,7 @@ export function AppSidebar() {
                             <div className="flex flex-col gap-5">
                                 {items.map(item => (
                                     <Link key={item.url} to={item.url} className="flex flex-row items-center gap-4">
-                                        <item.icon className="w-8 h-8" />
+                                        <item.icon className="w-7 h-7" />
                                         {item.title}
                                     </Link>
                                 ))}
