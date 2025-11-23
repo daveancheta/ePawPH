@@ -17,7 +17,11 @@ export function NavUser() {
                         <SidebarMenuButton size="lg" className="group text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent">
 
                             <Avatar className='rounded-md'>
-                                <AvatarFallback>{getIntials(auth.fullname)}</AvatarFallback>
+                                {auth.profile.length > 0 ?
+                                    <img src={auth.profile} alt="" /> :
+                                    <AvatarFallback className='bg-neutral-900'>
+                                        {getIntials(auth.fullname)}
+                                    </AvatarFallback>}
                             </Avatar>
                             <div className='flex flex-col'>
                                 <h1>{auth.fullname}</h1>
@@ -34,7 +38,11 @@ export function NavUser() {
                     >
                         <div className='flex flex-row gap-2 text-sm'>
                             <Avatar className='rounded-md'>
-                                <AvatarFallback className='bg-neutral-900'>{getIntials(auth.fullname)}</AvatarFallback>
+                                {auth.profile.length > 0 ?
+                                    <img src={auth.profile} alt="" /> :
+                                    <AvatarFallback className='bg-neutral-900'>
+                                        {getIntials(auth.fullname)}
+                                    </AvatarFallback>}
                             </Avatar>
                             <div className='flex flex-col'>
                                 <h1>{auth.fullname}</h1>
@@ -43,12 +51,12 @@ export function NavUser() {
                         </div>
                         <hr className='my-2' />
                         <div className='flex flex-col gap-1'>
-                        <Link to={'/account'} className='flex flex-row gap-2 items-center cursor-pointer text-sm p-2 hover-default'>
-                            <BadgeCheck className='size-4' />Account
-                        </Link>
-                         <Link to={'/account'} className='flex flex-row gap-2 items-center cursor-pointer text-sm p-2 hover-default'>
-                            <Settings className='size-4' />Settings
-                        </Link>
+                            <Link to={'/account'} className='flex flex-row gap-2 items-center cursor-pointer text-sm p-2 hover-default'>
+                                <BadgeCheck className='size-4' />Account
+                            </Link>
+                            <Link to={'/account'} className='flex flex-row gap-2 items-center cursor-pointer text-sm p-2 hover-default'>
+                                <Settings className='size-4' />Settings
+                            </Link>
                         </div>
                         <hr className='my-2' />
                         <button className='flex flex-row gap-2 items-center cursor-pointer text-sm hover-destrcutive p-2' onClick={logout}>

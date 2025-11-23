@@ -6,7 +6,8 @@ import { useEffect } from 'react'
 type User = {
     _id: string,
     fullname: string,
-    username: String
+    username: String,
+    profile: any,
 }
 function UserDisplayLayout() {
     const { userList, users } = UseUserStore() as {
@@ -33,9 +34,11 @@ function UserDisplayLayout() {
                             <div className='flex flex-row items-center gap-2.5'>
                                 <div className='relative'>
                                     <Avatar key={users._id} className='w-10 h-10 rounded-full'>
-                                        <AvatarFallback className='text-white cursor-pointer border truncate whitespace-nowrap rounded-full'>
-                                            {getInitials(users.fullname)}
-                                        </AvatarFallback>
+                                        {users.profile.length > 0 ?
+                                            <img src={users.profile} alt="" /> :
+                                            <AvatarFallback className='text-white cursor-pointer border truncate whitespace-nowrap rounded-full'>
+                                                {getInitials(users.fullname)}
+                                            </AvatarFallback>}
                                     </Avatar>
                                     <div className='absolute bottom-1 right-0 w-2 h-2 bg-green-500 rounded-full'></div>
                                 </div>
