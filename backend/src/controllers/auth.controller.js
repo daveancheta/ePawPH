@@ -8,6 +8,7 @@ export const signup = async (req, res) => {
 
     const fullnameLength = fullname.length;
     const defaultUsername = "user" + faker.number.int() + fullnameLength;
+    const defaultProfile = faker.image.avatar();
     try {
         if (!fullname || !gender || !email || !password) {
             return res.status(400).json({ message: "All fields are requred" })
@@ -35,6 +36,7 @@ export const signup = async (req, res) => {
             gender,
             email,
             password: hashedPassword,
+            profile: defaultProfile,
         });
 
         if (newUser) {
@@ -47,6 +49,7 @@ export const signup = async (req, res) => {
                 username: newUser.username,
                 gender: newUser.gender,
                 email: newUser.email,
+                profile: newUser.profile
             })
         }
 
