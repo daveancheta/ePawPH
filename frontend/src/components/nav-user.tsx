@@ -1,5 +1,5 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { UseAuthStore } from '@/store/UseAuthStore';
 import { useInitials } from '@/hooks/use-initials';

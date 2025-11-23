@@ -8,7 +8,7 @@ type User = {
     fullname: string,
 }
 function UserDisplayLayout() {
-    const { userList, usersCount, users } = UseUserStore() as {
+    const { userList, users } = UseUserStore() as {
         userList: User[]
         usersCount: number
         users: any

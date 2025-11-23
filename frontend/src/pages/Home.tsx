@@ -1,7 +1,6 @@
 import AppLayout from '@/layout/app-layout'
 import MessageLayout from '@/layout/message-layout'
 import PostLayout from '@/layout/post-layout'
-import UserDisplayLayout from '@/layout/user-display-layout'
 
 function Home() {
   return (

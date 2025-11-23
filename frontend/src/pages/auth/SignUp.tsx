@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button';
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
 import { Label } from '@/components/ui/label';
 import { useIsMobile } from '@/hooks/use-mobile';
-import AppLayout from '@/layout/app-layout'
 import { LoaderIcon, Lock, MessageCircle, UserRound } from 'lucide-react'
 import { Link } from 'react-router-dom';
 import {

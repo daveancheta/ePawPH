@@ -1,4 +1,4 @@
-import { Bell, Calendar, Globe, Home, Inbox, MessageCircle, Search, Settings } from "lucide-react"
+import { Bell, Globe, Home, MessageCircle, Search, } from "lucide-react"
 
 import {
     Sidebar,
@@ -7,9 +7,6 @@ import {
     SidebarGroup,
     SidebarGroupContent,
     SidebarGroupLabel,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import UserDisplayLayout from "@/layout/user-display-layout"
 import { Link } from "react-router-dom"

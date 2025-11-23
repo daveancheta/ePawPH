@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button';
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
 import { Label } from '@/components/ui/label';
 import { useIsMobile } from '@/hooks/use-mobile';
-import AppLayout from '@/layout/app-layout'
 import { UseAuthStore } from '@/store/UseAuthStore';
 import { Lock, MessageCircle, UserRound } from 'lucide-react'
 import { useState } from 'react';
@@ -11,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 function Login() {
   const isMobile = useIsMobile();
-  const { isLoggingIn, login, auth } = UseAuthStore();
+  const { isLoggingIn, login } = UseAuthStore();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
