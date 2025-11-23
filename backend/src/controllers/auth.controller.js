@@ -6,7 +6,6 @@ import { faker } from "@faker-js/faker"
 export const signup = async (req, res) => {
     const { fullname, gender, email, password } = req.body;
 
-    const indexName = fullname.split(" ").splice(0);
     const fullnameLength = fullname.length;
     const defaultUsername = "user" + faker.number.int() + fullnameLength;
     try {
@@ -45,6 +44,7 @@ export const signup = async (req, res) => {
             res.status(200).json({
                 _id: newUser._id,
                 fullname: newUser.fullname,
+                username: newUser.username,
                 gender: newUser.gender,
                 email: newUser.email,
             })
@@ -57,10 +57,16 @@ export const signup = async (req, res) => {
 }
 
 export const login = async (req, res) => {
-    const { email, password } = req.body
+    const { identifier, password } = req.body
 
     try {
-        const user = await User.findOne({ email })
+        const user = await User.findOne({
+            $or: [
+                { username: identifier },
+                { email: identifier }
+            ]
+        })
+
         if (!user) return res.status(400).json({ message: "Invalid credentials" })
 
         const isPasswordCorrect = await bcrypt.compare(password, user.password)
@@ -71,6 +77,7 @@ export const login = async (req, res) => {
         res.status(200).json({
             _id: user._id,
             fullname: user.fullname,
+            username: user.username,
             gender: user.gender,
             email: user.email,
             profile: user.profile
