@@ -1,10 +1,14 @@
 import bcrypt from "bcrypt"
 import { generateToken } from "../lib/utils.js"
 import User from "../models/User.js"
+import { faker } from "@faker-js/faker"
 
 export const signup = async (req, res) => {
     const { fullname, gender, email, password } = req.body;
 
+    const indexName = fullname.split(" ").splice(0);
+    const fullnameLength = fullname.length;
+    const defaultUsername = "user" + faker.number.int() + fullnameLength;
     try {
         if (!fullname || !gender || !email || !password) {
             return res.status(400).json({ message: "All fields are requred" })
@@ -28,6 +32,7 @@ export const signup = async (req, res) => {
 
         const newUser = new User({
             fullname,
+            username: defaultUsername,
             gender,
             email,
             password: hashedPassword,
@@ -78,6 +83,6 @@ export const login = async (req, res) => {
 }
 
 export const logout = async (_, res) => {
-    res.cookie("jwt", "", {maxAge: 0})
-    res.status(200).json({ message: "Logout succesfully"})
+    res.cookie("jwt", "", { maxAge: 0 })
+    res.status(200).json({ message: "Logout succesfully" })
 }
