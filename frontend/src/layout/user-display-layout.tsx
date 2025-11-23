@@ -23,7 +23,7 @@ function UserDisplayLayout() {
     const getInitials = useInitials()
     return (
         <div>
-            <div className='flex items-center justify-between space-x-10 truncate mb-2'>
+            <div className='flex items-center justify-between space-x-10 truncate mb-4'>
                 <h1 className='text-sm font-medium'>Suggested for you</h1>
             </div>
 
