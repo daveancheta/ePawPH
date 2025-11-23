@@ -16,10 +16,13 @@ import {
     DialogContent,
     DialogDescription,
     DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog-settings"
 import { useState } from 'react'
+import AccountSettings from '@/layout/settings/account.tsx'
+import { DialogClose } from '@radix-ui/react-dialog'
+import { ShieldEllipsis, UserRoundCog, X } from 'lucide-react'
+import SecuritySettings from '@/layout/settings/security.tsx'
+import { cn } from '@/lib/utils.ts'
 
 
 
@@ -28,6 +31,10 @@ export default function AppHeader() {
     const { authUser, logout } = UseAuthStore();
     const getInitials = useInitials();
     const [open, setOpen] = useState(Boolean)
+    const [category, setCategory] = useState("")
+    const isCategoryAccount = category === "account" || category === ""
+    const isCategorySecurity = category === "security"
+
     return (
         <div
             className='bg-neutral-900
@@ -77,11 +84,32 @@ export default function AppHeader() {
                     </DropdownMenuContent>
                 </DropdownMenu> : ""}
                 <Dialog open={open} onOpenChange={setOpen}>
-                    <DialogContent className="sm:max-w-[425px]">
+                    <DialogContent className="sm:max-w-[680px]">
                         <DialogHeader>
-                            <DialogTitle>Settings</DialogTitle>
+                            <DialogClose>
+                                <X className='size-8 cursor-pointer' />
+                            </DialogClose>
                             <DialogDescription>
-                              
+                                <div>
+                                    <div className='flex flex-row gap-2'>
+                                        <div className='flex flex-col justify-start items-start gap-2 min-w-30'>
+                                            <button onClick={() => setCategory("account")} className={cn('category-btn', isCategoryAccount ? "bg-accent" : "")}>
+                                                <UserRoundCog className='size-5' />
+                                                Account</button>
+                                            <button onClick={() => setCategory("security")} className={cn('category-btn', isCategorySecurity ? "bg-accent" : "")}>
+                                                <ShieldEllipsis className='size-5' />
+                                                Security</button>
+                                        </div>
+                                        <div className='flex justify-start'>
+                                            <div className={isCategoryAccount ? "" : "hidden"}>
+                                                <AccountSettings />
+                                            </div>
+                                            <div className={isCategorySecurity ? "" : "hidden"}>
+                                                <SecuritySettings />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </DialogDescription>
                         </DialogHeader>
                         <div className="grid gap-4">
