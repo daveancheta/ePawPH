@@ -18,17 +18,15 @@ import {
     DialogHeader,
 } from "@/components/ui/dialog-settings"
 import { useState } from 'react'
-import AccountSettings from '@/layout/settings/account.tsx'
 import { DialogClose } from '@radix-ui/react-dialog'
 import { ShieldEllipsis, UserRoundCog, X } from 'lucide-react'
-import SecuritySettings from '@/layout/settings/security.tsx'
 import { cn } from '@/lib/utils.ts'
 
 
 
 
 export default function AppHeader() {
-    const { authUser, logout } = UseAuthStore();
+    const { auth, logout } = UseAuthStore();
     const getInitials = useInitials();
     const [open, setOpen] = useState(Boolean)
     const [category, setCategory] = useState("")
@@ -59,16 +57,16 @@ export default function AppHeader() {
                 <Link to={'/'}>News</Link>
                 <Link to={'/'}>Notification</Link>
 
-                {authUser ? <DropdownMenu modal={false}>
+                {auth ? <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
                         <Avatar>
-                            <AvatarFallback className='text-white cursor-pointer'>{getInitials(authUser.fullname)}</AvatarFallback>
+                            <AvatarFallback className='text-white cursor-pointer'>{getInitials(auth.fullname)}</AvatarFallback>
                         </Avatar>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-auto" align="end">
                         <DropdownMenuLabel className='flex flex-col'>
-                            <span className='capitalize'>{authUser.fullname}</span>
-                            <span className='text-xs text-muted-foreground font-normal'>{authUser.email}</span>
+                            <span className='capitalize'>{auth.fullname}</span>
+                            <span className='text-xs text-muted-foreground font-normal'>{auth.email}</span>
                         </DropdownMenuLabel>
                         <hr />
                         <DropdownMenuGroup>
@@ -87,7 +85,7 @@ export default function AppHeader() {
                     <DialogContent className="sm:max-w-[680px]">
                         <DialogHeader>
                             <DialogClose>
-                                <X className='size-8 cursor-pointer' />
+                                <X className='size-5 cursor-pointer' />
                             </DialogClose>
                             <DialogDescription>
                                 <div>
@@ -102,10 +100,8 @@ export default function AppHeader() {
                                         </div>
                                         <div className='flex justify-start'>
                                             <div className={isCategoryAccount ? "" : "hidden"}>
-                                                <AccountSettings />
                                             </div>
                                             <div className={isCategorySecurity ? "" : "hidden"}>
-                                                <SecuritySettings />
                                             </div>
                                         </div>
                                     </div>
@@ -113,7 +109,7 @@ export default function AppHeader() {
                             </DialogDescription>
                         </DialogHeader>
                         <div className="grid gap-4">
-
+                           
                         </div>
                     </DialogContent>
                 </Dialog>

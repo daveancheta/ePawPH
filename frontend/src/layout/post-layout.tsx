@@ -13,15 +13,15 @@ import {
 import { Link } from "react-router-dom"
 
 function PostLayout() {
-  const { authUser } = UseAuthStore()
+  const { auth } = UseAuthStore()
   const getInitials = useInitials()
 
   return (
-    <div className="absolute left-5">
-      <div className="flex flex-row items-center gap-4 bg-neutral-900 p-4 px-10 rounded-md">
+    <div className="m-10">
+      <div className="flex flex-row items-center gap-4 bg-neutral-800 p-4 px-10 rounded-md">
         <Avatar>
           <AvatarFallback className='text-white cursor-pointer border'>
-            {getInitials(authUser.fullname)}
+            {getInitials(auth.fullname)}
           </AvatarFallback>
         </Avatar>
         <Dialog>

@@ -9,7 +9,7 @@ import Pageloader from "./components/PageLoader.tsx";
 import Lost from "./pages/store/Lost.tsx";
 
 function App() {
-  const { checkAuth, authUser, isCheckingAuth } = UseAuthStore();
+  const { checkAuth, auth, isCheckingAuth } = UseAuthStore();
 
   useEffect(() => {
     checkAuth()
@@ -20,10 +20,10 @@ function App() {
     <div className="">
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={authUser ? <Home /> : <Login />}></Route>
-          <Route path='/login' element={authUser ? <Home /> : <Login />}></Route>
-          <Route path='/signup' element={authUser ? <Home /> : <SignUp />}></Route>
-          <Route path='/lost' element={authUser ? <Lost /> : <Login />}></Route>
+          <Route path='/' element={auth ? <Home /> : <Login />}></Route>
+          <Route path='/login' element={auth ? <Home /> : <Login />}></Route>
+          <Route path='/signup' element={auth ? <Home /> : <SignUp />}></Route>
+          <Route path='/lost' element={auth ? <Lost /> : <Login />}></Route>
         </Routes>
       </BrowserRouter>
 

@@ -3,7 +3,7 @@ import { create } from 'zustand'
 import toast from "react-hot-toast"
 
 interface AuthState {
-    authUser: any;
+    auth: any;
     isCheckingAuth: boolean;
     isSigningUp: boolean;
     isLoggingIn: boolean;
@@ -26,7 +26,7 @@ interface LoginData {
 }
 
 export const UseAuthStore = create<AuthState>((set) => ({
-    authUser: null,
+    auth: null,
     isCheckingAuth: true,
     isSigningUp: false,
     isLoggingIn: false,
@@ -34,10 +34,10 @@ export const UseAuthStore = create<AuthState>((set) => ({
     checkAuth: async () => {
         try {
             const res = await AxiosInstance.get("/auth/check")
-            set({ authUser: res.data })
+            set({ auth: res.data })
         } catch (error) {
             console.log("Error in check Auth", error)
-            set({ authUser: null })
+            set({ auth: null })
         } finally {
             set({ isCheckingAuth: false })
         }
@@ -48,10 +48,10 @@ export const UseAuthStore = create<AuthState>((set) => ({
 
         try {
             const res = await AxiosInstance.post("/auth/signup", data)
-            set({ authUser: res.data })
+            set({ auth: res.data })
             toast.success("Account created successfully")
         } catch (error: any) {
-            set({ authUser: null })
+            set({ auth: null })
             toast.error(error.response?.data?.message || "Something went wrong");
         } finally {
             set({ isSigningUp: false })
@@ -63,10 +63,10 @@ export const UseAuthStore = create<AuthState>((set) => ({
 
         try {
             const res = await AxiosInstance.post("/auth/login", data)
-            set({ authUser: res.data })
+            set({ auth: res.data })
             toast.success("Logged in successfully")
         } catch (error: any) {
-            set({ authUser: null })
+            set({ auth: null })
             toast.error(error.response?.data?.message || "Something went wrong")
         } finally {
             set({ isLoggingIn: false })
@@ -76,7 +76,7 @@ export const UseAuthStore = create<AuthState>((set) => ({
     logout: async () => {
         try {
             await AxiosInstance.post("/auth/logout")
-            set({ authUser: null })
+            set({ auth: null })
             toast.success("Logout successfuly")
         } catch (error: any) {
             console.log("Logout error", error)

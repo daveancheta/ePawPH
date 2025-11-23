@@ -1,19 +1,13 @@
-import AppHeader from "@/components/app-header";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
-    return (
-        <div className="">
-            <header className="fixed w-full">
-                <div className="m-5 border border-white/20 rounded-md shadow-lg">
-                    <AppHeader />
-                </div>
-            </header>
-
-            <main className="pt-28 mx-auto flex h-full w-full max-w-7xl flex-1 flex-col gap-4 rounded-xl">
-                <div>
-                    {children}
-                </div>
-            </main>
-        </div>
-    )
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <SidebarProvider>
+      <AppSidebar />
+      <main>
+        {children}
+      </main>
+    </SidebarProvider>
+  )
 }

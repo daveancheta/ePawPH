@@ -20,36 +20,33 @@ function UserDisplayLayout() {
 
     const getInitials = useInitials()
     return (
-        <div className='absolute right-5'>
+        <div>
+            <div className='flex items-center justify-between space-x-10 truncate mb-2'>
+                <h1 className='text-sm font-medium'>Suggested for you</h1>
+            </div>
             {userList.length > 0 ?
-                <div className='min-w-100 min-h-130 bg-neutral-900 rounded-md p-8 py-5 flex flex-col gap-4'>
+                <div className='flex flex-col gap-4'>
                     {userList.map((users: User) => (
                         <div className='flex justify-between items-center' key={users._id}>
                             <div className='flex flex-row items-center gap-2.5'>
                                 <div className='relative'>
-                                    <Avatar key={users._id} className='w-15 h-15'>
-                                        <AvatarFallback className='text-white cursor-pointer border'>
+                                    <Avatar key={users._id} className='w-10 h-10 rounded-full'>
+                                        <AvatarFallback className='text-white cursor-pointer border truncate whitespace-nowrap rounded-full'>
                                             {getInitials(users.fullname)}
                                         </AvatarFallback>
                                     </Avatar>
-                                    <div className='absolute bottom-2 right-0 w-3 h-3 bg-green-500 rounded-full'></div>
+                                    <div className='absolute bottom-1 right-0 w-2 h-2 bg-green-500 rounded-full'></div>
                                 </div>
                                 <div className='flex flex-col'>
-                                    <h1 className='capitalize'>{users.fullname}</h1>
-                                    <span className='text-xs text-muted-foreground'>Sugessted for you</span>
+                                    <h1 className='capitalize font-medium text-sm'>{users.fullname}</h1>
+                                    <span className='text-xs text-muted-foreground'>@username</span>
                                 </div>
                             </div>
-                            <div>
-                                <button className='text-[#58C185] font-medium cursor-pointer hover:text-[#58C185]/70'>Follow</button>
-                            </div>
+
                         </div>
                     ))}
-                    <div className='flex justify-center'>
-                        <p className='absolute bottom-3 text-muted-foreground text-xs'>
-                            {usersCount} user{usersCount > 1 ? "s" : ""} to connect with
-                        </p>
-                    </div>
-                </div> : "0"}
+
+                </div> : ""}
 
         </div>
     )

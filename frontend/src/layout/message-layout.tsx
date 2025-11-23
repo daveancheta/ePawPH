@@ -27,8 +27,8 @@ function MessageLayout() {
                     </div>
                     <div className={userList.length > 0 ? "flex flex-row -gap-1" : "hidden"}>
                         {userList.slice(0, 3).map((users: User) => [
-                            <Avatar key={users._id}>
-                                <AvatarFallback className='text-white cursor-pointer border'>
+                            <Avatar key={users._id} className='rounded-full'>
+                                <AvatarFallback className='text-white cursor-pointer border rounded-full'>
                                     {getInitials(users.fullname)}
                                 </AvatarFallback>
                             </Avatar>

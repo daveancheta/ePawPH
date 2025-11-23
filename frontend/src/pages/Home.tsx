@@ -9,7 +9,6 @@ function Home() {
       <div>
         <PostLayout/>
         <MessageLayout/>
-        <UserDisplayLayout/>
       </div>
     </AppLayout>
   )

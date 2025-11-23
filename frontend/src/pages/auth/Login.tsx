@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 function Login() {
   const isMobile = useIsMobile();
-  const { isLoggingIn, login, authUser } = UseAuthStore();
+  const { isLoggingIn, login, auth } = UseAuthStore();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,8 +23,8 @@ function Login() {
     login(formData)
   }
   return (
-    <AppLayout>
-      <div className={isMobile ? 'hidden' : 'bg-neutral-900 min-h-160 w-full rounded-lg flex flex-col md:flex-row items-center justify-center'}>
+    <div className='m-20'>
+      <div className={isMobile ? 'hidden' : 'bg-neutral-800 min-h-160 w-full rounded-lg flex flex-col md:flex-row items-center justify-center'}>
 
         {/* Left Side */}
         <div className="flex items-center justify-center min-w-120 gap-10">
@@ -89,7 +89,7 @@ function Login() {
           </div>
         </div>
       </div>
-    </AppLayout>
+      </div>
   )
 }
 
