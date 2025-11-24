@@ -2,8 +2,9 @@ import { Button } from '@/components/ui/button';
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
 import { Label } from '@/components/ui/label';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 import { UseAuthStore } from '@/store/UseAuthStore';
-import { Lock, MessageCircle, UserRound } from 'lucide-react'
+import { Eye, EyeOff, Lock, MessageCircle, UserRound } from 'lucide-react'
 import { useState } from 'react';
 import { LoaderIcon } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
@@ -11,6 +12,7 @@ import { Link } from 'react-router-dom';
 function Login() {
   const isMobile = useIsMobile();
   const { isLoggingIn, login } = UseAuthStore();
+  const [password, setPassword] = useState("")
   const [formData, setFormData] = useState({
     identifier: "",
     password: "",
@@ -50,15 +52,20 @@ function Login() {
               <div className='space-y-2'>
                 <Label className='text-white'>Password</Label>
 
-                <InputGroup>
-                  <InputGroupInput type='password' className='text-white' placeholder="••••••••"
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })} value={formData.password} />
-                  <InputGroupAddon>
-                    <Lock />
-                  </InputGroupAddon>
-                </InputGroup>
-
-                <Link to={'/forgot-password'} className='text-white'>Forgot password?</Link>
+                <div className='relative'>
+                  <InputGroup>
+                    <InputGroupInput type={password === "show" ? "text" : "password"} className='text-white pr-8' placeholder="••••••••"
+                      onChange={(e) => setFormData({ ...formData, password: e.target.value })} value={formData.password} />
+                    <InputGroupAddon>
+                      <Lock />
+                    </InputGroupAddon>
+                  </InputGroup>
+                  <div className='flex justify-end'>
+                    <Eye className={cn('absolute top-1/4 right-2 text-muted-foreground size-5', password === "show" || password === "" ? "" : "hidden")} onClick={() => setPassword("show")} />
+                    <EyeOff className={cn('absolute top-1/4 right-2 text-muted-foreground size-5', password === "" ? "hidden" : "")} onClick={() => setPassword("")} />
+                  </div>
+                </div>
+                <Link to={'/forgot-password'} className='text-white text-sm'>Forgot password?</Link>
               </div>
 
               {isLoggingIn ?
@@ -88,7 +95,7 @@ function Login() {
           </div>
         </div>
       </div>
-      </div>
+    </div>
   )
 }
 
