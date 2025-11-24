@@ -39,5 +39,15 @@ export const post = async (req, res) => {
         console.log("Error in post controller:", error)
         res.status(400).json({ message: "Interal server error" })
     }
+}
 
+export const getPosts = async (_, res) => {
+
+    try {
+        const post = await Post.find().select();
+        res.status(200).json(post)
+    } catch (error) {
+        console.log("Error in get posts controller", error)
+        res.status(500).json({ message: "Internal server error" })
+    }
 }
