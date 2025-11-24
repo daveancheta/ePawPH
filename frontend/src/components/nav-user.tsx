@@ -14,7 +14,7 @@ export function NavUser() {
             <SidebarMenuItem>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <SidebarMenuButton size="lg" className="group text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent">
+                        <SidebarMenuButton size="lg" className="group text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent relative">
 
                             <Avatar className='rounded-md'>
                                 {auth.profile.length > 0 ?
@@ -27,7 +27,8 @@ export function NavUser() {
                                 <h1>{auth.fullname}</h1>
                                 <span className='text-xs text-muted-foreground'>{auth.email}</span>
                             </div>
-                            <ChevronsUpDown className='ml-5' />
+                            <ChevronsUpDown className='ml-5 absolute right-3' />
+
 
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
