@@ -44,7 +44,7 @@ export const post = async (req, res) => {
 export const getPosts = async (_, res) => {
 
     try {
-        const post = await Post.find().select();
+        const post = await Post.find().select().populate("posterId", "fullname profile");
         res.status(200).json(post)
     } catch (error) {
         console.log("Error in get posts controller", error)

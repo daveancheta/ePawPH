@@ -11,13 +11,60 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Link } from "react-router-dom"
+import { UsePostStore } from "@/store/UsePostStore"
+import { useEffect } from "react"
+import dayjs from "dayjs"
+import relativeTime from "dayjs/plugin/relativeTime";
+import updateLocale from "dayjs/plugin/updateLocale";
+import { History } from "lucide-react"
+
+type Post = {
+  _id: string
+  posterId: posterId,
+  petName: string,
+  createdAt: any
+  petPicture: string
+}
+
+type posterId = {
+  fullname: string,
+  posterId: string
+  profile: string,
+}
+
+dayjs.extend(relativeTime);
+dayjs.extend(updateLocale);
+
+dayjs.updateLocale('en', {
+  relativeTime: {
+    future: "in %s",
+    past: "%s ago",
+    s: "seconds",
+    m: "1 minute",
+    mm: "%d minutes",
+    h: "1 hour",
+    hh: "%d hours",
+    d: "1 day",
+    dd: "%d days",
+    M: "1 month",
+    MM: "%d months",
+    y: "1 year",
+    yy: "%d years"
+  }
+});
 
 function PostLayout() {
   const { auth } = UseAuthStore()
   const getInitials = useInitials()
+  const { posts, post } = UsePostStore() as { post: any, posts: Post[] }
+
+  useEffect(() => {
+    post()
+  }, [post])
 
   return (
     <div className="m-10 ms-30">
+      <div className="flex flex-col gap-4 items-center">
       <div className="flex flex-row gap-15 items-center bg-neutral-900 border p-4 px-10 rounded-md">
         <div className="flex flex-row items-center gap-2">
           <Avatar>
@@ -26,7 +73,7 @@ function PostLayout() {
                 {getInitials(auth.fullname)}
               </AvatarFallback>}
           </Avatar>
-          <h1>{auth.fullname}</h1>
+          <h1 className="truncate">{auth.fullname}</h1>
         </div>
         <Dialog>
           <form>
@@ -60,7 +107,30 @@ function PostLayout() {
             </DialogContent>
           </form>
         </Dialog>
+      </div>
 
+      <div className="flex flex-col gap-4">
+        {posts.map((posts) => (
+          <div key={posts._id}> 
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-row gap-2 items-center">
+                <img className="w-8 h-8 rounded-full" src={posts.posterId.profile} alt="" />
+                <div className="flex flex-col gap-1 itesm-start">
+                  <h1 className="text-sm font-bold truncate">{posts.posterId.fullname}</h1>
+                  <span className="text-xs font-normal flex flex-row gap-1 items-center text-muted-foreground">
+                    <History className="size-3" />
+                    {dayjs(posts.createdAt).fromNow() === "seconds ago" ? "Just now" : dayjs(posts.createdAt).fromNow()}
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <img className="min-w-120 h-auto max-w-120 rounded-sm" src={posts.petPicture} alt="" />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
       </div>
     </div>
   )
