@@ -17,13 +17,17 @@ function PostLayout() {
   const getInitials = useInitials()
 
   return (
-    <div className="m-10">
-      <div className="flex flex-row items-center gap-4 bg-neutral-800 p-4 px-10 rounded-md">
-        <Avatar>
-          <AvatarFallback className='text-white cursor-pointer border'>
-            {getInitials(auth.fullname)}
-          </AvatarFallback>
-        </Avatar>
+    <div className="m-10 ms-30">
+      <div className="flex flex-row gap-15 items-center bg-neutral-900 border p-4 px-10 rounded-md">
+        <div className="flex flex-row items-center gap-2">
+          <Avatar>
+            {auth.profile.length > 0 ? <img className="rounded-full" src={auth.profile} /> :
+              <AvatarFallback className='text-white cursor-pointer border rounded-full'>
+                {getInitials(auth.fullname)}
+              </AvatarFallback>}
+          </Avatar>
+          <h1>{auth.fullname}</h1>
+        </div>
         <Dialog>
           <form>
             <DialogTrigger asChild>
@@ -43,12 +47,12 @@ function PostLayout() {
                   font-bold text-center p-2 rounded-md cursor-pointer">Lost</Link>
                 </div>
                 <div className="grid gap-3">
-                     <Link to={'/adaption'} className="bg-yellow-100 text-yellow-800 
+                  <Link to={'/adaption'} className="bg-yellow-100 text-yellow-800 
                   hover:bg-yellow-200 hover:text-yellow-900 
                   font-bold text-center p-2 rounded-md cursor-pointer">Adaption</Link>
                 </div>
                 <div className="grid gap-3">
-                   <Link to={'/found'} className="bg-green-100 text-green-800 
+                  <Link to={'/found'} className="bg-green-100 text-green-800 
                   hover:bg-green-200 hover:text-green-900 
                   font-bold text-center p-2 rounded-md cursor-pointer">Found</Link>
                 </div>
