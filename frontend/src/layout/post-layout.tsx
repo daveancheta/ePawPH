@@ -16,7 +16,7 @@ import { useEffect } from "react"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
-import { History } from "lucide-react"
+import { Heart, History, MessageCircle, Share2 } from "lucide-react"
 
 type Post = {
   _id: string
@@ -65,74 +65,91 @@ function PostLayout() {
   return (
     <div className="flex justify-center">
       <div className="flex flex-col gap-4 items-center">
-      <div className="flex flex-row gap-15 items-center bg-neutral-900 border p-4 px-10 rounded-md">
-        <div className="flex flex-row items-center gap-2">
-          <Avatar>
-            {auth.profile.length > 0 ? <img className="rounded-full" src={auth.profile} /> :
-              <AvatarFallback className='text-white cursor-pointer border rounded-full'>
-                {getInitials(auth.fullname)}
-              </AvatarFallback>}
-          </Avatar>
-          <h1 className="truncate">{auth.fullname}</h1>
-        </div>
-        <Dialog>
-          <form>
-            <DialogTrigger asChild>
-              <Button className="text-muted-foreground cursor-pointer" variant='outline'>Create Pet Post</Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>Pet Status</DialogTitle>
-                <DialogDescription>
-                  We hope you find our platform helpful for your pet-related concerns.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4">
-                <div className="grid gap-3">
-                  <Link to={'/lost'} className="bg-red-200 text-red-800 
+        <div className="flex flex-row gap-15 items-center bg-neutral-900 border p-4 px-10 rounded-md">
+          <div className="flex flex-row items-center gap-2">
+            <Avatar>
+              {auth.profile.length > 0 ? <img className="rounded-full" src={auth.profile} /> :
+                <AvatarFallback className='text-white cursor-pointer border rounded-full'>
+                  {getInitials(auth.fullname)}
+                </AvatarFallback>}
+            </Avatar>
+            <h1 className="truncate">{auth.fullname}</h1>
+          </div>
+          <Dialog>
+            <form>
+              <DialogTrigger asChild>
+                <Button className="text-muted-foreground cursor-pointer" variant='outline'>Create Pet Post</Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Pet Status</DialogTitle>
+                  <DialogDescription>
+                    We hope you find our platform helpful for your pet-related concerns.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4">
+                  <div className="grid gap-3">
+                    <Link to={'/lost'} className="bg-red-200 text-red-800 
                   hover:bg-red-300 hover:text-red-900 
                   font-bold text-center p-2 rounded-md cursor-pointer">Lost</Link>
-                </div>
-                <div className="grid gap-3">
-                  <Link to={'/adaption'} className="bg-yellow-100 text-yellow-800 
+                  </div>
+                  <div className="grid gap-3">
+                    <Link to={'/adaption'} className="bg-yellow-100 text-yellow-800 
                   hover:bg-yellow-200 hover:text-yellow-900 
                   font-bold text-center p-2 rounded-md cursor-pointer">Adaption</Link>
-                </div>
-                <div className="grid gap-3">
-                  <Link to={'/found'} className="bg-green-100 text-green-800 
+                  </div>
+                  <div className="grid gap-3">
+                    <Link to={'/found'} className="bg-green-100 text-green-800 
                   hover:bg-green-200 hover:text-green-900 
                   font-bold text-center p-2 rounded-md cursor-pointer">Found</Link>
+                  </div>
+                </div>
+              </DialogContent>
+            </form>
+          </Dialog>
+        </div>
+
+        <div className="flex h-full flex-col gap-6 rounded-xl p-4 overflow-x-hidden">
+          <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-1 max-w-120">
+            {posts.map((posts) => (
+              <div key={posts._id}>
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-row gap-2 items-center">
+                    <img className="w-8 h-8 rounded-full" src={posts.posterId.profile} alt="" />
+                    <div className="flex flex-col gap-1 itesm-start">
+                      <h1 className="text-sm font-bold truncate">{posts.posterId.fullname}</h1>
+                      <span className="text-xs font-normal flex flex-row gap-1 items-center text-muted-foreground">
+                        <History className="size-3" />
+                        {dayjs(posts.createdAt).fromNow() === "seconds ago" ? "Just now" : dayjs(posts.createdAt).fromNow()}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <img className="w-full h-full rounded-sm" src={posts.petPicture} alt="" />
+                  </div>
+                  <div className="flex flex-row mx-2 gap-6 items-center">
+                    <button
+                      className="flex flex-row items-center gap-1 cursor-pointer">
+                      <Heart className="size-6" />
+                      <span className="text-xs">0</span>
+                    </button>
+                    <button
+                      className="flex flex-row items-center gap-1 cursor-pointer">
+                      <MessageCircle className="size-5" />
+                      <span className="text-xs">0</span>
+                    </button>
+                    <button
+                      className="flex flex-row items-center gap-1 cursor-pointer">
+                      <Share2 className="size-5" />
+                      <span className="text-xs">0</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </DialogContent>
-          </form>
-        </Dialog>
-      </div>
-
-  <div className="flex h-full flex-col gap-6 rounded-xl p-4 overflow-x-hidden">
-      <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-1 max-w-120">
-        {posts.map((posts) => (
-          <div key={posts._id}> 
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-row gap-2 items-center">
-                <img className="w-8 h-8 rounded-full" src={posts.posterId.profile} alt="" />
-                <div className="flex flex-col gap-1 itesm-start">
-                  <h1 className="text-sm font-bold truncate">{posts.posterId.fullname}</h1>
-                  <span className="text-xs font-normal flex flex-row gap-1 items-center text-muted-foreground">
-                    <History className="size-3" />
-                    {dayjs(posts.createdAt).fromNow() === "seconds ago" ? "Just now" : dayjs(posts.createdAt).fromNow()}
-                  </span>
-                </div>
-              </div>
-
-              <div>
-                <img className="w-full h-full rounded-sm" src={posts.petPicture} alt="" />
-              </div>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
-      </div>
+        </div>
       </div>
     </div>
   )
