@@ -7,12 +7,23 @@ const PostSchema = new mongoose.Schema({
         required: false,
     },
 
-     status: {
+    age: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Users",
+        required: false,
+    },
+
+    status: {
         type: String,
         required: false,
     },
 
     petName: {
+        type: String,
+        required: false
+    },
+
+    petType: {
         type: String,
         required: false
     },
@@ -52,7 +63,7 @@ const PostSchema = new mongoose.Schema({
         required: true
     },
 
-}, {timestamps: true})
+}, { timestamps: true })
 
 const Post = mongoose.model("Post", PostSchema)
 

@@ -2,22 +2,30 @@ import Post from "../models/Post.js"
 import cloudinary from "../lib/cloudinary.js"
 
 export const post = async (req, res) => {
-    const { posterId, status, petName, gender, breed,
+    const { posterId, age, status, petName, petType, gender, breed,
         color, lastSeenDate, lastSeenLocation, message, petPicture } = req.body
 
     try {
-        const petPictureCloud = cloudinary.uploader.upload(petPicture)
+
+        if (!petName || !petType || !age || !breed || !color || !petPicture
+            || !lastSeenDate || !lastSeenLocation
+            || !lastSeenDate || !message) {
+            return res.status(400).json({ message: "All fields are required" })
+        }
+        
+        const petPictureCloud = await cloudinary.uploader.upload(petPicture)
         const newPost = new Post({
             posterId,
             status,
             petName,
+            petType,
             gender,
             breed,
             color,
             lastSeenDate,
             lastSeenLocation,
             message,
-            petPicture: petPictureCloud
+            petPicture: petPictureCloud.secure_url
         })
 
         if (newPost) {
