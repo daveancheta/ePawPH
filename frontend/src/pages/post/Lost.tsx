@@ -14,7 +14,6 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { UsePostStore } from '@/store/UsePostStore'
 import { UseAuthStore } from '@/store/UseAuthStore'
-import toast from 'react-hot-toast'
 import { LoaderIcon } from 'lucide-react'
 
 function Lost() {
@@ -102,7 +101,7 @@ function Lost() {
                     <Textarea className='max-w-100' placeholder='Message (Optional)'
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })} value={formData.message} />
 
-                    <Button className="cursor-pointer" variant={'form'} onClick={() => {setFormData({ ...formData, posterId: auth._id }); setFormData({ ...formData, status: "lost" })}}
+                    <Button className="cursor-pointer" variant={'form'} onClick={() => setFormData({ ...formData, posterId: auth._id, status: "lost" })}
                         disabled={isCreatingPost || !formData.petName.trim() || !formData.gender.trim() || !formData.petType.trim()
                             || !formData.age || !formData.breed.trim()
                             || !formData.color.trim() || !formData.petPicture.trim()

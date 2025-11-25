@@ -17,6 +17,7 @@ import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
 import { Heart, History, MessageCircle, Share2 } from "lucide-react"
+import { PostSkeleton } from "@/components/post-skeleton"
 
 type Post = {
   _id: string
@@ -56,7 +57,7 @@ dayjs.updateLocale('en', {
 function PostLayout() {
   const { auth } = UseAuthStore()
   const getInitials = useInitials()
-  const { posts, post } = UsePostStore() as { post: any, posts: Post[] }
+  const { posts, post, isCheckingPost } = UsePostStore() as { post: any, posts: Post[], isCheckingPost: boolean }
 
   useEffect(() => {
     post()
@@ -111,11 +112,19 @@ function PostLayout() {
 
         <div className="flex h-full flex-col gap-6 rounded-xl p-4 overflow-x-hidden">
           <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-1 max-w-120">
+            {isCheckingPost && <PostSkeleton /> }
+
             {posts.map((posts) => (
               <div key={posts._id}>
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-row gap-2 items-center">
-                    <img className="w-8 h-8 rounded-full" src={posts.posterId.profile} alt="" />
+                    <Avatar className="w-8 h-8">
+                      {posts.posterId.profile.length > 0 ? <img className="rounded-full" src={posts.posterId.profile} /> :
+                        <AvatarFallback className='text-white cursor-pointer border rounded-full'>
+                          {getInitials(auth.fullname)}
+                        </AvatarFallback>}
+                    </Avatar>
+
                     <div className="flex flex-col gap-1 itesm-start">
                       <h1 className="text-sm font-bold truncate">{posts.posterId.fullname}</h1>
                       <span className="text-xs font-normal flex flex-row gap-1 items-center text-muted-foreground">

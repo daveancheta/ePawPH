@@ -18,6 +18,7 @@ interface Pet {
 export const UsePostStore = create((set) => ({
     posts: [],
     isCreatingPost: false,
+    isCheckingPost: true,
 
     post: async () => {
         try {
@@ -25,6 +26,8 @@ export const UsePostStore = create((set) => ({
             set({ posts: res.data })
         } catch (error) {
             console.log("Error fetching posts")
+        } finally {
+            set({ isCheckingPost: false })
         }
     },
 
