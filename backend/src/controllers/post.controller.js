@@ -2,13 +2,14 @@ import Post from "../models/Post.js"
 import cloudinary from "../lib/cloudinary.js"
 
 export const post = async (req, res) => {
-    const { posterId, petName, gender, breed,
+    const { posterId, status, petName, gender, breed,
         color, lastSeenDate, lastSeenLocation, message, petPicture } = req.body
 
     try {
         const petPictureCloud = cloudinary.uploader.upload(petPicture)
         const newPost = new Post({
             posterId,
+            status,
             petName,
             gender,
             breed,
@@ -22,17 +23,7 @@ export const post = async (req, res) => {
         if (newPost) {
             await newPost.save();
 
-            res.status(200).json({
-                posterId: newPost.posterId,
-                petName: newPost.petName,
-                gender: newPost.gender,
-                breed: newPost.breed,
-                color: newPost.color,
-                lastSeenDate: newPost.lastSeenDate,
-                lastSeenLocation: newPost.lastSeenLocation,
-                message: newPost.message,
-                petPicture: newPost.petPicture
-            })
+            res.status(200).json(newPost)
         }
 
     } catch (error) {

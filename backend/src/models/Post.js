@@ -7,6 +7,11 @@ const PostSchema = new mongoose.Schema({
         required: false,
     },
 
+     status: {
+        type: String,
+        required: false,
+    },
+
     petName: {
         type: String,
         required: false
