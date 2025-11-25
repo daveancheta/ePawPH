@@ -63,7 +63,7 @@ function PostLayout() {
   }, [post])
 
   return (
-    <div className="m-10 ms-30">
+    <div className="flex justify-center">
       <div className="flex flex-col gap-4 items-center">
       <div className="flex flex-row gap-15 items-center bg-neutral-900 border p-4 px-10 rounded-md">
         <div className="flex flex-row items-center gap-2">
@@ -109,7 +109,8 @@ function PostLayout() {
         </Dialog>
       </div>
 
-      <div className="flex flex-col gap-4">
+  <div className="flex h-full flex-col gap-6 rounded-xl p-4 overflow-x-hidden">
+      <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-1 max-w-120">
         {posts.map((posts) => (
           <div key={posts._id}> 
             <div className="flex flex-col gap-4">
@@ -125,11 +126,12 @@ function PostLayout() {
               </div>
 
               <div>
-                <img className="min-w-120 h-auto max-w-120 rounded-sm" src={posts.petPicture} alt="" />
+                <img className="w-full h-full rounded-sm" src={posts.petPicture} alt="" />
               </div>
             </div>
           </div>
         ))}
+      </div>
       </div>
       </div>
     </div>
