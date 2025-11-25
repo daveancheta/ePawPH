@@ -66,7 +66,7 @@ function PostLayout() {
   return (
     <div className="flex justify-center">
       <div className="flex flex-col gap-4 items-center">
-        <div className="flex flex-row gap-15 items-center bg-neutral-900 border p-4 px-10 rounded-md">
+        <div className="flex flex-row gap-5 items-center bg-neutral-900 border p-4 px-10 rounded-md">
           <div className="flex flex-row items-center gap-2">
             <Avatar>
               {auth.profile.length > 0 ? <img className="rounded-full" src={auth.profile} /> :
@@ -74,7 +74,6 @@ function PostLayout() {
                   {getInitials(auth.fullname)}
                 </AvatarFallback>}
             </Avatar>
-            <h1 className="truncate">{auth.fullname}</h1>
           </div>
           <Dialog>
             <form>
@@ -112,7 +111,7 @@ function PostLayout() {
 
         <div className="flex h-full flex-col gap-6 rounded-xl p-4 overflow-x-hidden">
           <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-1 max-w-120">
-            {isCheckingPost && <PostSkeleton /> }
+            {isCheckingPost && <PostSkeleton />}
 
             {posts.map((posts) => (
               <div key={posts._id}>
@@ -121,7 +120,7 @@ function PostLayout() {
                     <Avatar className="w-8 h-8">
                       {posts.posterId.profile.length > 0 ? <img className="rounded-full" src={posts.posterId.profile} /> :
                         <AvatarFallback className='text-white cursor-pointer border rounded-full'>
-                          {getInitials(auth.fullname)}
+                          {getInitials(posts.posterId.fullname)}
                         </AvatarFallback>}
                     </Avatar>
 
