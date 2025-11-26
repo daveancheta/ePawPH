@@ -16,7 +16,7 @@ import { useEffect } from "react"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
-import { Heart, History, MessageCircle, MoreHorizontalIcon, Share2 } from "lucide-react"
+import { Heart, History, InboxIcon, MessageCircle, MoreHorizontalIcon, PlusCircle, Share2 } from "lucide-react"
 import { PostSkeleton } from "@/components/post-skeleton"
 import {
   DropdownMenu,
@@ -66,12 +66,19 @@ dayjs.updateLocale('en', {
 function PostLayout() {
   const { auth } = UseAuthStore()
   const getInitials = useInitials()
-  const { posts, post, isCheckingPost } = UsePostStore() as { post: any, posts: Post[], isCheckingPost: boolean }
+  const { posts, post, isCheckingPost, handleDeletePost } = UsePostStore() as {
+    post: any, posts: Post[],
+    isCheckingPost: boolean, handleDeletePost: any
+  }
   const isMobile = useIsMobile()
 
   useEffect(() => {
     post()
   }, [post])
+
+  const handleDelete = (postId: any) => {
+    handleDeletePost(postId)
+  }
 
   return (
     <div className="flex justify-center">
@@ -119,85 +126,99 @@ function PostLayout() {
           </Dialog>
         </div>
 
-        <div className={isMobile ? "flex h-full min-w-screen flex-col gap-6 rounded-xl overflow-x-hidden justify-center items-center" : "flex h-full flex-col gap-6 rounded-xl p-4 overflow-x-hidden"}>
-          <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-1 max-w-120">
-            {isCheckingPost && <PostSkeleton />}
+        {posts.length > 0 ?
+          <div className={isMobile ? "flex h-full min-w-screen flex-col gap-6 rounded-xl overflow-x-hidden justify-center items-center" : "flex h-full flex-col gap-6 rounded-xl p-4 overflow-x-hidden"}>
+            <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-1 max-w-120">
+              {isCheckingPost && <PostSkeleton />}
 
-            {posts.map((posts) => (
-              <div key={posts._id}>
-                <div className="flex flex-col gap-4">
-                  <div className="flex flex-row justify-between items-center px-4">
-                    <div className="flex flex-row gap-2 items-center">
-                      <Avatar className="w-8 h-8">
-                        {posts.posterId.profile.length > 0 ? <img className="rounded-full" src={posts.posterId.profile} /> :
-                          <AvatarFallback className='text-white cursor-pointer border rounded-full'>
-                            {getInitials(posts.posterId.fullname)}
-                          </AvatarFallback>}
-                      </Avatar>
+              {posts.map(posts => (
+                <div key={posts._id}>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex flex-row justify-between items-center px-4">
+                      <div className="flex flex-row gap-2 items-center">
+                        <Avatar className="w-8 h-8">
+                          {posts.posterId.profile.length > 0 ? <img className="rounded-full" src={posts.posterId.profile} /> :
+                            <AvatarFallback className='text-white cursor-pointer border rounded-full'>
+                              {getInitials(posts.posterId.fullname)}
+                            </AvatarFallback>}
+                        </Avatar>
 
-                      <div className="flex flex-col gap-1 itesm-start">
-                        <h1 className="text-sm font-bold truncate capitalize">{posts.posterId.fullname}</h1>
-                        <span className="text-xs font-normal flex flex-row gap-1 items-center text-muted-foreground">
-                          <History className="size-3" />
-                          {dayjs(posts.createdAt).fromNow() === "seconds ago" ? "Just now" : dayjs(posts.createdAt).fromNow()}
-                        </span>
+                        <div className="flex flex-col gap-1 itesm-start">
+                          <h1 className="text-sm font-bold truncate capitalize">{posts.posterId.fullname}</h1>
+                          <span className="text-xs font-normal flex flex-row gap-1 items-center text-muted-foreground">
+                            <History className="size-3" />
+                            {dayjs(posts.createdAt).fromNow() === "seconds ago" ? "Just now" : dayjs(posts.createdAt).fromNow()}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div>
+                        <DropdownMenu modal={false}>
+                          <DropdownMenuTrigger asChild>
+                            <button className="cursor-pointer">
+                              <MoreHorizontalIcon className="size-5" />
+                            </button  >
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent className="w-40" align="end">
+                            <DropdownMenuGroup>
+                              <button className={auth._id === posts.posterId._id ? "hidden" : "w-full cursor-pointer"}>
+                                <DropdownMenuItem variant="destructive" className="cursor-pointer">
+                                  Report
+                                </DropdownMenuItem>
+                              </button>
+                              <button onClick={() => handleDelete(posts._id)} className={auth._id === posts.posterId._id ? "w-full cursor-pointer" : "hidden"}>
+                                <DropdownMenuItem variant="destructive" className="cursor-pointer">
+                                  Delete
+                                </DropdownMenuItem>
+                              </button>
+
+                              <button className={auth._id === posts.posterId._id ? "w-full cursor-pointer" : "hidden"}>
+                                <DropdownMenuItem className="cursor-pointer">
+                                  Edit
+                                </DropdownMenuItem>
+                              </button>
+                            </DropdownMenuGroup>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
                     </div>
-
                     <div>
-                      <DropdownMenu modal={false}>
-                        <DropdownMenuTrigger asChild>
-                          <button className="cursor-pointer">
-                            <MoreHorizontalIcon className="size-5" />
-                          </button  >
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-40" align="end">
-                          <DropdownMenuGroup>
-                            <button className={auth._id === posts.posterId._id ? "hidden" : "w-full cursor-pointer"}>
-                              <DropdownMenuItem variant="destructive" className="cursor-pointer">
-                                Report
-                              </DropdownMenuItem>
-                            </button>
-                            <button className={auth._id === posts.posterId._id ? "w-full cursor-pointer" : "hidden"}>
-                              <DropdownMenuItem variant="destructive" className="cursor-pointer">
-                                Delete
-                              </DropdownMenuItem>
-                            </button>
-                            <button className={auth._id === posts.posterId._id ? "w-full cursor-pointer" : "hidden"}>
-                              <DropdownMenuItem className="cursor-pointer">
-                                Edit
-                              </DropdownMenuItem>
-                            </button>
-                          </DropdownMenuGroup>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+                      <img className="w-full h-full rounded-sm" src={posts.petPicture} alt="" />
+                    </div>
+                    <div className="flex flex-row mx-2 gap-6 items-center">
+                      <button
+                        className="flex flex-row items-center gap-1 cursor-pointer">
+                        <Heart className="size-6" />
+                        <span className="text-xs">1</span>
+                      </button>
+                      <button
+                        className="flex flex-row items-center gap-1 cursor-pointer">
+                        <MessageCircle className="size-5" />
+                        <span className="text-xs">0</span>
+                      </button>
+                      <button
+                        className="flex flex-row items-center gap-1 cursor-pointer">
+                        <Share2 className="size-5" />
+                        <span className="text-xs">0</span>
+                      </button>
                     </div>
                   </div>
-                  <div>
-                    <img className="w-full h-full rounded-sm" src={posts.petPicture} alt="" />
-                  </div>
-                  <div className="flex flex-row mx-2 gap-6 items-center">
-                    <button
-                      className="flex flex-row items-center gap-1 cursor-pointer">
-                      <Heart className="size-6" />
-                      <span className="text-xs">1</span>
-                    </button>
-                    <button
-                      className="flex flex-row items-center gap-1 cursor-pointer">
-                      <MessageCircle className="size-5" />
-                      <span className="text-xs">0</span>
-                    </button>
-                    <button
-                      className="flex flex-row items-center gap-1 cursor-pointer">
-                      <Share2 className="size-5" />
-                      <span className="text-xs">0</span>
-                    </button>
-                  </div>
                 </div>
+              ))}
+            </div>
+          </div> :
+          <div className={isMobile ? "flex h-full min-w-screen flex-col gap-6 rounded-xl overflow-x-hidden justify-center items-center" : "flex h-full min-w-120 flex-col gap-6 rounded-xl p-4 overflow-x-hidden"}>
+            <div className="flex justify-center">
+              <div className="flex flex-col items-center text-muted-foreground">
+                <div className='mb-5 animate-bounce'>
+                  <InboxIcon className="size-20" />
+                </div>
+                <h1> No posts yet — be the first to create one!</h1>
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          </div>}
+
+
       </div>
     </div>
   )

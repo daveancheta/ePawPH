@@ -34,13 +34,24 @@ export const UsePostStore = create((set) => ({
     handlePetPost: async (data: Pet) => {
         set({ isCreatingPost: true })
         try {
-            await AxiosInstance.post("/post/post", data)
+            const res = await AxiosInstance.post("/post/post", data)
             toast.success("Post created successfully")
+            set({ posts: res.data })
         } catch (error: any) {
             console.log("Error posting", error)
             toast.error(error.response.data.message)
         } finally {
             set({ isCreatingPost: false })
+        }
+    },
+
+    handleDeletePost: async (postId: string) => {
+        try {
+            const res = await AxiosInstance.delete(`post/post/${postId}`)
+            toast.success("Post deleted successfully")
+            set({ posts: res.data })
+        } catch (error: any) {
+            toast.error(error.response.data.message || "Something went wrong")
         }
     }
 }))
