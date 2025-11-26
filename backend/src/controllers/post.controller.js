@@ -12,7 +12,7 @@ export const post = async (req, res) => {
             || !lastSeenDate || !message) {
             return res.status(400).json({ message: "All fields are required" })
         }
-        
+
         const petPictureCloud = await cloudinary.uploader.upload(petPicture)
         const newPost = new Post({
             posterId,
@@ -48,5 +48,23 @@ export const getPosts = async (_, res) => {
     } catch (error) {
         console.log("Error in get posts controller", error)
         res.status(500).json({ message: "Internal server error" })
+    }
+}
+
+export const deletePost = async (req, res) => {
+    const id = req.params.id
+
+    try {
+        const post = await Post.findById(id)
+
+        if(!post) {
+            res.status(400).json({message: "Post dont exists"})
+        }
+
+        await Post.findByIdAndDelete(id);
+        res.status(200).json({ message: "Deleted successfully" })
+    } catch (error) {
+        console.log("Error in delete post controller", error)
+        res.status(400).json({message: "Internal server error"})
     }
 }
