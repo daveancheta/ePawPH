@@ -125,7 +125,7 @@ function PostLayout() {
                     </Avatar>
 
                     <div className="flex flex-col gap-1 itesm-start">
-                      <h1 className="text-sm font-bold truncate">{posts.posterId.fullname}</h1>
+                      <h1 className="text-sm font-bold truncate capitalize">{posts.posterId.fullname}</h1>
                       <span className="text-xs font-normal flex flex-row gap-1 items-center text-muted-foreground">
                         <History className="size-3" />
                         {dayjs(posts.createdAt).fromNow() === "seconds ago" ? "Just now" : dayjs(posts.createdAt).fromNow()}
