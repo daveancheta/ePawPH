@@ -60,7 +60,7 @@ export function AppSidebar() {
                         <SidebarGroupContent>
                             <div className="flex flex-col gap-5">
                                 {items.map(item => (
-                                    <Link key={item.url} to={item.url} className="flex flex-row items-center gap-4 hover-default p-1 py-2">
+                                    <Link key={item.url} to={item.url} className="flex flex-row items-center gap-4 hover-default p-1 py-2 transition-ease-in-out duration-200">
                                         <item.icon className="w-7 h-7" />
                                         {item.title}
                                     </Link>
