@@ -92,16 +92,16 @@ function Lost() {
                         onChange={(e) => setFormData({ ...formData, color: e.target.value })} value={formData.color}/>
                     </div>
 
-                    <Input type="file" accept='image/*' onChange={handleImageUpload}
+                    <Input className="max-w-93" type="file" accept='image/*' onChange={handleImageUpload}
                     />
-                    <Input type="text" placeholder='Last seen (Location)'
+                    <Input className="max-w-93" type="text" placeholder='Last seen (Location)'
                         onChange={(e) => setFormData({ ...formData, lastSeenLocation: e.target.value })} value={formData.lastSeenLocation} />
-                    <Input type="date" placeholder='Last seen (Date)'
+                    <Input className="max-w-93" type="date" placeholder='Last seen (Date)'
                         onChange={(e) => setFormData({ ...formData, lastSeenDate: e.target.value })} value={formData.lastSeenDate} />
-                    <Textarea className='max-w-100' placeholder='Message (Optional)'
+                    <Textarea  className='max-w-93' placeholder='Message (Optional)'
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })} value={formData.message} />
 
-                    <Button className="cursor-pointer" variant={'form'} onClick={() => setFormData({ ...formData, posterId: auth._id, status: "lost" })}
+                    <Button className="cursor-pointer max-w-93" variant={'form'} onClick={() => setFormData({ ...formData, posterId: auth._id, status: "lost" })}
                         disabled={isCreatingPost || !formData.petName.trim() || !formData.gender.trim() || !formData.petType.trim()
                             || !formData.age || !formData.breed.trim()
                             || !formData.color.trim() || !formData.petPicture.trim()

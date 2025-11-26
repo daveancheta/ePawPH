@@ -16,7 +16,7 @@ import { useEffect } from "react"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
-import { Heart, History, InboxIcon, MessageCircle, MoreHorizontalIcon, PlusCircle, Share2 } from "lucide-react"
+import { Bookmark, Heart, History, InboxIcon, MessageCircle, MoreHorizontalIcon, Share2 } from "lucide-react"
 import { PostSkeleton } from "@/components/post-skeleton"
 import {
   DropdownMenu,
@@ -81,7 +81,7 @@ function PostLayout() {
   }
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center overflow-auto">
       <div className="flex flex-col gap-4 items-center">
         <div className="flex flex-row gap-5 items-center bg-neutral-900 border p-4 px-10 rounded-md my-5">
           <div className="flex flex-row items-center gap-2">
@@ -185,22 +185,25 @@ function PostLayout() {
                     <div>
                       <img className="w-full h-full rounded-sm" src={posts.petPicture} alt="" />
                     </div>
-                    <div className="flex flex-row mx-2 gap-6 items-center">
-                      <button
-                        className="flex flex-row items-center gap-1 cursor-pointer">
-                        <Heart className="size-6" />
-                        <span className="text-xs">1</span>
-                      </button>
-                      <button
-                        className="flex flex-row items-center gap-1 cursor-pointer">
-                        <MessageCircle className="size-5" />
-                        <span className="text-xs">0</span>
-                      </button>
-                      <button
-                        className="flex flex-row items-center gap-1 cursor-pointer">
-                        <Share2 className="size-5" />
-                        <span className="text-xs">0</span>
-                      </button>
+                    <div className="flex flex-row justify-between mx-4">
+                      <div className="flex flex-row gap-6 items-center">
+                        <button
+                          className="flex flex-row items-center gap-1 cursor-pointer">
+                          <Heart className="size-6" />
+                          <span className="text-xs">1</span>
+                        </button>
+                        <button
+                          className="flex flex-row items-center gap-1 cursor-pointer">
+                          <MessageCircle className="size-5" />
+                          <span className="text-xs">0</span>
+                        </button>
+                        <button
+                          className="flex flex-row items-center gap-1 cursor-pointer">
+                          <Share2 className="size-5" />
+                          <span className="text-xs">0</span>
+                        </button>
+                      </div>
+                      <button><Bookmark/></button>
                     </div>
                   </div>
                 </div>

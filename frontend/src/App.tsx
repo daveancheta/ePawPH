@@ -7,6 +7,7 @@ import { UseAuthStore } from "./store/UseAuthStore.ts"
 import { Toaster } from "react-hot-toast"
 import Pageloader from "./components/PageLoader.tsx";
 import Lost from "./pages/post/Lost.tsx";
+import Account from "./pages/Account.tsx";
 
 function App() {
   const { checkAuth, auth, isCheckingAuth } = UseAuthStore();
@@ -25,6 +26,7 @@ function App() {
           <Route path='/login' element={auth ? <Home /> : <Login />}></Route>
           <Route path='/signup' element={auth ? <Home /> : <SignUp />}></Route>
           <Route path='/lost' element={auth ? <Lost /> : <Login />}></Route>
+          <Route path='/account' element={auth ? <Account /> : <Login />}></Route>
         </Routes>
       </BrowserRouter>
 
