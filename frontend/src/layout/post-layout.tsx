@@ -16,8 +16,16 @@ import { useEffect } from "react"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
-import { Heart, History, MessageCircle, Share2 } from "lucide-react"
+import { Heart, History, MessageCircle, MoreHorizontalIcon, Share2 } from "lucide-react"
 import { PostSkeleton } from "@/components/post-skeleton"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 type Post = {
   _id: string
@@ -28,6 +36,7 @@ type Post = {
 }
 
 type posterId = {
+  _id: String
   fullname: string,
   posterId: string
   profile: string,
@@ -116,23 +125,53 @@ function PostLayout() {
             {posts.map((posts) => (
               <div key={posts._id}>
                 <div className="flex flex-col gap-4">
-                  <div className="flex flex-row gap-2 items-center">
-                    <Avatar className="w-8 h-8">
-                      {posts.posterId.profile.length > 0 ? <img className="rounded-full" src={posts.posterId.profile} /> :
-                        <AvatarFallback className='text-white cursor-pointer border rounded-full'>
-                          {getInitials(posts.posterId.fullname)}
-                        </AvatarFallback>}
-                    </Avatar>
+                  <div className="flex flex-row justify-between items-center px-4">
+                    <div className="flex flex-row gap-2 items-center">
+                      <Avatar className="w-8 h-8">
+                        {posts.posterId.profile.length > 0 ? <img className="rounded-full" src={posts.posterId.profile} /> :
+                          <AvatarFallback className='text-white cursor-pointer border rounded-full'>
+                            {getInitials(posts.posterId.fullname)}
+                          </AvatarFallback>}
+                      </Avatar>
 
-                    <div className="flex flex-col gap-1 itesm-start">
-                      <h1 className="text-sm font-bold truncate capitalize">{posts.posterId.fullname}</h1>
-                      <span className="text-xs font-normal flex flex-row gap-1 items-center text-muted-foreground">
-                        <History className="size-3" />
-                        {dayjs(posts.createdAt).fromNow() === "seconds ago" ? "Just now" : dayjs(posts.createdAt).fromNow()}
-                      </span>
+                      <div className="flex flex-col gap-1 itesm-start">
+                        <h1 className="text-sm font-bold truncate capitalize">{posts.posterId.fullname}</h1>
+                        <span className="text-xs font-normal flex flex-row gap-1 items-center text-muted-foreground">
+                          <History className="size-3" />
+                          {dayjs(posts.createdAt).fromNow() === "seconds ago" ? "Just now" : dayjs(posts.createdAt).fromNow()}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <DropdownMenu modal={false}>
+                        <DropdownMenuTrigger asChild>
+                          <button className="cursor-pointer">
+                            <MoreHorizontalIcon className="size-5" />
+                          </button  >
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-40" align="end">
+                          <DropdownMenuGroup>
+                            <button className={auth._id === posts.posterId._id ? "hidden" : "w-full cursor-pointer"}>
+                              <DropdownMenuItem variant="destructive" className="cursor-pointer">
+                                Report
+                              </DropdownMenuItem>
+                            </button>
+                             <button className={auth._id === posts.posterId._id ? "w-full cursor-pointer" : "hidden"}>
+                            <DropdownMenuItem variant="destructive" className="cursor-pointer"> 
+                              Delete
+                            </DropdownMenuItem>
+                            </button>
+                             <button className={auth._id === posts.posterId._id ? "w-full cursor-pointer" : "hidden"}>
+                            <DropdownMenuItem className="cursor-pointer">
+                              Edit
+                            </DropdownMenuItem>
+                            </button>
+                          </DropdownMenuGroup>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </div>
                   </div>
-
                   <div>
                     <img className="w-full h-full rounded-sm" src={posts.petPicture} alt="" />
                   </div>
@@ -140,7 +179,7 @@ function PostLayout() {
                     <button
                       className="flex flex-row items-center gap-1 cursor-pointer">
                       <Heart className="size-6" />
-                      <span className="text-xs">0</span>
+                      <span className="text-xs">1</span>
                     </button>
                     <button
                       className="flex flex-row items-center gap-1 cursor-pointer">
