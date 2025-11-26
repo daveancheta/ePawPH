@@ -16,8 +16,9 @@ function App() {
   }, [checkAuth])
 
   if (isCheckingAuth) return <Pageloader />
+
   return (
-    <div className="">
+    <div>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={auth ? <Home /> : <Login />}></Route>

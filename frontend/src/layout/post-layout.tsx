@@ -23,9 +23,9 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 type Post = {
   _id: string
@@ -67,6 +67,7 @@ function PostLayout() {
   const { auth } = UseAuthStore()
   const getInitials = useInitials()
   const { posts, post, isCheckingPost } = UsePostStore() as { post: any, posts: Post[], isCheckingPost: boolean }
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     post()
@@ -75,7 +76,7 @@ function PostLayout() {
   return (
     <div className="flex justify-center">
       <div className="flex flex-col gap-4 items-center">
-        <div className="flex flex-row gap-5 items-center bg-neutral-900 border p-4 px-10 rounded-md">
+        <div className="flex flex-row gap-5 items-center bg-neutral-900 border p-4 px-10 rounded-md my-5">
           <div className="flex flex-row items-center gap-2">
             <Avatar>
               {auth.profile.length > 0 ? <img className="rounded-full" src={auth.profile} /> :
@@ -118,7 +119,7 @@ function PostLayout() {
           </Dialog>
         </div>
 
-        <div className="flex h-full flex-col gap-6 rounded-xl p-4 overflow-x-hidden">
+        <div className={isMobile ? "flex h-full min-w-screen flex-col gap-6 rounded-xl overflow-x-hidden justify-center items-center" : "flex h-full flex-col gap-6 rounded-xl p-4 overflow-x-hidden"}>
           <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-1 max-w-120">
             {isCheckingPost && <PostSkeleton />}
 
@@ -157,15 +158,15 @@ function PostLayout() {
                                 Report
                               </DropdownMenuItem>
                             </button>
-                             <button className={auth._id === posts.posterId._id ? "w-full cursor-pointer" : "hidden"}>
-                            <DropdownMenuItem variant="destructive" className="cursor-pointer"> 
-                              Delete
-                            </DropdownMenuItem>
+                            <button className={auth._id === posts.posterId._id ? "w-full cursor-pointer" : "hidden"}>
+                              <DropdownMenuItem variant="destructive" className="cursor-pointer">
+                                Delete
+                              </DropdownMenuItem>
                             </button>
-                             <button className={auth._id === posts.posterId._id ? "w-full cursor-pointer" : "hidden"}>
-                            <DropdownMenuItem className="cursor-pointer">
-                              Edit
-                            </DropdownMenuItem>
+                            <button className={auth._id === posts.posterId._id ? "w-full cursor-pointer" : "hidden"}>
+                              <DropdownMenuItem className="cursor-pointer">
+                                Edit
+                              </DropdownMenuItem>
                             </button>
                           </DropdownMenuGroup>
                         </DropdownMenuContent>
