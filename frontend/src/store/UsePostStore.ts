@@ -15,10 +15,11 @@ interface Pet {
     lastSeenLocation: String,
     message: String,
 }
-export const UsePostStore = create((set) => ({
+export const UsePostStore = create((set, get) => ({
     posts: [],
     isCreatingPost: false,
     isCheckingPost: true,
+    isDeletingPost: true,
 
     post: async () => {
         try {
@@ -46,12 +47,20 @@ export const UsePostStore = create((set) => ({
     },
 
     handleDeletePost: async (postId: string) => {
+        set({ isDeletingPost: true })
+
         try {
-            const res = await AxiosInstance.delete(`post/post/${postId}`)
+            await AxiosInstance.delete(`post/post/${postId}`)
+
+            set((state: any) => ({
+            posts: state.posts.filter((post: any) => post._id !== postId)
+        }));
+        
             toast.success("Post deleted successfully")
-            set({ posts: res.data })
         } catch (error: any) {
             toast.error(error.response.data.message || "Something went wrong")
+        } finally {
+            set({ isDeletingPost: false })
         }
     }
 }))

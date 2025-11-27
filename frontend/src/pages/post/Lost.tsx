@@ -58,7 +58,7 @@ function Lost() {
     return (
         <AppLayout>
             <form onSubmit={handlePost}>
-                <div className='flex flex-col gap-4 items-center'>
+                <div className='flex flex-col gap-4 items-center p-10'>
                     <h1 className='font-extrabold text-2xl'>Pet Description</h1>
 
                     <div className='flex flex-row gap-2'>

@@ -66,9 +66,10 @@ dayjs.updateLocale('en', {
 function PostLayout() {
   const { auth } = UseAuthStore()
   const getInitials = useInitials()
-  const { posts, post, isCheckingPost, handleDeletePost } = UsePostStore() as {
+  const { posts, post, isCheckingPost, handleDeletePost, isDeletePost } = UsePostStore() as {
     post: any, posts: Post[],
-    isCheckingPost: boolean, handleDeletePost: any
+    isCheckingPost: boolean, handleDeletePost: any,
+    isDeletePost: boolean
   }
   const isMobile = useIsMobile()
 
@@ -145,10 +146,12 @@ function PostLayout() {
 
                         <div className="flex flex-col gap-1 itesm-start">
                           <h1 className="text-sm font-bold truncate capitalize">{posts.posterId.fullname}</h1>
-                          <span className="text-xs font-normal flex flex-row gap-1 items-center text-muted-foreground">
+                          <div className="text-xs font-normal flex flex-row gap-1 items-center text-muted-foreground">
                             <History className="size-3" />
+                            <span>
                             {dayjs(posts.createdAt).fromNow() === "seconds ago" ? "Just now" : dayjs(posts.createdAt).fromNow()}
-                          </span>
+                            </span>
+                          </div>
                         </div>
                       </div>
 
@@ -166,7 +169,7 @@ function PostLayout() {
                                   Report
                                 </DropdownMenuItem>
                               </button>
-                              <button onClick={() => handleDelete(posts._id)} className={auth._id === posts.posterId._id ? "w-full cursor-pointer" : "hidden"}>
+                              <button onClick={() => handleDelete(posts._id)} className={auth._id === posts.posterId._id ? "w-full cursor-pointer" : "hidden"} disabled={isDeletePost}>
                                 <DropdownMenuItem variant="destructive" className="cursor-pointer">
                                   Delete
                                 </DropdownMenuItem>
