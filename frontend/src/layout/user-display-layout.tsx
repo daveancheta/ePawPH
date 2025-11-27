@@ -14,7 +14,7 @@ type User = {
     profile: any,
 }
 
-type  Followings = {
+type Followings = {
     followingId: string,
     followerId: string
 }
@@ -27,9 +27,10 @@ function UserDisplayLayout() {
     }
     const getInitials = useInitials()
     const [container, setContainer] = useState("")
-    const { isFollowing, handleFollow, isFollowed, followings } = UseFollowStore() as {
+    const { isFollowing, handleFollow, isFollowed, followings, isUnFollowing } = UseFollowStore() as {
         isFollowing: any, handleFollow: any,
-        isFollowed: any, followings: Followings[]
+        isFollowed: any, followings: Followings[],
+        isUnFollowing: any
     }
 
     useEffect(() => {
@@ -47,6 +48,13 @@ function UserDisplayLayout() {
 
     const handleOpenContainer = (id: any) => {
         setContainer(id)
+
+        const container = document.getElementById(`container-${id}`)
+
+        setTimeout(() => {
+            container?.classList.remove("opacity-0", "scale-0")
+            container?.classList.add("opacity-100", "scale-100")
+        }, 10)
     }
 
     const handlesubmitFollow = (e: any) => {
@@ -60,7 +68,7 @@ function UserDisplayLayout() {
             {userList.length > 0 ?
                 <div className='flex flex-col gap-4'>
                     {userList.slice(0, 5).map((users: User) => (
-                        <div onMouseOver={() => handleOpenContainer(users._id)} className='relative flex justify-between items-center cursor-pointer' key={users._id}>
+                        <div onMouseOver={() => handleOpenContainer(users._id)} className={container === users._id ? 'relative flex justify-between items-center cursor-pointer bg-accent p-2 rounded-md' : 'relative flex justify-between items-center cursor-pointer p-2 rounded-md'} key={users._id}>
                             <div className='flex flex-row items-center gap-2.5'>
                                 <div className='relative'>
                                     <Avatar key={users._id} className='w-8 h-8 rounded-full'>
@@ -73,11 +81,12 @@ function UserDisplayLayout() {
                                     <div className='absolute bottom-1 right-0 w-2 h-2 bg-green-500 rounded-full'></div>
                                 </div>
                                 <div className='flex flex-col'>
-                                    <h1 className='capitalize font-medium text-sm'>{users.fullname}</h1>
+                                    <h1 className="capitalize font-medium text-sm">{users.fullname}</h1>
                                     <span className='text-xs text-muted-foreground'>{users.username}</span>
                                 </div>
                             </div>
-                            <div className={container === users._id ? 'fixed left-50 bg-neutral-900 border border-white/20 min-w-70 min-h-50 p-4 shadow-md shadow-white/20 rounded-md' : "hidden"}>
+                            <div id={`container-${users._id}`} className={container === users._id ? 'fixed left-62 bg-neutral-900 border border-white/20 min-w-70 min-h-50 \
+                                p-4 shadow-md shadow-white/20 rounded-md origin-left transition-all ease-in-out opacity-0 scale-0' : "hidden"}>
                                 <div className='flex flex-col gap-2'>
                                     <div className='flex flex-row gap-2 items-center'>
                                         <Avatar key={users._id} className='w-12 h-12 rounded-full'>
@@ -99,13 +108,15 @@ function UserDisplayLayout() {
 
                                 <hr className="my-2 bg-white w-full" />
                                 <div className='flex flex-row gap-2 justify-center'>
-                                    <form onSubmit={handlesubmitFollow} className='flex-1'>
+                                    {followings.some(f => f.followerId === users._id) ?
+                                        <Button onClick={() => setFormData({ ...formData, followerId: users._id })}
+                                            className='bg-[#58C185] text-[#2F2F2F] hover:bg-[#58C185]/90 cursor-pointer flex-1'
+                                        ><Loader className={isUnFollowing ? "animate-spin" : "hidden"} /><UserRoundCheck />Following</Button> :
+                                        <form onSubmit={handlesubmitFollow} className='flex-1'>
                                             <Button onClick={() => setFormData({ ...formData, followerId: users._id })}
                                                 className='bg-[#58C185] text-[#2F2F2F] hover:bg-[#58C185]/90 cursor-pointer w-full'
-                                                disabled={isFollowing || followings.some(f => f.followerId === users._id)}>{followings.some(f => f.followerId === users._id) ? 
-                                                <div className='flex flex-row items-center gap-2'><Loader className={isFollowing ? "" : "hidden"} /><UserRoundCheck />Following</div> 
-                                                : <div className='flex flex-row items-center gap-2'><Loader className={isFollowing ? "" : "hidden"} /><UserRoundPlus />Follow</div>}</Button>
-                                    </form>
+                                                disabled={isFollowing}><Loader className={isFollowing ? "animate-spin" : "hidden"} /><UserRoundPlus />Follow</Button>
+                                        </form>}
                                     <Button className='cursor-pointer flex-1'><Send />Message</Button>
                                 </div>
                             </div>
