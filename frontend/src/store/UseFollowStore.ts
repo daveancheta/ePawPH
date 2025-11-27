@@ -2,12 +2,29 @@ import { AxiosInstance } from '@/lib/axios'
 import toast from 'react-hot-toast'
 import { create } from 'zustand'
 
-export const UseFollowStore = create((set) => ({
+interface FollowState {
+    followings: any
+    isFollowing: any
+}
+
+export const UseFollowStore = create<FollowState>((set, get) => ({
     isFollowing: false,
     followings: [],
 
     handleFollow: async (data: any) => {
         set({ isFollowing: true })
+
+        const { followings } = get()
+
+        const tempId = `temp-${Date.now()}`
+        const optimisticFollowing = {
+            _id: tempId,
+            followingId: data.followingId,
+            followerId: data.followerId,
+            createdAt: new Date().toISOString(),
+        }
+
+        set({ followings: [...followings, optimisticFollowing] })
 
         try {
             await AxiosInstance.post("/follow/follow", data)
