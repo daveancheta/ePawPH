@@ -1,83 +1,81 @@
-import { Bell, Globe, Home, MessageCircle, Search, } from "lucide-react"
+"use client"
 
+import * as React from "react"
 import {
-    Sidebar,
-    SidebarContent,
-    SidebarFooter,
-    SidebarGroup,
-    SidebarGroupContent,
-    SidebarGroupLabel,
-} from "@/components/ui/sidebar"
-import UserDisplayLayout from "@/layout/user-display-layout"
-import { Link } from "react-router-dom"
-import { Input } from "./ui/input"
-import { NavUser } from "./nav-user"
+  AudioWaveform,
+  Bell,
+  Command,
+  Frame,
+  GalleryVerticalEnd,
+  Globe,
+  Home,
+  Map,
+  MessageCircle,
+  PieChart,
+} from "lucide-react"
 
-// Menu items.
-const items = [
+import { NavMain } from '@/components/nav-main'
+import { NavProjects } from '@/components/nav-projects'
+import { NavUser } from '@/components/nav-user'
+import { TeamSwitcher } from '@/components/team-switcher'
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarRail,
+} from '@/components/ui/sidebar'
+
+// This is sample data.
+const data = {
+  user: {
+    name: "shadcn",
+    email: "m@example.com",
+    avatar: "/avatars/shadcn.jpg",
+  },
+  navMain: [
     {
-        title: "Home",
-        url: "/",
-        icon: Home,
+      title: "Home",
+      url: "/",
+      icon: Home,
+      isActive: true,
     },
     {
-        title: "Message",
-        url: "/messages",
-        icon: MessageCircle,
+      title: "Messages",
+      url: "/messages",
+      icon: MessageCircle,
+      isActive: true,
     },
-    {
-        title: "News",
-        url: "/news",
-        icon: Globe,
+      {
+      title: "News",
+      url: "/",
+      icon: Globe,
+      isActive: true,
     },
-    {
-        title: "Notification",
-        url: "/notification",
-        icon: Bell,
+      {
+      title: "Notification",
+      url: "/notification",
+      icon: Bell,
+      isActive: true,
     },
-]
 
-export function AppSidebar() {
-    return (
-        <Sidebar className="w-65 px-2">
-            <SidebarContent className="flex flex-col jusitify-between">
-                <div>
-                    <SidebarGroup>
-                        <SidebarGroupLabel className="mb-20 flex flex-col item-center gap-3">
-                            <h1 className='text-3xl font-extrabold'>
-                                <span className='fresh-green'>e</span>
-                                <span className='text-white'>
-                                    Paw
-                                    <span className='text-sm'>PH</span>
-                                </span>
-                            </h1>
-                            <div className="relative">
-                                <Search className="size-4 absolute top-1/2 left-3 -translate-y-1/2" />
-                                <Input type="text" className="rounded-full pl-8" placeholder="Search..." />
-                            </div>
+  ],
+}
 
-                        </SidebarGroupLabel>
-                        <SidebarGroupContent>
-                            <div className="flex flex-col gap-5">
-                                {items.map(item => (
-                                    <Link key={item.url} to={item.url} className="flex flex-row items-center gap-4 hover-default p-1 py-2 transition-ease-in-out duration-200">
-                                        <item.icon className="w-7 h-7" />
-                                        {item.title}
-                                    </Link>
-                                ))}
-
-                            </div>
-                        </SidebarGroupContent>
-                    </SidebarGroup>
-                </div>
-                <div className="px-2 mt-5">
-                    <UserDisplayLayout />
-                </div>
-
-                <SidebarFooter className="absolute bottom-0 w-full  left-0">
-                    <NavUser />
-                </SidebarFooter>
-            </SidebarContent>
-        </Sidebar>
-    )
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  return (
+    <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader>
+        <TeamSwitcher />
+      </SidebarHeader>
+      <SidebarContent>
+        <NavMain items={data.navMain} />
+        <NavProjects />
+      </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={data.user} />
+      </SidebarFooter>
+      <SidebarRail />
+    </Sidebar>
+  )
 }

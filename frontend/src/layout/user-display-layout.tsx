@@ -23,17 +23,13 @@ function UserDisplayLayout() {
     const getInitials = useInitials()
     return (
         <div>
-            <div className='flex items-center justify-between space-x-10 truncate mb-4'>
-                <h1 className='text-sm font-medium'>Suggested for you</h1>
-            </div>
-
             {userList.length > 0 ?
                 <div className='flex flex-col gap-4'>
                     {userList.slice(0, 5).map((users: User) => (
                         <div className='flex justify-between items-center' key={users._id}>
                             <div className='flex flex-row items-center gap-2.5'>
                                 <div className='relative'>
-                                    <Avatar key={users._id} className='w-10 h-10 rounded-full'>
+                                    <Avatar key={users._id} className='w-8 h-8 rounded-full'>
                                         {users.profile.length > 0 ?
                                             <img src={users.profile} alt="" /> :
                                             <AvatarFallback className='text-white cursor-pointer border truncate whitespace-nowrap rounded-full'>

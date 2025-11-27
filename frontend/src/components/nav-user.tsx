@@ -1,71 +1,126 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { UseAuthStore } from '@/store/UseAuthStore';
-import { useInitials } from '@/hooks/use-initials';
-import { BadgeCheck, ChevronsUpDown, LogOut, Settings } from 'lucide-react';
-import { Link } from 'react-router-dom';
+"use client"
 
-export function NavUser() {
-    const { auth, logout } = UseAuthStore()
-    const getIntials = useInitials()
-    return (
-        <SidebarMenu>
-            <SidebarMenuItem>
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <SidebarMenuButton size="lg" className="group text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent relative">
+import {
+  BadgeCheck,
+  Bell,
+  ChevronsUpDown,
+  CreditCard,
+  LogOut,
+  Sparkles,
+} from "lucide-react"
 
-                            <Avatar className='rounded-md'>
-                                {auth.profile.length > 0 ?
-                                    <img src={auth.profile} alt="" /> :
-                                    <AvatarFallback className='bg-neutral-800'>
-                                        {getIntials(auth.fullname)}
-                                    </AvatarFallback>}
-                            </Avatar>
-                            <div className='flex flex-col'>
-                                <h1>{auth.fullname}</h1>
-                                <span className='text-xs text-muted-foreground'>{auth.email}</span>
-                            </div>
-                            <ChevronsUpDown className='ml-5 absolute right-3' />
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@/components/ui/avatar'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from '@/components/ui/sidebar'
+import { UseAuthStore } from "@/store/UseAuthStore"
+import { Link } from "react-router-dom"
+import { useInitials } from "@/hooks/use-initials"
 
+export function NavUser({
+}: {
+  user: {
+    name: string
+    email: string
+    avatar: string
+  }
+}) {
+  const { isMobile } = useSidebar()
+  const { logout, auth } = UseAuthStore()
+  const getInitials = useInitials()
 
-                        </SidebarMenuButton>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                        className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg bg-neutral-800 p-2"
-                        align="end"
+  return (
+    <SidebarMenu>
+      <SidebarMenuItem>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <SidebarMenuButton
+              size="lg"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            >
 
-                    >
-                        <div className='flex flex-row gap-2 text-sm'>
-                            <Avatar className='rounded-md'>
-                                {auth.profile.length > 0 ?
-                                    <img src={auth.profile} alt="" /> :
-                                    <AvatarFallback className='bg-neutral-900'>
-                                        {getIntials(auth.fullname)}
-                                    </AvatarFallback>}
-                            </Avatar>
-                            <div className='flex flex-col'>
-                                <h1>{auth.fullname}</h1>
-                                <span className='text-xs text-muted-foreground'>{auth.email}</span>
-                            </div>
-                        </div>
-                        <hr className='my-2' />
-                        <div className='flex flex-col gap-1'>
-                            <Link to={'/account'} className='flex flex-row gap-2 items-center cursor-pointer text-sm p-2 hover-default'>
-                                <BadgeCheck className='size-4' />Account
-                            </Link>
-                            <Link to={'/account'} className='flex flex-row gap-2 items-center cursor-pointer text-sm p-2 hover-default'>
-                                <Settings className='size-4' />Settings
-                            </Link>
-                        </div>
-                        <hr className='my-2' />
-                        <button className='flex flex-row gap-2 items-center cursor-pointer text-sm hover-destrcutive p-2' onClick={logout}>
-                            <LogOut className='size-4' /> Logout
-                        </button>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </SidebarMenuItem>
-        </SidebarMenu>
-    );
+              <Avatar className="h-8 w-8 rounded-lg">
+                {auth.profile.length > 0 ? <AvatarImage src={auth.profile} alt={auth.fullname} /> :
+                  <AvatarFallback className="rounded-lg">{getInitials(auth.fullname)}</AvatarFallback>
+                }
+              </Avatar>
+
+              <div className="grid flex-1 text-left text-sm leading-tight">
+                <span className="truncate font-medium">{auth.fullname}</span>
+                <span className="truncate text-xs">{auth.email}</span>
+              </div>
+              <ChevronsUpDown className="ml-auto size-4" />
+            </SidebarMenuButton>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+            side={isMobile ? "bottom" : "right"}
+            align="end"
+            sideOffset={4}
+          >
+            <DropdownMenuLabel className="p-0 font-normal">
+              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                <Avatar className="h-8 w-8 rounded-lg">
+                {auth.profile.length > 0 ? <AvatarImage src={auth.profile} alt={auth.fullname} /> :
+                  <AvatarFallback className="rounded-lg">{getInitials(auth.fullname)}</AvatarFallback>
+                }
+              </Avatar>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-medium">{auth.fullname}</span>
+                  <span className="truncate text-xs">{auth.email}</span>
+                </div>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <Sparkles />
+                Upgrade to Pro
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <Link to="/account">
+                <DropdownMenuItem>
+                  <BadgeCheck />
+                  Account
+                </DropdownMenuItem>
+              </Link>
+              <DropdownMenuItem>
+                <CreditCard />
+                Billing
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Bell />
+                Notifications
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <button className="w-full cursor-pointer" onClick={logout}>
+              <DropdownMenuItem variant="destructive" className="cursor-pointer">
+                <LogOut />
+                Log out
+              </DropdownMenuItem>
+            </button>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarMenuItem>
+    </SidebarMenu>
+  )
 }
