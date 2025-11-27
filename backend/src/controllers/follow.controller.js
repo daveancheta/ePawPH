@@ -19,18 +19,26 @@ export const follow = async (req, res) => {
             res.status(200).json(newFollowing)
 
         }
-        
+
     } catch (error) {
         console.log("Error in follow controller", error)
         res.status(400).json({ message: "Internal server error" })
     }
 }
 
-export const getfollowing = async (req, res) => {
+export const getFollowingByUserId = async (req, res) => {
     try {
-        const post = await Follow.find().select()
+        const loggedInUser = req.user._id
+        const { id: userToFollowId } = req.params
 
-        res.status(200).json(post)
+        const follows = await Follow.find({
+            $or: [
+                { followingId: loggedInUser, followerId: userToFollowId },
+                { followingId: userToFollowId, followerId: loggedInUser }
+            ]
+        })
+
+        res.status(200).json(follows)
 
     } catch (error) {
         console.log(error)
