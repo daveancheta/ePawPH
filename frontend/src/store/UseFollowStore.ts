@@ -4,6 +4,7 @@ import { create } from 'zustand'
 
 export const UseFollowStore = create((set) => ({
     isFollowing: false,
+    followings: [],
 
     handleFollow: async (data: any) => {
         set({ isFollowing: true })
@@ -15,5 +16,15 @@ export const UseFollowStore = create((set) => ({
         } finally {
             set({ isFollowing: false })
         }
+    },
+
+    isFollowed: async () => {
+        try {
+            const res = await AxiosInstance.get("/follow/following")
+            set({ followings: res.data })
+        } catch (error: any) {
+            toast.error(error.response.data.message || "Error fetching followings")
+        }
     }
+
 }))

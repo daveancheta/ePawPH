@@ -4,7 +4,7 @@ import { useInitials } from '@/hooks/use-initials'
 import { UseAuthStore } from '@/store/UseAuthStore'
 import { UseFollowStore } from '@/store/UseFollowStore'
 import { UseUserStore } from '@/store/UseUserStore'
-import { Loader, Send, UserRoundPlus } from 'lucide-react'
+import { Loader, Send, UserRoundCheck, UserRoundPlus } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 type User = {
@@ -12,6 +12,11 @@ type User = {
     fullname: string,
     username: String,
     profile: any,
+}
+
+type  Followings = {
+    followingId: string,
+    followerId: string
 }
 function UserDisplayLayout() {
     const { auth } = UseAuthStore()
@@ -22,7 +27,15 @@ function UserDisplayLayout() {
     }
     const getInitials = useInitials()
     const [container, setContainer] = useState("")
-    const { isFollowing, handleFollow } = UseFollowStore() as { isFollowing: any, handleFollow: any }
+    const { isFollowing, handleFollow, isFollowed, followings } = UseFollowStore() as {
+        isFollowing: any, handleFollow: any,
+        isFollowed: any, followings: Followings[]
+    }
+
+    useEffect(() => {
+        isFollowed()
+    }, [isFollowed])
+
     const [formData, setFormData] = useState({
         followingId: auth._id,
         followerId: ""
@@ -87,9 +100,11 @@ function UserDisplayLayout() {
                                 <hr className="my-2 bg-white w-full" />
                                 <div className='flex flex-row gap-2 justify-center'>
                                     <form onSubmit={handlesubmitFollow} className='flex-1'>
-                                        <Button onClick={() => setFormData({ ...formData, followerId: users._id })}
-                                            className='bg-[#58C185] text-[#2F2F2F] hover:bg-[#58C185]/90 cursor-pointer w-full'
-                                            disabled={isFollowing}><Loader className={isFollowing ? "" : "hidden"} /><UserRoundPlus />Follow</Button>
+                                            <Button onClick={() => setFormData({ ...formData, followerId: users._id })}
+                                                className='bg-[#58C185] text-[#2F2F2F] hover:bg-[#58C185]/90 cursor-pointer w-full'
+                                                disabled={isFollowing || followings.some(f => f.followerId === users._id)}>{followings.some(f => f.followerId === users._id) ? 
+                                                <div className='flex flex-row items-center gap-2'><Loader className={isFollowing ? "" : "hidden"} /><UserRoundCheck />Following</div> 
+                                                : <div className='flex flex-row items-center gap-2'><Loader className={isFollowing ? "" : "hidden"} /><UserRoundPlus />Follow</div>}</Button>
                                     </form>
                                     <Button className='cursor-pointer flex-1'><Send />Message</Button>
                                 </div>

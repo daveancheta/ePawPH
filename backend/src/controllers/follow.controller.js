@@ -26,16 +26,12 @@ export const follow = async (req, res) => {
     }
 }
 
-export const getFollowingByUserId = async (req, res) => {
+export const getFollowing = async (req, res) => {
     try {
         const loggedInUser = req.user._id
-        const { id: userToFollowId } = req.params
 
         const follows = await Follow.find({
-            $or: [
-                { followingId: loggedInUser, followerId: userToFollowId },
-                { followingId: userToFollowId, followerId: loggedInUser }
-            ]
+            $or: [{ followingId: loggedInUser }]
         })
 
         res.status(200).json(follows)
