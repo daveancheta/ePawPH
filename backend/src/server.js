@@ -5,6 +5,7 @@ import { ENV } from "./lib/env.js";
 import AuthRoutes from "./routes/AuthRoutes.route.js";
 import PostRoutes from "./routes/PostRoutes.route.js";
 import UserRoutes from "./routes/UserRoutes.route.js";
+import FollowRoutes from "./routes/FollowRoutes.route.js";
 import path from "path";
 import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser"
@@ -24,6 +25,7 @@ const PORT = ENV.PORT || 3000;
 app.use("/api/auth", AuthRoutes);
 app.use("/api/post", PostRoutes);
 app.use("/api/user", UserRoutes);
+app.use("/api/follow", FollowRoutes);
 
 if (ENV.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../frontend/dist")));
