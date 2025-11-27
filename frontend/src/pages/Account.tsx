@@ -10,11 +10,15 @@ import { useEffect } from "react"
 function Account() {
     const { auth } = UseAuthStore()
     const getInitials = useInitials()
-    const { followingCount, count} = UseFollowStore()
+    const { followingCount, countFollower, countFollowing, followerCount} = UseFollowStore()
 
     useEffect(() => {
         followingCount()
     }, [followingCount])
+
+    useEffect(() => {
+        followerCount()
+    }, [followerCount])
 
     return (
         <Layout>
@@ -56,8 +60,8 @@ function Account() {
                         {/* Stats */}
                         <div className="flex flex-row items-center justify-center sm:justify-start gap-6 sm:gap-8">
                             <h1 className="text-lg"><span className="font-bold">0</span> <span className="text-muted-foreground">post</span></h1>
-                            <h1 className="text-lg"><span className="font-bold">{count}</span> <span className="text-muted-foreground">following</span></h1>
-                            <h1 className="text-lg"><span className="font-bold">1,000</span> <span className="text-muted-foreground">followers</span></h1>
+                            <h1 className="text-lg"><span className="font-bold">{countFollowing}</span> <span className="text-muted-foreground">following</span></h1>
+                            <h1 className="text-lg"><span className="font-bold">{countFollower}</span> <span className="text-muted-foreground">followers</span></h1>
                         </div>
                     </div>
                 </div>
