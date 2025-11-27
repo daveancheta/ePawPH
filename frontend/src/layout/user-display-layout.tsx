@@ -93,7 +93,7 @@ function UserDisplayLayout() {
                                                     {getInitials(users.fullname)}
                                                 </AvatarFallback>}
                                         </Avatar>
-                                        <h1>{users.fullname}</h1>
+                                        <h1 className='text-md font-bold capitalize'>{users.fullname}</h1>
                                     </div>
                                     <div className="flex flex-row items-center justify-center sm:justify-start gap-6 sm:gap-8 p-3">
                                         <h1 className="text-sm"><span className="font-bold">130</span> <span className="text-muted-foreground">following</span></h1>
