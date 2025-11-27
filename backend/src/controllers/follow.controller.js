@@ -41,3 +41,19 @@ export const getFollowing = async (req, res) => {
         res.status(400).json({ message: "Internal server error" })
     }
 }
+
+export const unfollow = async (req, res) => {
+    const { followingId, followerId } = req.body
+    try {
+        await Follow.findOneAndDelete({
+            followingId,
+            followerId
+        })
+
+        res.status(200).json({ message: "Unfollowed successfully" })
+
+    } catch (error) {
+        console.log("Error in unfollow controller", error)
+        res.status(400).json({ message: "Internal server error" })
+    }
+}
