@@ -9,6 +9,8 @@ interface FollowState {
     isFollowed: any
     handleUnfollow: any
     isUnFollowing: any
+    followingCount: any
+    count: any
 }
 
 interface Followings {
@@ -20,6 +22,7 @@ export const UseFollowStore = create<FollowState>((set, get) => ({
     isFollowing: false,
     followings: [],
     isUnFollowing: false,
+    count: 0,
 
     handleFollow: async (data: any) => {
         set({ isFollowing: true })
@@ -69,6 +72,14 @@ export const UseFollowStore = create<FollowState>((set, get) => ({
         } finally {
             set({ isUnFollowing: false })
         }
-    }
+    },
 
+    followingCount: async () => {
+        try {
+            const res = await AxiosInstance.get("/follow/followingCount")
+            set({ count: res.data })
+        } catch (error) {
+
+        }
+    }
 }))

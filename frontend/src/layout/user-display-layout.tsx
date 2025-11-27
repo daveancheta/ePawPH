@@ -14,11 +14,6 @@ type User = {
     profile: any,
 }
 
-type Followings = {
-    followingId: string,
-    followerId: string
-}
-
 function UserDisplayLayout() {
     const { auth } = UseAuthStore()
     const { userList, users } = UseUserStore() as {

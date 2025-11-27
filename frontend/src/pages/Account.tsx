@@ -3,11 +3,18 @@ import { Button } from "@/components/ui/button"
 import { useInitials } from "@/hooks/use-initials"
 import Layout from "@/layout/app-layout"
 import { UseAuthStore } from "@/store/UseAuthStore"
+import { UseFollowStore } from "@/store/UseFollowStore"
 import { Bolt, BookMarked, Copy, Heart, LayoutGrid, Send } from "lucide-react"
+import { useEffect } from "react"
 
 function Account() {
     const { auth } = UseAuthStore()
     const getInitials = useInitials()
+    const { followingCount, count} = UseFollowStore()
+
+    useEffect(() => {
+        followingCount()
+    }, [followingCount])
 
     return (
         <Layout>
@@ -49,7 +56,7 @@ function Account() {
                         {/* Stats */}
                         <div className="flex flex-row items-center justify-center sm:justify-start gap-6 sm:gap-8">
                             <h1 className="text-lg"><span className="font-bold">0</span> <span className="text-muted-foreground">post</span></h1>
-                            <h1 className="text-lg"><span className="font-bold">130</span> <span className="text-muted-foreground">following</span></h1>
+                            <h1 className="text-lg"><span className="font-bold">{count}</span> <span className="text-muted-foreground">following</span></h1>
                             <h1 className="text-lg"><span className="font-bold">1,000</span> <span className="text-muted-foreground">followers</span></h1>
                         </div>
                     </div>
