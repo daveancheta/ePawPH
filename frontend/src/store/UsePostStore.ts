@@ -15,7 +15,7 @@ interface Pet {
     lastSeenLocation: String,
     message: String,
 }
-export const UsePostStore = create((set, get) => ({
+export const UsePostStore = create((set) => ({
     posts: [],
     isCreatingPost: false,
     isCheckingPost: true,

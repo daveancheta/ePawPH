@@ -2,16 +2,10 @@
 
 import * as React from "react"
 import {
-  AudioWaveform,
   Bell,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
   Globe,
   Home,
-  Map,
   MessageCircle,
-  PieChart,
 } from "lucide-react"
 
 import { NavMain } from '@/components/nav-main'
