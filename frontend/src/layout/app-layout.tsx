@@ -11,8 +11,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <SidebarTrigger className="-ml-1 hidden" />
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0 bg-neutral-900">
-          <div className="min-h-100vh flex rounded-xl md:min-h-min" >
+        <div className="flex flex-1 flex-col gap-4 pt-0 bg-neutral-900">
+          <div className="flex rounded-xl justify-center min-h-min" >
             {children}
           </div>
         </div>

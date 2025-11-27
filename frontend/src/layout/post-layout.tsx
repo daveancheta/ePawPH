@@ -82,7 +82,8 @@ function PostLayout() {
   }
 
   return (
-    <div className="flex justify-center overflow-auto">
+    <div className="flex w-full">
+    <div className="flex overflow-auto">
       <div className="flex flex-col gap-4 items-center">
         <div className="flex flex-row gap-5 items-center bg-neutral-900 border p-4 px-10 rounded-md my-5">
           <div className="flex flex-row items-center gap-2">
@@ -223,9 +224,8 @@ function PostLayout() {
               </div>
             </div>
           </div>}
-
-
       </div>
+    </div>
     </div>
   )
 }
