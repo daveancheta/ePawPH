@@ -71,3 +71,17 @@ export const followingCount = async (req, res) => {
         res.status(400).json({ message: "Internal server error" })
     }
 }
+
+export const followerCount = async (req, res) => {
+    try {
+        const loggedInUser = req.user._id
+        const followingCount = await Follow.find({
+            $or: [{ followerId: loggedInUser }]
+        }).countDocuments()
+
+        res.status(200).json(followingCount)
+    } catch (error) {
+        console.log("Error in following count controller", error)
+        res.status(400).json({ message: "Internal server error" })
+    }
+}
