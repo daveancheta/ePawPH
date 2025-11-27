@@ -18,6 +18,7 @@ type Followings = {
     followingId: string,
     followerId: string
 }
+
 function UserDisplayLayout() {
     const { auth } = UseAuthStore()
     const { userList, users } = UseUserStore() as {
@@ -27,11 +28,7 @@ function UserDisplayLayout() {
     }
     const getInitials = useInitials()
     const [container, setContainer] = useState("")
-    const { isFollowing, handleFollow, isFollowed, followings, isUnFollowing } = UseFollowStore() as {
-        isFollowing: any, handleFollow: any,
-        isFollowed: any, followings: Followings[],
-        isUnFollowing: any
-    }
+    const { isFollowing, handleFollow, isFollowed, followings, isUnFollowing, handleUnfollow } = UseFollowStore()
 
     useEffect(() => {
         isFollowed()
@@ -63,6 +60,11 @@ function UserDisplayLayout() {
         handleFollow(formData)
     }
 
+    const handlesubmitUnFollow = (e: any) => {
+        e.preventDefault()
+
+        handleUnfollow(formData)
+    }
     return (
         <div>
             {userList.length > 0 ?
@@ -109,9 +111,12 @@ function UserDisplayLayout() {
                                 <hr className="my-2 bg-white w-full" />
                                 <div className='flex flex-row gap-2 justify-center'>
                                     {followings.some(f => f.followerId === users._id) ?
-                                        <Button onClick={() => setFormData({ ...formData, followerId: users._id })}
-                                            className='bg-[#58C185] text-[#2F2F2F] hover:bg-[#58C185]/90 cursor-pointer flex-1'
-                                        ><Loader className={isUnFollowing ? "animate-spin" : "hidden"} /><UserRoundCheck />Following</Button> :
+                                        <form onSubmit={handlesubmitUnFollow} className='flex-1'>
+                                            <Button onClick={() => setFormData({ ...formData, followerId: users._id })}
+                                                className='bg-[#58C185] text-[#2F2F2F] hover:bg-[#58C185]/90 cursor-pointer w-full'
+                                            ><Loader className={isUnFollowing ? "animate-spin" : "hidden"} /><UserRoundCheck />Following</Button>
+                                        </form>
+                                        :
                                         <form onSubmit={handlesubmitFollow} className='flex-1'>
                                             <Button onClick={() => setFormData({ ...formData, followerId: users._id })}
                                                 className='bg-[#58C185] text-[#2F2F2F] hover:bg-[#58C185]/90 cursor-pointer w-full'

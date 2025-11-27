@@ -3,13 +3,23 @@ import toast from 'react-hot-toast'
 import { create } from 'zustand'
 
 interface FollowState {
-    followings: any
+    followings: Followings[]
     isFollowing: any
+    handleFollow: any
+    isFollowed: any
+    handleUnfollow: any
+    isUnFollowing: any
+}
+
+interface Followings {
+    followingId: string,
+    followerId: string
 }
 
 export const UseFollowStore = create<FollowState>((set, get) => ({
     isFollowing: false,
     followings: [],
+    isUnFollowing: false,
 
     handleFollow: async (data: any) => {
         set({ isFollowing: true })
@@ -41,6 +51,23 @@ export const UseFollowStore = create<FollowState>((set, get) => ({
             set({ followings: res.data })
         } catch (error: any) {
             toast.error(error.response.data.message || "Error fetching followings")
+        }
+    },
+
+    handleUnfollow: async (data: any) => {
+        set({ isUnFollowing: true })
+
+        try {
+            AxiosInstance.post("/follow/unfollow", data)
+
+            set((state: any) => ({
+                followings: state.followings.filter((followings: any) => followings.followingId !== data.followingId
+                    || followings.followerId !== data.followerId)
+            }))
+        } catch (error: any) {
+            toast.error(error.response.data.message)
+        } finally {
+            set({ isUnFollowing: false })
         }
     }
 
