@@ -112,7 +112,7 @@ function UserDisplayLayout() {
                                     {followings.some(f => f.followerId === users._id) ?
                                         <form onSubmit={handlesubmitUnFollow} className='flex-1'>
                                             <Button onClick={() => setFormData({ ...formData, followerId: users._id })}
-                                                className='bg-[#58C185] text-[#2F2F2F] hover:bg-[#58C185]/90 cursor-pointer w-full'
+                                                className='text-white bg-[#2F2F2F] hover:bg-[#2F2F2F]/90 cursor-pointer w-full'
                                             ><Loader className={isUnFollowing ? "animate-spin" : "hidden"} /><UserRoundCheck />Following</Button>
                                         </form>
                                         :

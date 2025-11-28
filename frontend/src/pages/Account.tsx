@@ -5,7 +5,7 @@ import Layout from "@/layout/app-layout"
 import { UseAuthStore } from "@/store/UseAuthStore"
 import { UseFollowStore } from "@/store/UseFollowStore"
 import { Bolt, Bookmark, Copy, Heart, LayoutGrid, Search, Send } from "lucide-react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import {
     Dialog,
     DialogContent,
@@ -19,7 +19,19 @@ function Account() {
     const { auth } = UseAuthStore()
     const getInitials = useInitials()
     const { followingCount, countFollower, countFollowing,
-        followerCount, followingList, listFollowing, followerList, listFollower } = UseFollowStore()
+        followerCount, followingList, listFollowing,
+        followerList, listFollower, isFollowed, followings,
+        handleFollow, handleUnfollow } = UseFollowStore()
+
+    const [formData, setFormData] = useState({
+        followingId: auth._id,
+        followerId: ""
+    })
+
+    useEffect(() => {
+        isFollowed()
+    }, [isFollowed])
+
 
     useEffect(() => {
         followerList()
@@ -36,6 +48,18 @@ function Account() {
     useEffect(() => {
         followerCount()
     }, [followerCount])
+
+    const handlesubmitFollow = (e: any) => {
+        e.preventDefault()
+
+        handleFollow(formData)
+    }
+
+    const handlesubmitUnFollow = (e: any) => {
+        e.preventDefault()
+
+        handleUnfollow(formData)
+    }
 
     return (
         <Layout>
@@ -114,7 +138,13 @@ function Account() {
                                                 </div>
 
                                                 <div>
-                                                    <Button variant={'form'}>Following</Button>
+                                                    {followings.some(f => f.followerId === following.followerId._id) ? <form onSubmit={handlesubmitUnFollow}>
+                                                        <Button variant={'following'} onClick={() => setFormData({ ...formData, followerId: following.followerId._id, followingId: following.followingId })}>Following</Button>
+                                                    </form> :
+                                                        <form onSubmit={handlesubmitFollow}>
+                                                            <Button variant={'form'} onClick={() => setFormData({ ...formData, followerId: following.followerId._id, followingId: following.followingId })}>Follow</Button>
+                                                        </form>}
+
                                                 </div>
                                             </div>
                                         </div>
@@ -130,7 +160,7 @@ function Account() {
                                 </DialogTrigger>
                                 <DialogContent className="sm:max-w-[700px]">
                                     <DialogHeader>
-                                        <DialogTitle className="flex justify-center">Following</DialogTitle>
+                                        <DialogTitle className="flex justify-center">Followers</DialogTitle>
                                         <hr />
 
                                     </DialogHeader>
@@ -159,7 +189,13 @@ function Account() {
                                                 </div>
 
                                                 <div>
-                                                    <Button variant={'form'}>Following</Button>
+                                                    {followings.some(f => f.followerId === follower.followingId._id) ?
+                                                        <form onSubmit={handlesubmitUnFollow}>
+                                                            <Button variant={'following'} onClick={() => setFormData({ ...formData, followerId: follower.followingId._id, followingId: follower.followerId })}>Following</Button>
+                                                        </form> :
+                                                        <form onSubmit={handlesubmitFollow}>
+                                                            <Button variant={'form'} onClick={() => setFormData({ ...formData, followerId: follower.followingId._id, followingId: follower.followerId })}>Follow Back</Button>
+                                                        </form>}
                                                 </div>
                                             </div>
                                         </div>
