@@ -89,10 +89,20 @@ export const followingList = async (req, res) => {
     const loggedInUser = req.user._id
     try {
         const followingList = await Follow.find({ followingId: loggedInUser }).select().populate("followerId", "fullname profile username")
-
         res.status(200).json(followingList)
     } catch (error) {
         console.log("Error in following list controller", error)
+        res.status(400).json({ message: "Internal server error" })
+    }
+}
+
+export const followerList = async (req, res) => {
+    const loggedInUser = req.user._id
+    try {
+        const followerList = await Follow.find({ followerId: loggedInUser }).select().populate("followingId", "fullname profile username")
+        res.status(200).json(followerList)
+    } catch (error) {
+        console.log("Error in follower list controller", error)
         res.status(400).json({ message: "Internal server error" })
     }
 }

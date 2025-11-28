@@ -112,7 +112,7 @@ export const UseFollowStore = create<FollowState>((set, get) => ({
 
     followingList: async () => {
         try {
-            const res = await AxiosInstance.get("/follow/followList")
+            const res = await AxiosInstance.get("/follow/followingList")
             set({ listFollowing: res.data })
         } catch (error: any) {
             toast.error(error.response.data.message || "Something went wrong")
