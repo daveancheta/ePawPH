@@ -49,6 +49,10 @@ function UserDisplayLayout() {
         }, 10)
     }
 
+    const handleCloseContainer = () => {
+        setContainer("")
+    }
+
     const handlesubmitFollow = (e: any) => {
         e.preventDefault()
 
@@ -65,7 +69,7 @@ function UserDisplayLayout() {
             {userList.length > 0 ?
                 <div className='flex flex-col gap-4'>
                     {userList.slice(0, 5).map((users: User) => (
-                        <div onMouseOver={() => handleOpenContainer(users._id)} className={container === users._id ? 'relative flex justify-between items-center cursor-pointer bg-accent p-2 rounded-md' : 'relative flex justify-between items-center cursor-pointer p-2 rounded-md'} key={users._id}>
+                        <div onMouseOver={() => handleOpenContainer(users._id)} onMouseOut={() => handleCloseContainer()} className={container === users._id ? 'relative flex justify-between items-center cursor-pointer bg-accent p-2 rounded-md' : 'relative flex justify-between items-center cursor-pointer p-2 rounded-md'} key={users._id}>
                             <div className='flex flex-row items-center gap-2.5'>
                                 <div className='relative'>
                                     <Avatar key={users._id} className='w-8 h-8 rounded-full'>

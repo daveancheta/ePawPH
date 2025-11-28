@@ -88,7 +88,7 @@ export const followerCount = async (req, res) => {
 export const followingList = async (req, res) => {
     const loggedInUser = req.user._id
     try {
-        const followingList = await Follow.find({ followingId: loggedInUser }).select().populate("followerId", "fullname profile")
+        const followingList = await Follow.find({ followingId: loggedInUser }).select().populate("followerId", "fullname profile username")
 
         res.status(200).json(followingList)
     } catch (error) {

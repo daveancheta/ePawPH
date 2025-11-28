@@ -13,6 +13,20 @@ interface FollowState {
     followerCount: any
     countFollowing: any
     countFollower: any
+    listFollowing: Following[]
+    followingList: any
+}
+
+interface Following {
+    _id: any
+    followingId: any
+    followerId: followerId[]
+}
+
+interface followerId {
+    fullname: any
+    profile: any
+    username: any
 }
 
 interface Followings {
@@ -26,6 +40,7 @@ export const UseFollowStore = create<FollowState>((set, get) => ({
     isUnFollowing: false,
     countFollowing: 0,
     countFollower: 0,
+    listFollowing: [],
 
     handleFollow: async (data: any) => {
         set({ isFollowing: true })
@@ -81,17 +96,26 @@ export const UseFollowStore = create<FollowState>((set, get) => ({
         try {
             const res = await AxiosInstance.get("/follow/followingCount")
             set({ countFollowing: res.data })
-        } catch (error) {
-
+        } catch (error: any) {
+            toast.error(error.response.data.message || "Something went wrong")
         }
     },
 
-     followerCount: async () => {
+    followerCount: async () => {
         try {
             const res = await AxiosInstance.get("/follow/followerCount")
             set({ countFollower: res.data })
-        } catch (error) {
+        } catch (error: any) {
+            toast.error(error.response.data.message || "Something went wrong")
+        }
+    },
 
+    followingList: async () => {
+        try {
+            const res = await AxiosInstance.get("/follow/followList")
+            set({ listFollowing: res.data })
+        } catch (error: any) {
+            toast.error(error.response.data.message || "Something went wrong")
         }
     }
 }))
