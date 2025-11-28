@@ -1,5 +1,5 @@
 import express from "express"
-import { follow, followerCount, followingCount, getFollowing, unfollow } from "../controllers/follow.controller.js"
+import { follow, followerCount, followingCount, followingList, getFollowing, unfollow } from "../controllers/follow.controller.js"
 import { protectRoute } from "../middleware/auth.middleware.js"
 
 const router = express.Router() 
@@ -9,5 +9,6 @@ router.get("/following", protectRoute, getFollowing)
 router.post("/unfollow", protectRoute, unfollow)
 router.get("/followingCount", protectRoute, followingCount)
 router.get("/followerCount", protectRoute, followerCount)
+router.get("/followList", protectRoute, followingList)
 
 export default router

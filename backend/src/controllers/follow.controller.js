@@ -85,3 +85,14 @@ export const followerCount = async (req, res) => {
         res.status(400).json({ message: "Internal server error" })
     }
 }
+export const followingList = async (req, res) => {
+    const loggedInUser = req.user._id
+    try {
+        const followingList = await Follow.find({ followingId: loggedInUser }).select().populate("followerId", "fullname profile")
+
+        res.status(200).json(followingList)
+    } catch (error) {
+        console.log("Error in following list controller", error)
+        res.status(400).json({ message: "Internal server error" })
+    }
+}
