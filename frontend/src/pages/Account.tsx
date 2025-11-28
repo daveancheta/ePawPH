@@ -19,7 +19,11 @@ function Account() {
     const { auth } = UseAuthStore()
     const getInitials = useInitials()
     const { followingCount, countFollower, countFollowing,
-        followerCount, followingList, listFollowing } = UseFollowStore()
+        followerCount, followingList, listFollowing, followerList, listFollower } = UseFollowStore()
+
+    useEffect(() => {
+        followerList()
+    }, [followerList])
 
     useEffect(() => {
         followingList()
@@ -92,33 +96,76 @@ function Account() {
                                         </InputGroupAddon>
                                     </InputGroup>
 
-                                      {listFollowing.map((following: any) => (
-                                            <div>
-                                                <div className="flex justify-between items-center"> 
+                                    {listFollowing.map((following: any) => (
+                                        <div>
+                                            <div className="flex justify-between items-center">
                                                 <div className="flex flex-row items-center gap-2">
-                                                <Avatar key={following._id} className='w-12 h-12 rounded-full'>
-                                                {following.followerId.profile.length > 0 ?
-                                                    <img src={following.followerId.profile} alt="" /> :
-                                                    <AvatarFallback className='text-white cursor-pointer border truncate whitespace-nowrap rounded-full'>
-                                                        {getInitials(following.followerId.fullname)}
-                                                    </AvatarFallback>}
-                                            </Avatar>
-                                            <div className="flex flex-col">
-                                            <h1 className="font-medium capitalize">{following.followerId.fullname}</h1>
-                                            <span className="text-muted-foreground">{following.followerId.username}</span>
-                                            </div>
-                                            </div>
+                                                    <Avatar key={following._id} className='w-12 h-12 rounded-full'>
+                                                        {following.followerId.profile.length > 0 ?
+                                                            <img src={following.followerId.profile} alt="" /> :
+                                                            <AvatarFallback className='text-white cursor-pointer border truncate whitespace-nowrap rounded-full'>
+                                                                {getInitials(following.followerId.fullname)}
+                                                            </AvatarFallback>}
+                                                    </Avatar>
+                                                    <div className="flex flex-col">
+                                                        <h1 className="font-medium capitalize">{following.followerId.fullname}</h1>
+                                                        <span className="text-muted-foreground">{following.followerId.username}</span>
+                                                    </div>
+                                                </div>
 
-                                            <div>
-                                                <Button variant={'form'}>Following</Button>
+                                                <div>
+                                                    <Button variant={'form'}>Following</Button>
+                                                </div>
                                             </div>
-                                            </div>
-                                            </div>
-                                        ))}
+                                        </div>
+                                    ))}
 
                                 </DialogContent>
                             </Dialog>
-                            <h1 className="text-lg"><span className="font-bold">{countFollower}</span> <span className="text-muted-foreground">followers</span></h1>
+                            <Dialog>
+                                <DialogTrigger asChild>
+                                    <button className="text-lg cursor-pointer">
+                                        <span className="font-bold">{countFollower}</span> <span className="text-muted-foreground">followers</span>
+                                    </button>
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-[700px]">
+                                    <DialogHeader>
+                                        <DialogTitle className="flex justify-center">Following</DialogTitle>
+                                        <hr />
+
+                                    </DialogHeader>
+                                    <InputGroup>
+                                        <InputGroupInput placeholder="Search..." />
+                                        <InputGroupAddon>
+                                            <Search />
+                                        </InputGroupAddon>
+                                    </InputGroup>
+
+                                    {listFollower.map((follower: any) => (
+                                        <div>
+                                            <div className="flex justify-between items-center">
+                                                <div className="flex flex-row items-center gap-2">
+                                                    <Avatar key={follower._id} className='w-12 h-12 rounded-full'>
+                                                        {follower.followingId.profile.length > 0 ?
+                                                            <img src={follower.followingId.profile} alt="" /> :
+                                                            <AvatarFallback className='text-white cursor-pointer border truncate whitespace-nowrap rounded-full'>
+                                                                {getInitials(follower.followingId.fullname)}
+                                                            </AvatarFallback>}
+                                                    </Avatar>
+                                                    <div className="flex flex-col">
+                                                        <h1 className="font-medium capitalize">{follower.followingId.fullname}</h1>
+                                                        <span className="text-muted-foreground">{follower.followingId.username}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <Button variant={'form'}>Following</Button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </DialogContent>
+                            </Dialog>
                         </div>
                     </div>
                 </div>
