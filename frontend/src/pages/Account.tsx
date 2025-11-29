@@ -4,7 +4,7 @@ import { useInitials } from "@/hooks/use-initials"
 import Layout from "@/layout/app-layout"
 import { UseAuthStore } from "@/store/UseAuthStore"
 import { UseFollowStore } from "@/store/UseFollowStore"
-import { Bolt, Bookmark, Copy, Heart, LayoutGrid, Search, Send, Users2 } from "lucide-react"
+import { Bolt, Bookmark, Copy, EllipsisVertical, Heart, LayoutGrid, MessageCircle, MoreHorizontalIcon, Search, Send, Share2, Users2 } from "lucide-react"
 import { useEffect, useState } from "react"
 import {
     Dialog,
@@ -14,6 +14,22 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group"
+import { UsePostStore } from "@/store/UsePostStore"
+
+type Post = {
+    _id: string
+    posterId: posterId,
+    petName: string,
+    createdAt: any
+    petPicture: string
+}
+
+type posterId = {
+    _id: String
+    fullname: string,
+    posterId: string
+    profile: string,
+}
 
 function Account() {
     const { auth } = UseAuthStore()
@@ -22,11 +38,18 @@ function Account() {
         followerCount, followingList, listFollowing,
         followerList, listFollower, isFollowed, followings,
         handleFollow, handleUnfollow } = UseFollowStore()
+    const { posts, post } = UsePostStore() as { posts: Post[], post: any }
+    const [hovered, setHoverd] = useState("")
+
 
     const [formData, setFormData] = useState({
         followingId: auth._id,
         followerId: ""
     })
+
+    useEffect(() => {
+        post()
+    }, [post])
 
     useEffect(() => {
         isFollowed()
@@ -59,6 +82,11 @@ function Account() {
         e.preventDefault()
 
         handleUnfollow(formData)
+    }
+
+    const setHovered = (id: any) => {
+        setHoverd(id)
+
     }
 
     return (
@@ -251,6 +279,82 @@ function Account() {
                     </div>
 
                     <hr className="my-2 bg-white" />
+                    {posts.length >= 0 && (
+                        (() => {
+                            const post = posts.filter((post: Post) => post.posterId._id === auth._id)
+
+                            return post.length > 0 ? (
+                                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1 my-10'>
+                                    {post.map((post: Post) => (
+                                        <div key={post._id}>
+                                            {post.posterId._id === auth._id && <div>
+                                                <div className="relative">
+                                                    <div className="relative" onMouseEnter={() => setHovered(post._id)}>
+                                                        <img className='w-full h-100 object-cover rounded-md border' src={post.petPicture} alt="" />
+
+                                                    </div>
+                                                    <div className={hovered === post._id ? 'absolute z-50 top-0 w-full h-30 bg-linear-to-b  from-black/70 to-transparent p-2 rounded-md text-white' : 'hidden'}>
+                                                    </div>
+                                                    <div className={hovered === post._id ? 'absolute z-50 bottom-0 w-full h-30 bg-linear-to-t  from-black/70 to-transparent p-2 rounded-md text-white' : 'hidden'}>
+
+                                                    </div>
+                                                    <div className={hovered === post._id ? 'absolute z-50 bottom-0 w-full p-2 text-white' : 'hidden'}>
+                                                        <div className="w-full px-4 py-2 has-[>svg]:px-3 rounded-sm flex flex-row justify-start gap-1">
+                                                            <div className="flex flex-row gap-6 items-center">
+                                                                <button
+                                                                    className="flex flex-row items-center gap-1 cursor-pointer">
+                                                                    <Heart className="size-6" />
+                                                                    <span className="text-xs">1</span>
+                                                                </button>
+                                                                <button
+                                                                    className="flex flex-row items-center gap-1 cursor-pointer">
+                                                                    <MessageCircle className="size-5" />
+                                                                    <span className="text-xs">0</span>
+                                                                </button>
+                                                                <button
+                                                                    className="flex flex-row items-center gap-1 cursor-pointer">
+                                                                    <Share2 className="size-5" />
+                                                                    <span className="text-xs">0</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className={hovered === post._id ? 'absolute z-50 top-0 w-full p-2 text-white flex flex-col gap-1' : 'hidden'}>
+                                                        <div className="w-full px-0 py-2 has-[>svg]:px-3 rounded-sm flex flex-row justify-end items-center gap-0">
+                                                            <div className="flex flex-row gap-0 items-center">
+                                                                <button
+                                                                    className="">
+                                                                    <Bookmark className="size-6" />
+                                                                </button>
+                                                                <button
+                                                                    className="">
+                                                                    <EllipsisVertical className="size-6" />
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>}
+                                        </div>
+                                    ))}
+                                </div>
+                            ) :
+                                <div className="flex flex-col justify-center items-center py-6">
+                                    <div className="p-4 bg-neutral-800/80 rounded-full">
+                                        <LayoutGrid className="size-5 text-neutral-300" />
+                                    </div>
+
+                                    <h1 className="mt-4 text-base font-semibold text-white">
+                                        No Posts Yet
+                                    </h1>
+
+                                    <p className="mt-1 text-neutral-400 text-sm">
+                                        When they post something, it will appear here.
+                                    </p>
+                                </div>
+                        })()
+                    )
+                    }
                 </div>
 
             </div>
