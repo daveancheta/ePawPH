@@ -164,7 +164,7 @@ function Account() {
                                                 When you follow someone, they will appear here.
                                             </p>
 
-                                            <button className="mt-6 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white">
+                                            <button className="mt-6 px-4 py-2 bg-[#58C185] hover:bg-[#58C185]/90 rounded-lg text-[#2F2F2F]">
                                                 Discover People
                                             </button>
                                         </div>}

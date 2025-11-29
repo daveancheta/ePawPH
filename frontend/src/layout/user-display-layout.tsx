@@ -5,7 +5,7 @@ import { UseAuthStore } from '@/store/UseAuthStore'
 import { UseFollowStore } from '@/store/UseFollowStore'
 import { UsePostStore } from '@/store/UsePostStore'
 import { UseUserStore } from '@/store/UseUserStore'
-import { Divide, LayoutGrid, Loader, Send, UserRoundCheck, UserRoundPlus } from 'lucide-react'
+import { LayoutGrid, Loader, Send, UserRoundCheck, UserRoundPlus } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 type User = {
@@ -129,7 +129,6 @@ function UserDisplayLayout() {
                                     </div>
                                 </div>
                                 <hr className="my-2 bg-white w-full" />
-
                                 {posts.length >= 0 && (
                                     (() => {
                                         const post = posts.filter((post: Post) => post.posterId._id === users._id)
@@ -158,11 +157,9 @@ function UserDisplayLayout() {
                                                     When they post something, it will appear here.
                                                 </p>
                                             </div>
-
                                     })()
                                 )
                                 }
-
                                 <hr className="my-2 bg-white w-full" />
                                 <div className='flex flex-row gap-2 justify-center'>
                                     {followings.some(f => f.followerId === users._id) ?
@@ -182,7 +179,6 @@ function UserDisplayLayout() {
                             </div>
                         </div>
                     ))}
-
                 </div> : ""}
 
         </div>
