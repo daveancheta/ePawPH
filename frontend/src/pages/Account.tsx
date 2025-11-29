@@ -289,16 +289,26 @@ function Account() {
                                         <div key={post._id}>
                                             {post.posterId._id === auth._id && <div>
                                                 <div className="relative">
-                                                    <div className="relative" onMouseEnter={() => setHovered(post._id)}>
+                                                    <div className="relative" onMouseEnter={() => setHovered(post._id)} onMouseLeave={() => setHovered("")}>
                                                         <img className='w-full h-100 object-cover rounded-md border' src={post.petPicture} alt="" />
 
                                                     </div>
-                                                    <div className={hovered === post._id ? 'absolute z-50 top-0 w-full h-30 bg-linear-to-b  from-black/70 to-transparent p-2 rounded-md text-white' : 'hidden'}>
+                                                    <div onMouseEnter={() => setHovered(post._id)} onMouseLeave={() => setHovered("")} className={`
+            absolute top-0 w-full h-16 bg-linear-to-b from-black/70 to-transparent
+            rounded-t-md text-white
+            transition-opacity duration-300 ease-in-out
+            ${hovered === post._id ? "opacity-100" : "opacity-0 pointer-events-none"}
+        `}>
                                                     </div>
-                                                    <div className={hovered === post._id ? 'absolute z-50 bottom-0 w-full h-30 bg-linear-to-t  from-black/70 to-transparent p-2 rounded-md text-white' : 'hidden'}>
+                                                    <div onMouseEnter={() => setHovered(post._id)} onMouseLeave={() => setHovered("")} className={`
+            absolute bottom-0 w-full h-16 bg-linear-to-t from-black/70 to-transparent
+            rounded-t-md text-white
+            transition-opacity duration-300 ease-in-out
+            ${hovered === post._id ? "opacity-100" : "opacity-0 pointer-events-none"}
+            `}>
 
                                                     </div>
-                                                    <div className={hovered === post._id ? 'absolute z-50 bottom-0 w-full p-2 text-white' : 'hidden'}>
+                                                    <div onMouseEnter={() => setHovered(post._id)} onMouseLeave={() => setHovered("")} className={`absolute bottom-0 text-white transition-opacity duration-300 ease-in-out ${hovered === post._id ? "opacity-100" : "opacity-0"}`}>
                                                         <div className="w-full px-4 py-2 has-[>svg]:px-3 rounded-sm flex flex-row justify-start gap-1">
                                                             <div className="flex flex-row gap-6 items-center">
                                                                 <button
@@ -319,7 +329,7 @@ function Account() {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div className={hovered === post._id ? 'absolute z-50 top-0 w-full p-2 text-white flex flex-col gap-1' : 'hidden'}>
+                                                    <div onMouseEnter={() => setHovered(post._id)} onMouseLeave={() => setHovered("")} className={`absolute top-0 p-2 flex justify-end w-full text-white transition-opacity duration-300 ease-in-out ${hovered === post._id ? "opacity-100" : "opacity-0"}`}>
                                                         <div className="w-full px-0 py-2 has-[>svg]:px-3 rounded-sm flex flex-row justify-end items-center gap-0">
                                                             <div className="flex flex-row gap-0 items-center">
                                                                 <button
