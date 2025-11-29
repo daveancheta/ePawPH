@@ -51,6 +51,7 @@ function UserDisplayLayout() {
 
     const handleCloseContainer = () => {
         setContainer("")
+
     }
 
     const handlesubmitFollow = (e: any) => {
@@ -64,12 +65,13 @@ function UserDisplayLayout() {
 
         handleUnfollow(formData)
     }
+
     return (
         <div>
             {userList.length > 0 ?
                 <div className='flex flex-col gap-4'>
                     {userList.slice(0, 5).map((users: User) => (
-                        <div onMouseOver={() => handleOpenContainer(users._id)} onMouseOut={() => handleCloseContainer()} className={container === users._id ? 'relative flex justify-between items-center cursor-pointer bg-accent p-2 rounded-md' : 'relative flex justify-between items-center cursor-pointer p-2 rounded-md'} key={users._id}>
+                        <div onMouseEnter={() => handleOpenContainer(users._id)} onMouseLeave={() => handleCloseContainer()} className={container === users._id ? 'relative flex justify-between items-center cursor-pointer bg-accent p-2 rounded-md' : 'relative flex justify-between items-center cursor-pointer p-2 rounded-md'} key={users._id}>
                             <div className='flex flex-row items-center gap-2.5'>
                                 <div className='relative'>
                                     <Avatar key={users._id} className='w-8 h-8 rounded-full'>
@@ -86,8 +88,8 @@ function UserDisplayLayout() {
                                     <span className='text-xs text-muted-foreground'>{users.username}</span>
                                 </div>
                             </div>
-                            <div id={`container-${users._id}`} className={container === users._id ? 'fixed left-62 bg-neutral-900 border border-white/20 min-w-70 min-h-50 \
-                                p-4 shadow-md shadow-white/20 rounded-md origin-left transition-all ease-in-out opacity-0 scale-0' : "hidden"}>
+                            <div onMouseEnter={() => handleOpenContainer(users._id)} id={`container-${users._id}`} className={container === users._id ? 'fixed mt-63 bg-neutral-900 border border-white/20 min-w-70 min-h-50 \
+                                p-4 shadow-md shadow-white/20 rounded-md origin-left transition-all ease-in-out opacity-0 scale-0 z-50' : "hidden"}>
                                 <div className='flex flex-col gap-2'>
                                     <div className='flex flex-row gap-2 items-center'>
                                         <Avatar key={users._id} className='w-12 h-12 rounded-full'>
