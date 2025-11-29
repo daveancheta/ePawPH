@@ -3,8 +3,9 @@ import { Button } from '@/components/ui/button'
 import { useInitials } from '@/hooks/use-initials'
 import { UseAuthStore } from '@/store/UseAuthStore'
 import { UseFollowStore } from '@/store/UseFollowStore'
+import { UsePostStore } from '@/store/UsePostStore'
 import { UseUserStore } from '@/store/UseUserStore'
-import { Loader, Send, UserRoundCheck, UserRoundPlus } from 'lucide-react'
+import { Divide, LayoutGrid, Loader, Send, UserRoundCheck, UserRoundPlus } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 type User = {
@@ -12,6 +13,21 @@ type User = {
     fullname: string,
     username: String,
     profile: any,
+}
+
+type Post = {
+    _id: string
+    posterId: posterId,
+    petName: string,
+    createdAt: any
+    petPicture: string
+}
+
+type posterId = {
+    _id: String
+    fullname: string,
+    posterId: string
+    profile: string,
 }
 
 function UserDisplayLayout() {
@@ -24,6 +40,11 @@ function UserDisplayLayout() {
     const getInitials = useInitials()
     const [container, setContainer] = useState("")
     const { isFollowing, handleFollow, isFollowed, followings, isUnFollowing, handleUnfollow } = UseFollowStore()
+    const { posts, post } = UsePostStore() as { posts: Post[], post: any }
+
+    useEffect(() => {
+        post()
+    }, [post])
 
     useEffect(() => {
         isFollowed()
@@ -88,7 +109,7 @@ function UserDisplayLayout() {
                                     <span className='text-xs text-muted-foreground'>{users.username}</span>
                                 </div>
                             </div>
-                            <div onMouseEnter={() => handleOpenContainer(users._id)} id={`container-${users._id}`} className={container === users._id ? 'fixed mt-63 bg-neutral-900 border border-white/20 min-w-70 min-h-50 \
+                            <div onMouseEnter={() => handleOpenContainer(users._id)} id={`container-${users._id}`} className={container === users._id ? 'fixed ml-10 mt-70 bg-neutral-900 border border-white/20 min-w-70 min-h-50 \
                                 p-4 shadow-md shadow-white/20 rounded-md origin-left transition-all ease-in-out opacity-0 scale-0 z-50' : "hidden"}>
                                 <div className='flex flex-col gap-2'>
                                     <div className='flex flex-row gap-2 items-center'>
@@ -108,6 +129,39 @@ function UserDisplayLayout() {
                                     </div>
                                 </div>
                                 <hr className="my-2 bg-white w-full" />
+
+                                {posts.length >= 0 && (
+                                    (() => {
+                                        const post = posts.filter((post: Post) => post.posterId._id === users._id)
+
+                                        return post.length > 0 ? (
+                                            <div className='flex flex-row gap-1'>
+                                                {post.slice(0, 3).map((post: Post) => (
+                                                    <div key={post._id}>
+                                                        {post.posterId._id === users._id && <div>
+                                                            <img className='min-w-25 min-h-30 max-w-20 max-h-20' src={post.petPicture} alt="" />
+                                                        </div>}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ) :
+                                            <div className="flex flex-col justify-center items-center py-6">
+                                                <div className="p-4 bg-neutral-800/80 rounded-full">
+                                                    <LayoutGrid className="size-5 text-neutral-300" />
+                                                </div>
+
+                                                <h1 className="mt-4 text-base font-semibold text-white">
+                                                    No Posts Yet
+                                                </h1>
+
+                                                <p className="mt-1 text-neutral-400 text-sm">
+                                                    When they post something, it will appear here.
+                                                </p>
+                                            </div>
+
+                                    })()
+                                )
+                                }
 
                                 <hr className="my-2 bg-white w-full" />
                                 <div className='flex flex-row gap-2 justify-center'>
