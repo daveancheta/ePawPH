@@ -4,7 +4,7 @@ import { useInitials } from "@/hooks/use-initials"
 import Layout from "@/layout/app-layout"
 import { UseAuthStore } from "@/store/UseAuthStore"
 import { UseFollowStore } from "@/store/UseFollowStore"
-import { Bolt, Bookmark, Copy, EllipsisVertical, Heart, LayoutGrid, MessageCircle, MoreHorizontalIcon, Search, Send, Share2, Users2 } from "lucide-react"
+import { Bolt, Bookmark, Copy, EllipsisVertical, Heart, LayoutGrid, MessageCircle, Search, Send, Share2, Users2 } from "lucide-react"
 import { useEffect, useState } from "react"
 import {
     Dialog,
