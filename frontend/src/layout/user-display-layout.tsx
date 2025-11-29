@@ -93,7 +93,7 @@ function UserDisplayLayout() {
                                     <span className='text-xs text-muted-foreground'>{users.username}</span>
                                 </div>
                             </div>
-                            <div onMouseEnter={() => setContainer(users._id)} id={`container-${users._id}`} className={`fixed ml-50 z-50 bg-neutral-900 border border-white/20 min-w-70 min-h-50 \
+                            <div onMouseEnter={() => setContainer(users._id)} id={`container-${users._id}`} className={`fixed ml-55 z-50 bg-neutral-900 border border-white/20 min-w-70 min-h-50 \
                                 p-4 shadow-md shadow-white/20 rounded-md origin-left transition-all ease-in-out duration-300 ${container === users._id ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}>
                                 <div className='flex flex-col gap-2'>
                                     <div className='flex flex-row gap-2 items-center'>
