@@ -1,5 +1,6 @@
 import cloudinary from "../lib/cloudinary.js";
 import Message from "../models/Message.js";
+import Follow from "../models/Follow.js";
 
 export const sendMessage = async (req, res) => {
     const { senderId, receiverId, text, image } = req.body
@@ -26,7 +27,7 @@ export const sendMessage = async (req, res) => {
     }
 }
 
-export const getMessages = async (req, res) => {
+export const getConversation = async (req, res) => {
     const loggedInUser = req.user._id
     const { id: UserToChatId } = req.params
 
@@ -39,9 +40,26 @@ export const getMessages = async (req, res) => {
         })
 
         res.status(200).json(messages)
-        
+
     } catch (error) {
-        console.log("Error in get message controller:", error)
+        console.log("Error in get conversation controller:", error)
+        res.status(400).json({ message: "Interal server error" })
+    }
+}
+
+export const getChats = async (req, res) => {
+    const loggedInUser = req.user._id
+    try {
+        const chats = await Follow.find({
+            $or: [
+                { followingId: loggedInUser }
+            ]
+        }).populate("followerId", "fullname profile _id");
+
+        res.status(200).json(chats)
+
+    } catch (error) {
+        console.log("Error in get chats controller:", error)
         res.status(400).json({ message: "Interal server error" })
     }
 }

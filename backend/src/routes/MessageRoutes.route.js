@@ -1,10 +1,11 @@
 import express from "express"
-import { getMessages, sendMessage } from "../controllers/message.controller.js"
+import { getChats, getConversation, sendMessage } from "../controllers/message.controller.js"
 import { protectRoute } from "../middleware/auth.middleware.js"
 
 const router = express.Router()
 
 router.post("/sendMessage", sendMessage)
-router.get("/getMessages/:id", protectRoute, getMessages)
+router.get("/getConversation/:id", protectRoute, getConversation)
+router.get("/getChats", protectRoute, getChats)
 
 export default router
