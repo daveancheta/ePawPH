@@ -4,7 +4,7 @@ import { UseAuthStore } from '@/store/UseAuthStore'
 import { UseMessageStore } from '@/store/UseMessageStore'
 import { AvatarFallback } from '@radix-ui/react-avatar'
 import dayjs from 'dayjs'
-import { History, X } from 'lucide-react'
+import { History, MessageCircle, X } from 'lucide-react'
 import { useEffect } from 'react'
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
@@ -57,7 +57,7 @@ function ChatContainer() {
                             </AvatarFallback>
                         )}
                     </Avatar>
-                    <h1 className="font-bold">{selectedUser?.followerId.fullname}</h1>
+                    <h1 className="font-bold capitalize">{selectedUser?.followerId.fullname}</h1>
                 </div>
 
                 <button onClick={() => setSelectedUser(null)}>
@@ -67,7 +67,7 @@ function ChatContainer() {
 
             <hr />
 
-            <div className="flex-1 overflow-auto scrollbar-hide px-4 py-2 gap-6 flex flex-col">
+            {conversation.length > 0 ? (<div className="flex-1 overflow-auto scrollbar-hide px-4 py-2 gap-6 flex flex-col">
                 {conversation.map((convo: any) => (
                     <div
                         key={convo._id}
@@ -76,8 +76,8 @@ function ChatContainer() {
                         <div className="relative">
                             <div
                                 className={`${auth._id === convo.senderId
-                                        ? "bg-[#58C185] text-[#2F2F2F]"
-                                        : "bg-gray-700 text-white"
+                                    ? "bg-[#58C185] text-[#2F2F2F]"
+                                    : "bg-gray-700 text-white"
                                     } rounded-xl px-4 py-2 max-w-xs wrap-break-word`}
                             >
                                 {convo.text}
@@ -96,7 +96,23 @@ function ChatContainer() {
                         </div>
                     </div>
                 ))}
-            </div>
+            </div>) : (
+                <div className="flex-1 overflow-auto scrollbar-hide px-4 py-2 gap-1 flex flex-col justify-center items-center">
+                    <div className="p-4 bg-neutral-800/80 rounded-full flex justify-center items-center w-16 h-16 animate-pulse">
+                        <MessageCircle className="size-10 text-neutral-300 animate-pulse" />
+                    </div>
+
+                    <h1 className="mt-4 text-base font-semibold text-white">
+                        Start a conversation with <span className='capitalize'>{selectedUser?.followerId.fullname}</span>
+                    </h1>
+
+                    <p className="mt-1 text-neutral-400 text-sm text-center">
+                        Once you send a message, your conversation will appear here.
+                    </p>
+                </div>
+
+            )}
+
 
             <hr />
 

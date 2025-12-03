@@ -1,4 +1,3 @@
-import { IconPlus } from "@tabler/icons-react"
 import { ArrowUpIcon, Image } from "lucide-react"
 import {
     InputGroup,
