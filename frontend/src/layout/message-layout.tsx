@@ -87,7 +87,7 @@ function MessageLayout() {
                             </div>
                         ))}
                     </div>
-                </div>|| selectedUser
+                </div>
 
                 {selectedUser &&
                     <ChatContainer />}
