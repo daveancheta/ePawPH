@@ -4,13 +4,26 @@ import { create } from "zustand"
 
 export const UseMessageStore = create((set) => ({
     chats: [],
+    conversation: [],
+    selectedUser: null,
+
+    setSelectedUser: (selectedUser: string) => set({ selectedUser: selectedUser }),
 
     getChats: async () => {
         try {
             const res = await AxiosInstance.get("/message/getChats")
-            set({ chats: res.data})
-        } catch (error) {
-            toast.error("Something went wrong")
+            set({ chats: res.data })
+        } catch (error: any) {
+            toast.error(error.response.data.message || "Something went wrong")
+        }
+    },
+
+    getConversation: async (id: any) => {
+        try {
+            const res = await AxiosInstance.get(`/message/getConversation/${id}`)
+            set({ conversation: res.data })
+        } catch (error: any) {
+            toast.error(error.response.data.message || "Something went wrong")
         }
     }
 }))
