@@ -1,8 +1,9 @@
 import { AxiosInstance } from "@/lib/axios"
 import toast from "react-hot-toast"
 import { create } from "zustand"
+import { UseAuthStore } from "./UseAuthStore"
 
-export const UseMessageStore = create((set) => ({
+export const UseMessageStore = create((set, get) => ({
     chats: [],
     conversation: [],
     selectedUser: null,
@@ -20,7 +21,7 @@ export const UseMessageStore = create((set) => ({
     },
 
     getConversation: async (id: any) => {
-        set({ isLoadingMessages: true})
+        set({ isLoadingMessages: true })
         try {
             const res = await AxiosInstance.get(`/message/getConversation/${id}`)
             set({ conversation: res.data })
@@ -28,6 +29,30 @@ export const UseMessageStore = create((set) => ({
             toast.error(error.response.data.message || "Something went wrong")
         } finally {
             set({ isLoadingMessages: false })
+        }
+    },
+
+    sendMessage: async (data: any) => {
+        const { conversation } = get() as { conversation: any }
+        const { auth } = UseAuthStore.getState()
+
+        const tempId = `temp-${Date.now()}`
+        const optimisticMessage = {
+            _id: tempId,
+            senderId: auth._id,
+            receiverId: data.receiverId,
+            text: data.text,
+            image: data.image,
+            createdAt: new Date().toISOString(),
+        }
+
+        set({ conversation: [...conversation, optimisticMessage] })
+
+        try {
+            await AxiosInstance.post("/message/sendMessage", data)
+        } catch (error: any) {
+            toast.error("Something went wrong")
+            console.log("Error sending message", error)
         }
     }
 }))

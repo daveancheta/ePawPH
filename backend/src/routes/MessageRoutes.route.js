@@ -4,7 +4,7 @@ import { protectRoute } from "../middleware/auth.middleware.js"
 
 const router = express.Router()
 
-router.post("/sendMessage", sendMessage)
+router.post("/sendMessage", protectRoute, sendMessage)
 router.get("/getConversation/:id", protectRoute, getConversation)
 router.get("/getChats", protectRoute, getChats)
 

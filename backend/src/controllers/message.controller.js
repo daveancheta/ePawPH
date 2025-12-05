@@ -3,13 +3,13 @@ import Message from "../models/Message.js";
 import Follow from "../models/Follow.js";
 
 export const sendMessage = async (req, res) => {
-    const { senderId, receiverId, text, image } = req.body
-
+    const { receiverId, text, image } = req.body
+    const loggedInUser = req.user._id
     try {
 
         const imageCloud = cloudinary.uploader.upload(image)
         const newMessage = new Message({
-            senderId,
+            senderId: loggedInUser,
             receiverId,
             text,
             image: imageCloud
