@@ -5,11 +5,16 @@ import { UseMessageStore } from '@/store/UseMessageStore'
 import { AvatarFallback } from '@radix-ui/react-avatar'
 import dayjs from 'dayjs'
 import { Heart, History, MessageCircle, X } from 'lucide-react'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
 import { ChatInput } from './chat-input'
 import { MessageSkeleton } from '@/components/message-skeleton'
+import {
+    Dialog,
+    DialogContent,
+} from "@/components/ui/dialog"
+
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
@@ -42,6 +47,8 @@ function ChatContainer() {
     const { auth } = UseAuthStore()
     const getInitials = useInitials()
     const messageRef = useRef<HTMLDivElement>(null)
+    const [open, setOpen] = useState(false)
+    const [previewImage, setPreviewImage] = useState("")
 
     useEffect(() => {
         getConversation(selectedUser?.followerId?._id)
@@ -56,6 +63,13 @@ function ChatContainer() {
 
     return (
         <div className="fixed bottom-10 right-10 rounded-sm min-h-160 max-h-160 min-w-120 max-w-120 bg-neutral-950 border origin-bottom-right transition-all duration-300 flex flex-col select-none">
+            <Dialog open={open} onOpenChange={setOpen}>
+                <DialogContent className="">
+                    <div className='mt-5'>
+                        <img src={previewImage} alt="" />
+                    </div>
+                </DialogContent>
+            </Dialog>
             <div className="flex justify-between items-center py-4 px-6">
                 <div className="flex flex-row items-center gap-2">
                     <Avatar className="w-15 h-15">
@@ -91,8 +105,14 @@ function ChatContainer() {
                                         : `${convo.text === "heart" ? "" : "bg-gray-700 text-white]"}`
                                         } rounded-xl px-4 py-2 max-w-xs wrap-break-word`}
                                 >
-
-                                    <img className='rounded-sm' src={convo.image} />
+                                    {convo.image &&
+                                        <button onClick={() => {
+                                            setOpen(true)
+                                            setPreviewImage(convo.image)
+                                        }}>
+                                            <img className='rounded-sm' src={convo.image} />
+                                        </button>
+                                    }
 
                                     {convo.text === "heart" ?
                                         <Heart className="fill-red-400 text-red-400 size-8" /> :
