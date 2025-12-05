@@ -5,7 +5,7 @@ import { UseMessageStore } from '@/store/UseMessageStore'
 import { AvatarFallback } from '@radix-ui/react-avatar'
 import dayjs from 'dayjs'
 import { Heart, History, MessageCircle, X } from 'lucide-react'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
 import { ChatInput } from './chat-input'
@@ -41,10 +41,17 @@ function ChatContainer() {
         }
     const { auth } = UseAuthStore()
     const getInitials = useInitials()
+    const messageRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         getConversation(selectedUser?.followerId?._id)
     }, [getConversation])
+
+    useEffect(() => {
+        if(messageRef.current) {
+            messageRef.current.scrollIntoView({ behavior: "smooth"})
+        }
+    })
 
 
     return (
@@ -104,6 +111,7 @@ function ChatContainer() {
                             </div>
                         </div>
                     ))}
+                    <div ref={messageRef}></div>
                 </div>) : (
                     <div className="flex-1 overflow-auto scrollbar-hide px-4 py-2 gap-1 flex flex-col justify-center items-center">
                         <div className="p-4 bg-neutral-800/80 rounded-full flex justify-center items-center w-16 h-16 animate-pulse">
