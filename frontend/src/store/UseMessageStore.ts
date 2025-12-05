@@ -6,6 +6,7 @@ export const UseMessageStore = create((set) => ({
     chats: [],
     conversation: [],
     selectedUser: null,
+    isLoadingMessages: false,
 
     setSelectedUser: (selectedUser: string) => set({ selectedUser: selectedUser }),
 
@@ -19,11 +20,14 @@ export const UseMessageStore = create((set) => ({
     },
 
     getConversation: async (id: any) => {
+        set({ isLoadingMessages: true})
         try {
             const res = await AxiosInstance.get(`/message/getConversation/${id}`)
             set({ conversation: res.data })
         } catch (error: any) {
             toast.error(error.response.data.message || "Something went wrong")
+        } finally {
+            set({ isLoadingMessages: false })
         }
     }
 }))

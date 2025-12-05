@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
 import { ChatInput } from './chat-input'
+import { MessageSkeleton } from '@/components/message-skeleton'
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
@@ -32,10 +33,12 @@ dayjs.updateLocale('en', {
 });
 
 function ChatContainer() {
-    const { setSelectedUser, selectedUser, getConversation, conversation } = UseMessageStore() as {
-        setSelectedUser: any,
-        getConversation: any, conversation: any, selectedUser: any
-    }
+    const { setSelectedUser, selectedUser, getConversation,
+        conversation, isLoadingMessages } = UseMessageStore() as {
+            setSelectedUser: any,
+            getConversation: any, conversation: any, selectedUser: any,
+            isLoadingMessages: any
+        }
     const { auth } = UseAuthStore()
     const getInitials = useInitials()
 
@@ -67,52 +70,53 @@ function ChatContainer() {
 
             <hr />
 
-            {conversation.length > 0 ? (<div className="flex-1 overflow-auto scrollbar-hide px-4 py-2 gap-6 flex flex-col">
-                {conversation.map((convo: any) => (
-                    <div
-                        key={convo._id}
-                        className={`flex w-full ${auth._id === convo.senderId ? "justify-end" : "justify-start"}`}
-                    >
-                        <div className="relative">
-                            <div
-                                className={`${auth._id === convo.senderId
-                                    ? "bg-[#58C185] text-[#2F2F2F]"
-                                    : "bg-gray-700 text-white"
-                                    } rounded-xl px-4 py-2 max-w-xs wrap-break-word`}
-                            >
-                                {convo.text}
+            {isLoadingMessages ? <MessageSkeleton /> :
+                conversation.length > 0 ? (<div className="flex-1 overflow-auto scrollbar-hide px-4 py-2 gap-6 flex flex-col">
+                    {conversation.map((convo: any) => (
+                        <div
+                            key={convo._id}
+                            className={`flex w-full ${auth._id === convo.senderId ? "justify-end" : "justify-start"}`}
+                        >
+                            <div className="relative">
+                                <div
+                                    className={`${auth._id === convo.senderId
+                                        ? "bg-[#58C185] text-[#2F2F2F]"
+                                        : "bg-gray-700 text-white"
+                                        } rounded-xl px-4 py-2 max-w-xs wrap-break-word`}
+                                >
+                                    {convo.text}
+                                </div>
+                                <p
+                                    className={`text-xs text-muted-foreground absolute flex flex-row gap-1 items-center mt-1 truncate ${auth._id === convo.senderId ? "right-2" : "left-2"
+                                        }`}
+                                >
+                                    <History className="size-3" />
+                                    <span>
+                                        {dayjs(convo.createdAt).fromNow() === "seconds ago"
+                                            ? "Just now"
+                                            : dayjs(convo.createdAt).fromNow()}
+                                    </span>
+                                </p>
                             </div>
-                            <p
-                                className={`text-xs text-muted-foreground absolute flex flex-row gap-1 items-center mt-1 truncate ${auth._id === convo.senderId ? "right-2" : "left-2"
-                                    }`}
-                            >
-                                <History className="size-3" />
-                                <span>
-                                    {dayjs(convo.createdAt).fromNow() === "seconds ago"
-                                        ? "Just now"
-                                        : dayjs(convo.createdAt).fromNow()}
-                                </span>
-                            </p>
                         </div>
+                    ))}
+                </div>) : (
+                    <div className="flex-1 overflow-auto scrollbar-hide px-4 py-2 gap-1 flex flex-col justify-center items-center">
+                        <div className="p-4 bg-neutral-800/80 rounded-full flex justify-center items-center w-16 h-16 animate-pulse">
+                            <MessageCircle className="size-10 text-neutral-300 animate-pulse" />
+                        </div>
+
+                        <h1 className="mt-4 text-base font-semibold text-white">
+                            Start a conversation with <span className='capitalize'>{selectedUser?.followerId.fullname}</span>
+                        </h1>
+
+                        <p className="mt-1 text-neutral-400 text-sm text-center">
+                            Once you send a message, your conversation will appear here.
+                        </p>
                     </div>
-                ))}
-            </div>) : (
-                <div className="flex-1 overflow-auto scrollbar-hide px-4 py-2 gap-1 flex flex-col justify-center items-center">
-                    <div className="p-4 bg-neutral-800/80 rounded-full flex justify-center items-center w-16 h-16 animate-pulse">
-                        <MessageCircle className="size-10 text-neutral-300 animate-pulse" />
-                    </div>
 
-                    <h1 className="mt-4 text-base font-semibold text-white">
-                        Start a conversation with <span className='capitalize'>{selectedUser?.followerId.fullname}</span>
-                    </h1>
-
-                    <p className="mt-1 text-neutral-400 text-sm text-center">
-                        Once you send a message, your conversation will appear here.
-                    </p>
-                </div>
-
-            )}
-
+                )
+            }
 
             <hr />
 
