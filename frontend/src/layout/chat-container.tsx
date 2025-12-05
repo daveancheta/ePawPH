@@ -4,7 +4,7 @@ import { UseAuthStore } from '@/store/UseAuthStore'
 import { UseMessageStore } from '@/store/UseMessageStore'
 import { AvatarFallback } from '@radix-ui/react-avatar'
 import dayjs from 'dayjs'
-import { History, MessageCircle, X } from 'lucide-react'
+import { Heart, History, MessageCircle, X } from 'lucide-react'
 import { useEffect } from 'react'
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
@@ -80,12 +80,16 @@ function ChatContainer() {
                             <div className="relative">
                                 <div
                                     className={`${auth._id === convo.senderId
-                                        ? "bg-[#58C185] text-[#2F2F2F]"
-                                        : "bg-gray-700 text-white"
+                                        ? `${convo.text === "heart" ? "": "bg-[#58C185] text-[#2F2F2F]"}`
+                                        : `${convo.text === "heart" ? "": "bg-gray-700 text-white]"}`
                                         } rounded-xl px-4 py-2 max-w-xs wrap-break-word`}
                                 >
-                                    {convo.text}
+
+                                    <img className='rounded-sm' src={convo.image} />
+
+                                    {convo.text === "heart" ? <Heart className="fill-red-400 text-red-400 size-8" /> : convo.text}
                                 </div>
+
                                 <p
                                     className={`text-xs text-muted-foreground absolute flex flex-row gap-1 items-center mt-1 truncate ${auth._id === convo.senderId ? "right-2" : "left-2"
                                         }`}

@@ -7,7 +7,12 @@ export const sendMessage = async (req, res) => {
     const loggedInUser = req.user._id
     try {
 
-        const imageCloud = cloudinary.uploader.upload(image)
+        let imageCloud;
+        if (image) {
+            const cuploadResponse = await cloudinary.uploader.upload(image)
+            imageCloud = cuploadResponse.secure_url
+        }
+
         const newMessage = new Message({
             senderId: loggedInUser,
             receiverId,

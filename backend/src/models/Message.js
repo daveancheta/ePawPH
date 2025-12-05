@@ -15,11 +15,13 @@ const MesssageSchema = new mongoose.Schema({
 
     text: {
         type: String,
+        default: "",
         trim: true
     },
 
     image: {
         type: String,
+        default: ""
     }
 
 }, { timestamps: true })

@@ -1,4 +1,4 @@
-import { ArrowUpIcon, Image } from "lucide-react"
+import { ArrowUpIcon, Heart, Image, X } from "lucide-react"
 import {
     InputGroup,
     InputGroupAddon,
@@ -6,7 +6,7 @@ import {
     InputGroupTextarea,
 } from "@/components/ui/input-group"
 import { UseMessageStore } from "@/store/UseMessageStore"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 
 export function ChatInput() {
@@ -16,33 +16,73 @@ export function ChatInput() {
         text: "",
         image: ""
     })
+    const imageFileRef = useRef<HTMLInputElement>(null)
+
     const handleSendMessage = (e: any) => {
         e.preventDefault()
         sendMessage(formData)
 
-        setFormData({ ...formData, text: "" })
+        setFormData({ ...formData, text: "", image: "" })
     }
+
+    const handleImageUpload = (e: any) => {
+        const file = e.target.files[0]
+        if (!file) return;
+
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+
+        reader.onloadend = () => {
+            if (typeof reader.result === "string") {
+                setFormData({ ...formData, image: reader.result })
+            }
+        }
+    }
+
     return (
         <div className=" px-0 py-0">
             <form onSubmit={handleSendMessage}>
                 <InputGroup className="rounded-none rounded-b-sm border-none max-w-120 wrap-break-word">
+                    {formData.image &&
+                        <div className="w-full p-2 flex">
+                            <div className="relative">
+                                <img className="w-30 h-30 flex justify-start rounded-sm" src={formData.image} alt="" />
+                                <button className="absolute top-0 right-0 m-1 cursor-pointer"
+                                    onClick={() => setFormData({ ...formData, image: "" })
+                                    }>
+                                    <X className="text-black" />
+                                </button>
+                            </div>
+                        </div>}
                     <InputGroupTextarea placeholder="Ask, Search or Chat..."
                         onChange={(e) => setFormData({ ...formData, text: e.target.value })} value={formData.text} />
+                    <input type="file" ref={imageFileRef} accept="image/*" onChange={handleImageUpload} hidden />
                     <InputGroupAddon align="block-end">
                         <InputGroupButton
                             variant="outline"
-                            className="rounded-full"
+                            className="rounded-full cursor-pointer"
                             size="icon-sm"
+                            onClickCapture={() => imageFileRef?.current?.click()}
                         >
                             <Image />
                         </InputGroupButton>
                         <div className="flex-1" />
                         <Button
-                            className="rounded-full"
-                            disabled={!formData.text.trim()}
+                            className="rounded-full cursor-pointer"
+                            hidden={!formData.text && !formData.image}
+
                         >
                             <ArrowUpIcon />
                             <span className="sr-only">Send</span>
+                        </Button>
+
+                        <Button
+                            className="rounded-full cursor-pointer"
+                            hidden={formData.text || formData.image}
+                            onClick={() => setFormData({ ...formData, text: "heart" })}
+                        >
+                            <Heart className="fill-red-400 text-red-400" />
+                            <span className="sr-only">Heart</span>
                         </Button>
                     </InputGroupAddon>
                 </InputGroup>
