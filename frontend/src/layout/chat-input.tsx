@@ -68,15 +68,17 @@ export function ChatInput() {
                         </InputGroupButton>
                         <div className="flex-1" />
                         <Button
+                        variant={'outline'}
                             className="rounded-full cursor-pointer"
                             hidden={!formData.text && !formData.image}
 
                         >
-                            <ArrowUpIcon />
+                            <ArrowUpIcon className="text-white"/>
                             <span className="sr-only">Send</span>
                         </Button>
 
                         <Button
+                        variant={'outline'}
                             className="rounded-full cursor-pointer"
                             hidden={formData.text || formData.image}
                             onClick={() => setFormData({ ...formData, text: "heart" })}
