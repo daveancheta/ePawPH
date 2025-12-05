@@ -106,13 +106,13 @@ function ChatContainer() {
                                         } rounded-xl px-4 py-2 max-w-xs wrap-break-word`}
                                 >
                                     {convo.image &&
-                                        <button onClick={() => {
+                                        <button className='cursor-pointer' onClick={() => {
                                             setOpen(true)
                                             setPreviewImage(convo.image)
                                         }}>
                                             <img className='rounded-sm' src={convo.image} />
                                         </button>
-                                    }
+                                    }   
 
                                     {convo.text === "heart" ?
                                         <Heart className="fill-red-400 text-red-400 size-8" /> :
