@@ -31,7 +31,7 @@ type posterId = {
 }
 
 function UserDisplayLayout() {
-    const { auth } = UseAuthStore()
+    const { auth, onlineUsers } = UseAuthStore()
     const { userList, users } = UseUserStore() as {
         userList: User[]
         usersCount: number
@@ -86,7 +86,7 @@ function UserDisplayLayout() {
                                                 {getInitials(users.fullname)}
                                             </AvatarFallback>}
                                     </Avatar>
-                                    <div className='absolute bottom-1 right-0 w-2 h-2 bg-green-500 rounded-full'></div>
+                                    <div className={`absolute bottom-1 right-0 w-2 h-2 rounded-full ${onlineUsers.includes(users._id) ? "bg-green-500" : "bg-neutral-700"}`}></div>
                                 </div>
                                 <div className='flex flex-col'>
                                     <h1 className="capitalize font-medium text-sm">{users.fullname}</h1>

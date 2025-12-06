@@ -6,6 +6,7 @@ import { UseUserStore } from '@/store/UseUserStore'
 import { Send, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import ChatContainer from './chat-container'
+import { UseAuthStore } from '@/store/UseAuthStore'
 
 type User = {
     _id: string,
@@ -19,6 +20,7 @@ function MessageLayout() {
         getChats: any, chats: any, setSelectedUser: any,
         getConversation: any, conversation: any, selectedUser: any
     }
+    const { onlineUsers } = UseAuthStore()
     const getInitials = useInitials()
     const [chatContainer, setChatContiner] = useState("")
 
@@ -74,6 +76,7 @@ function MessageLayout() {
                                 onClick={() =>
                                     setSelectedUser(chats)
                                 }>
+                                    <div className='relative'>
                                 <Avatar className="w-15 h-15">
                                     {chats.followerId.profile?.length > 0 ? (
                                         <img className="rounded-full object-cover" src={chats.followerId.profile} />
@@ -83,7 +86,10 @@ function MessageLayout() {
                                         </AvatarFallback>
                                     )}
                                 </Avatar>
+                                    <div className={`absolute bottom-1 right-0 w-3 h-3 rounded-full ${onlineUsers.includes(chats.followerId._id) ? "bg-green-500" : "bg-neutral-700"}`}></div>
+                                </div>
                                 <h1 className='capitalize'>{chats.followerId.fullname}</h1>
+
                             </div>
                         ))}
                     </div>

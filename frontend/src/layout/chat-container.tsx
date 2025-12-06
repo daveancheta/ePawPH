@@ -44,7 +44,7 @@ function ChatContainer() {
             getConversation: any, conversation: any, selectedUser: any,
             isLoadingMessages: any
         }
-    const { auth } = UseAuthStore()
+    const { auth, onlineUsers } = UseAuthStore()
     const getInitials = useInitials()
     const messageRef = useRef<HTMLDivElement>(null)
     const [open, setOpen] = useState(false)
@@ -81,7 +81,13 @@ function ChatContainer() {
                             </AvatarFallback>
                         )}
                     </Avatar>
-                    <h1 className="font-bold capitalize">{selectedUser?.followerId.fullname}</h1>
+                    <div className='flex flex-col'>
+                        <h1 className="font-bold capitalize">{selectedUser?.followerId.fullname}</h1>
+                        <div className='flex flex-row items-center gap-1'>
+                            <div className={`w-2 h-2 rounded-full ${onlineUsers.includes(selectedUser.followerId._id) ? "bg-green-500" : "bg-neutral-700"}`}></div>
+                            <span className='text-muted-foreground text-xs'>{onlineUsers.includes(selectedUser.followerId._id) ? "Online" : "Offline"}</span>
+                        </div>
+                    </div>
                 </div>
 
                 <button onClick={() => setSelectedUser(null)}>
@@ -112,7 +118,7 @@ function ChatContainer() {
                                         }}>
                                             <img className='rounded-sm' src={convo.image} />
                                         </button>
-                                    }   
+                                    }
 
                                     {convo.text === "heart" ?
                                         <Heart className="fill-red-400 text-red-400 size-8" /> :
