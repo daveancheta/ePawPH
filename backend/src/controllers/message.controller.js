@@ -1,6 +1,7 @@
 import cloudinary from "../lib/cloudinary.js";
 import Message from "../models/Message.js";
 import Follow from "../models/Follow.js";
+import { getReceiverSocketId, io } from "../lib/socket.js"
 
 export const sendMessage = async (req, res) => {
     const { receiverId, text, image } = req.body
@@ -15,16 +16,21 @@ export const sendMessage = async (req, res) => {
 
         const newMessage = new Message({
             senderId: loggedInUser,
-            receiverId,
+            receiverId: receiverId._id,
             text,
             image: imageCloud
         })
 
-        if (newMessage) {
-            newMessage.save()
+        await newMessage.save()
 
-            res.status(200).json(newMessage)
+        const receieverSocketId = getReceiverSocketId(receiverId._id)
+        if (receieverSocketId) {
+            io.to(receieverSocketId).emit("newMessage", newMessage)
         }
+
+        console.log(receiverId._id)
+
+        res.status(200).json(newMessage)
 
     } catch (error) {
         console.log("Error in send message controller:", error)

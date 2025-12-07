@@ -10,7 +10,7 @@ import { useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 
 export function ChatInput() {
-    const { sendMessage, selectedUser } = UseMessageStore() as { sendMessage: any, selectedUser: any }
+    const { sendMessage, selectedUser } = UseMessageStore() 
     const [formData, setFormData] = useState({
         receiverId: selectedUser.followerId,
         text: "",

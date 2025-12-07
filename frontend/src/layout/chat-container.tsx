@@ -39,11 +39,7 @@ dayjs.updateLocale('en', {
 
 function ChatContainer() {
     const { setSelectedUser, selectedUser, getConversation,
-        conversation, isLoadingMessages } = UseMessageStore() as {
-            setSelectedUser: any,
-            getConversation: any, conversation: any, selectedUser: any,
-            isLoadingMessages: any
-        }
+        conversation, isLoadingMessages, subscribeToMessages, unsubscribeFromMessages } = UseMessageStore()
     const { auth, onlineUsers } = UseAuthStore()
     const getInitials = useInitials()
     const messageRef = useRef<HTMLDivElement>(null)
@@ -52,7 +48,10 @@ function ChatContainer() {
 
     useEffect(() => {
         getConversation(selectedUser?.followerId?._id)
-    }, [getConversation])
+        subscribeToMessages();
+
+        return () => unsubscribeFromMessages();
+    }, [getConversation, selectedUser, subscribeToMessages, unsubscribeFromMessages])
 
     useEffect(() => {
         if (messageRef.current) {
