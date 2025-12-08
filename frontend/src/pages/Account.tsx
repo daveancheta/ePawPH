@@ -113,6 +113,12 @@ function Account() {
         };
     }
 
+    const hasChanges =
+        formData.fullname !== auth.fullname ||
+        formData.username !== auth.username ||
+        formData.profile !== auth.profile;
+
+
     return (
         <Layout>
             <div className="flex flex-col gap-6 sm:px-10 lg:px-20 w-full">
@@ -186,10 +192,11 @@ function Account() {
                                             <DialogClose asChild>
                                                 <Button type="button" variant="outline">Cancel</Button>
                                             </DialogClose>
-                                            <Button type="submit" disabled={isUpdatingProfile}>
+                                            <Button type="submit" disabled={isUpdatingProfile || !hasChanges
+                                            }>
                                                 <div className="flex flex-row gap-1 items-center">
-                                                {isUpdatingProfile && <Loader className="animate-spin"/>}
-                                                <span>Save changes</span>
+                                                    {isUpdatingProfile && <Loader className="animate-spin" />}
+                                                    <span>Save changes</span>
                                                 </div></Button>
                                         </DialogFooter>
                                     </form>
