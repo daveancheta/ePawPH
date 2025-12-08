@@ -88,7 +88,7 @@ function PostLayout() {
         <div className="flex flex-row gap-5 items-center bg-neutral-900 border p-4 px-10 rounded-md my-5">
           <div className="flex flex-row items-center gap-2">
             <Avatar>
-              {auth.profile.length > 0 ? <img className="rounded-full" src={auth.profile} /> :
+              {auth.profile.length > 0 ? <img className="rounded-full object-cover" src={auth.profile} /> :
                 <AvatarFallback className='text-white cursor-pointer border rounded-full'>
                   {getInitials(auth.fullname)}
                 </AvatarFallback>}
@@ -139,7 +139,7 @@ function PostLayout() {
                     <div className="flex flex-row justify-between items-center px-4">
                       <div className="flex flex-row gap-2 items-center">
                         <Avatar className="w-8 h-8">
-                          {posts.posterId.profile.length > 0 ? <img className="rounded-full" src={posts.posterId.profile} /> :
+                          {posts.posterId.profile.length > 0 ? <img className="rounded-full object-cover" src={posts.posterId.profile} /> :
                             <AvatarFallback className='text-white cursor-pointer border rounded-full'>
                               {getInitials(posts.posterId.fullname)}
                             </AvatarFallback>}
