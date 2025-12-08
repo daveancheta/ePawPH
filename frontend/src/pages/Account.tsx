@@ -4,17 +4,20 @@ import { useInitials } from "@/hooks/use-initials"
 import Layout from "@/layout/app-layout"
 import { UseAuthStore } from "@/store/UseAuthStore"
 import { UseFollowStore } from "@/store/UseFollowStore"
-import { Bolt, Bookmark, Copy, EllipsisVertical, Heart, LayoutGrid, MessageCircle, Search, Send, Share2, Users2 } from "lucide-react"
+import { Bolt, Bookmark, Copy, EllipsisVertical, Heart, LayoutGrid, MessageCircle, Send, Share2, Users2 } from "lucide-react"
 import { useEffect, useState } from "react"
 import {
     Dialog,
     DialogContent,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group"
 import { UsePostStore } from "@/store/UsePostStore"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { DialogClose } from "@radix-ui/react-dialog"
 
 type Post = {
     _id: string
@@ -121,7 +124,37 @@ function Account() {
 
                         {/* Action buttons */}
                         <div className="flex flex-row justify-center sm:justify-start gap-2">
-                            <Button className="text-md cursor-pointer w-50" variant="form">Edit profile</Button>
+                            <Dialog>
+                                <form>
+                                    <DialogTrigger asChild>
+                                        <Button className="text-md cursor-pointer w-50" variant="form">Edit profile</Button>
+
+                                    </DialogTrigger>
+                                    <DialogContent className="sm:max-w-[700px]">
+                                        <DialogHeader>
+                                            <DialogTitle>Edit profile</DialogTitle>
+
+                                        </DialogHeader>
+                                        <hr/>
+                                        <div className="grid gap-4">
+                                            <div className="grid gap-3">
+                                                <Label htmlFor="name-1">Name</Label>
+                                                <Input id="name-1" name="name" defaultValue="Pedro Duarte" />
+                                            </div>
+                                            <div className="grid gap-3">
+                                                <Label htmlFor="username-1">Username</Label>
+                                                <Input id="username-1" name="username" defaultValue="@peduarte" />
+                                            </div>
+                                        </div>
+                                        <DialogFooter>
+                                            <DialogClose asChild>
+                                                <Button variant="outline">Cancel</Button>
+                                            </DialogClose>
+                                            <Button type="submit">Save changes</Button>
+                                        </DialogFooter>
+                                    </DialogContent>
+                                </form>
+                            </Dialog>
                             <Button className="cursor-pointer"><Send /></Button>
                             <Button className="cursor-pointer"><Bolt /></Button>
                         </div>
@@ -137,16 +170,10 @@ function Account() {
                                 </DialogTrigger>
                                 <DialogContent className="sm:max-w-[700px]">
                                     <DialogHeader>
-                                        <DialogTitle className="flex justify-center">Following</DialogTitle>
+                                        <DialogTitle className="flex justify-start">Following</DialogTitle>
                                         <hr />
 
                                     </DialogHeader>
-                                    <InputGroup>
-                                        <InputGroupInput placeholder="Search..." />
-                                        <InputGroupAddon>
-                                            <Search />
-                                        </InputGroupAddon>
-                                    </InputGroup>
                                     {listFollowing.length > 0 ? <div className="space-y-6">
                                         {
                                             listFollowing.map((following: any) => (
@@ -208,16 +235,10 @@ function Account() {
                                 </DialogTrigger>
                                 <DialogContent className="sm:max-w-[700px]">
                                     <DialogHeader>
-                                        <DialogTitle className="flex justify-center">Followers</DialogTitle>
+                                        <DialogTitle className="flex justify-start">Followers</DialogTitle>
                                         <hr />
 
                                     </DialogHeader>
-                                    <InputGroup>
-                                        <InputGroupInput placeholder="Search..." />
-                                        <InputGroupAddon>
-                                            <Search />
-                                        </InputGroupAddon>
-                                    </InputGroup>
                                     {listFollower.length > 0 ? <div className="space-y-6">
                                         {
                                             listFollower.map((follower: any) => (
