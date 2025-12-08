@@ -2,6 +2,7 @@ import bcrypt from "bcrypt"
 import { generateToken } from "../lib/utils.js"
 import User from "../models/User.js"
 import { faker } from "@faker-js/faker"
+import cloudinary from "../lib/cloudinary.js"
 
 export const signup = async (req, res) => {
     const { fullname, gender, email, password } = req.body;
@@ -53,7 +54,7 @@ export const signup = async (req, res) => {
 
     } catch (error) {
         console.error("Error signup controller:", error)
-        res.status(500).json({ message: 'Inertal server error' })
+        res.status(400).json({ message: 'Inertal server error' })
     }
 }
 
@@ -86,11 +87,33 @@ export const login = async (req, res) => {
 
     } catch (error) {
         console.error("Error login controller:", error)
-        res.status(500).json({ message: 'Inertal server error' })
+        res.status(400).json({ message: 'Inertal server error' })
     }
 }
 
 export const logout = async (_, res) => {
     res.cookie("jwt", "", { maxAge: 0 })
     res.status(200).json({ message: "Logout succesfully" })
+}
+
+export const updateProfile = async (req, res) => {
+    const loggedInUser = req.user._id
+    const { fullname, username, profile } = req.body
+    try {
+
+        const profileCloud = await cloudinary.uploader.upload(profile)
+        const newProfile = await User.findByIdAndUpdate(loggedInUser,
+            {
+                fullname: fullname,
+                username: username,
+                profile: profileCloud.secure_url
+            },
+            { new: true }
+        )
+
+        res.status(200).json(newProfile)
+    } catch (error) {
+        console.error("Error update profile controller:", error)
+        res.status(400).json({ message: 'Inertal server error' })
+    }
 }
