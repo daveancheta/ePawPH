@@ -73,7 +73,7 @@ function MessageLayout() {
                             <div>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
-                                        <Button variant="ghost" aria-label="Open menu" size="icon-sm">
+                                        <Button className='cursor-pointer' variant="ghost" aria-label="Open menu" size="icon-sm">
                                             <MoreHorizontalIcon />
                                         </Button>
                                     </DropdownMenuTrigger>
