@@ -4,8 +4,8 @@ import { useInitials } from "@/hooks/use-initials"
 import Layout from "@/layout/app-layout"
 import { UseAuthStore } from "@/store/UseAuthStore"
 import { UseFollowStore } from "@/store/UseFollowStore"
-import { Bolt, Bookmark, Copy, EllipsisVertical, Heart, LayoutGrid, MessageCircle, Send, Share2, Users2 } from "lucide-react"
-import { useEffect, useState } from "react"
+import { Bolt, Bookmark, Copy, EllipsisVertical, Heart, LayoutGrid, MessageCircle, Pencil, Send, Share2, Users2 } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
 import {
     Dialog,
     DialogContent,
@@ -35,7 +35,7 @@ type posterId = {
 }
 
 function Account() {
-    const { auth } = UseAuthStore()
+    const { auth, updateProfile } = UseAuthStore()
     const getInitials = useInitials()
     const { followingCount, countFollower, countFollowing,
         followerCount, followingList, listFollowing,
@@ -43,12 +43,14 @@ function Account() {
         handleFollow, handleUnfollow } = UseFollowStore()
     const { posts, post } = UsePostStore() as { posts: Post[], post: any }
     const [hovered, setHoverd] = useState("")
-
-
     const [formData, setFormData] = useState({
         followingId: auth._id,
-        followerId: ""
+        followerId: "",
+        fullname: auth.fullname,
+        username: auth.username,
+        profile: auth.profile,
     })
+    const profileRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
         post()
@@ -89,7 +91,26 @@ function Account() {
 
     const setHovered = (id: any) => {
         setHoverd(id)
+    }
 
+    const handleUpdateProfile = (e: any) => {
+        e.preventDefault()
+
+        updateProfile(formData)
+    }
+
+    const handleImageUpload = (e: any) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+
+        reader.onloadend = () => {
+            if (typeof reader.result === "string") {
+                setFormData({ ...formData, profile: reader.result });
+            }
+        };
     }
 
     return (
@@ -125,35 +146,44 @@ function Account() {
                         {/* Action buttons */}
                         <div className="flex flex-row justify-center sm:justify-start gap-2">
                             <Dialog>
-                                <form>
-                                    <DialogTrigger asChild>
-                                        <Button className="text-md cursor-pointer w-50" variant="form">Edit profile</Button>
 
-                                    </DialogTrigger>
-                                    <DialogContent className="sm:max-w-[700px]">
+                                <DialogTrigger asChild>
+                                    <Button className="text-md cursor-pointer w-50" variant="form">Edit profile</Button>
+
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-[700px]">
+                                    <form onSubmit={handleUpdateProfile} className="flex flex-col gap-6">
                                         <DialogHeader>
                                             <DialogTitle>Edit profile</DialogTitle>
-
                                         </DialogHeader>
-                                        <hr/>
+                                        <hr />
+
                                         <div className="grid gap-4">
+                                            <input type="file" ref={profileRef} onChange={handleImageUpload} accept="image/*"  hidden/>
+                                            <div className="flex justify-center">
+                                                <div className="relative">
+                                                    <img className="w-50 h-50 rounded-full" src={formData.profile} alt="" />
+                                                    <Button variant={'following'} className="absolute right-0 bottom-6 rounded-full w-10"
+                                                        onClick={() => profileRef?.current?.click()} type="button"><Pencil /></Button>
+                                                </div>
+                                            </div>
                                             <div className="grid gap-3">
-                                                <Label htmlFor="name-1">Name</Label>
-                                                <Input id="name-1" name="name" defaultValue="Pedro Duarte" />
+                                                <Label htmlFor="name-1">Full Name</Label>
+                                                <Input onChange={(e) => setFormData({ ...formData, fullname: e.target.value })} value={formData.fullname} />
                                             </div>
                                             <div className="grid gap-3">
                                                 <Label htmlFor="username-1">Username</Label>
-                                                <Input id="username-1" name="username" defaultValue="@peduarte" />
+                                                <Input onChange={(e) => setFormData({ ...formData, username: e.target.value })} value={formData.username} />
                                             </div>
                                         </div>
                                         <DialogFooter>
                                             <DialogClose asChild>
-                                                <Button variant="outline">Cancel</Button>
+                                                <Button type="button" variant="outline">Cancel</Button>
                                             </DialogClose>
                                             <Button type="submit">Save changes</Button>
                                         </DialogFooter>
-                                    </DialogContent>
-                                </form>
+                                    </form>
+                                </DialogContent>
                             </Dialog>
                             <Button className="cursor-pointer"><Send /></Button>
                             <Button className="cursor-pointer"><Bolt /></Button>
