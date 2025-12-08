@@ -56,7 +56,7 @@ export function NavUser({
             >
 
               <Avatar className="h-8 w-8 rounded-lg">
-                {auth.profile.length > 0 ? <AvatarImage src={auth.profile} alt={auth.fullname} /> :
+                {auth.profile.length > 0 ? <AvatarImage className="object-cover" src={auth.profile} alt={auth.fullname} /> :
                   <AvatarFallback className="rounded-lg">{getInitials(auth.fullname)}</AvatarFallback>
                 }
               </Avatar>
@@ -77,7 +77,7 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                {auth.profile.length > 0 ? <AvatarImage src={auth.profile} alt={auth.fullname} /> :
+                {auth.profile.length > 0 ? <AvatarImage className="object-cover" src={auth.profile} alt={auth.fullname} /> :
                   <AvatarFallback className="rounded-lg">{getInitials(auth.fullname)}</AvatarFallback>
                 }
               </Avatar>

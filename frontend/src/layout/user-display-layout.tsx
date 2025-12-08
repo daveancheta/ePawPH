@@ -81,7 +81,7 @@ function UserDisplayLayout() {
                                 <div className='relative'>
                                     <Avatar key={users._id} className='w-8 h-8 rounded-full'>
                                         {users.profile.length > 0 ?
-                                            <img src={users.profile} alt="" /> :
+                                            <img src={users.profile} alt="" className='object-cover'/> :
                                             <AvatarFallback className='text-white cursor-pointer border truncate whitespace-nowrap rounded-full'>
                                                 {getInitials(users.fullname)}
                                             </AvatarFallback>}
