@@ -12,6 +12,7 @@ interface AuthState {
     onlineUsers: string[];
     connectSocket: any;
     disconnectSocket: any;
+    isUpdatingProfile: boolean;
     updateProfile: any;
     checkAuth: () => Promise<void>;
     signup: (data: SignUpData) => Promise<void>;
@@ -40,6 +41,7 @@ export const UseAuthStore = create<AuthState>((set, get) => ({
     isLoggingIn: false,
     socket: null,
     onlineUsers: [],
+    isUpdatingProfile: false,
 
     checkAuth: async () => {
         try {
@@ -123,11 +125,16 @@ export const UseAuthStore = create<AuthState>((set, get) => ({
     },
 
     updateProfile: async (data: any) => {
+        set({ isUpdatingProfile: true })
+
         try {
             const res = await AxiosInstance.put("/auth/updateProfile", data)
+            set({ auth: res.data })
             toast.success("Profile updated successfully")
         } catch (error: any) {
             toast.error(error.reponse.data.message || "Something went wrong")
+        } finally {
+            set({ isUpdatingProfile: false })
         }
     }
 }));

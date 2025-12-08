@@ -4,7 +4,7 @@ import { useInitials } from "@/hooks/use-initials"
 import Layout from "@/layout/app-layout"
 import { UseAuthStore } from "@/store/UseAuthStore"
 import { UseFollowStore } from "@/store/UseFollowStore"
-import { Bolt, Bookmark, Copy, EllipsisVertical, Heart, LayoutGrid, MessageCircle, Pencil, Send, Share2, Users2 } from "lucide-react"
+import { Bolt, Bookmark, Copy, EllipsisVertical, Heart, LayoutGrid, Loader, MessageCircle, Pencil, Send, Share2, Users2 } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import {
     Dialog,
@@ -35,7 +35,7 @@ type posterId = {
 }
 
 function Account() {
-    const { auth, updateProfile } = UseAuthStore()
+    const { auth, updateProfile, isUpdatingProfile } = UseAuthStore()
     const getInitials = useInitials()
     const { followingCount, countFollower, countFollowing,
         followerCount, followingList, listFollowing,
@@ -122,7 +122,7 @@ function Account() {
 
                     <Avatar className="w-32 h-32 sm:w-60 sm:h-60">
                         {auth.profile?.length > 0 ? (
-                            <img className="rounded-full" src={auth.profile} />
+                            <img className="rounded-full object-cover" src={auth.profile} />
                         ) : (
                             <AvatarFallback className="text-white cursor-pointer border rounded-full">
                                 {getInitials(auth.fullname)}
@@ -159,28 +159,38 @@ function Account() {
                                         <hr />
 
                                         <div className="grid gap-4">
-                                            <input type="file" ref={profileRef} onChange={handleImageUpload} accept="image/*"  hidden/>
-                                            <div className="flex justify-center">
-                                                <div className="relative">
-                                                    <img className="w-50 h-50 rounded-full" src={formData.profile} alt="" />
-                                                    <Button variant={'following'} className="absolute right-0 bottom-6 rounded-full w-10"
-                                                        onClick={() => profileRef?.current?.click()} type="button"><Pencil /></Button>
+                                            <input type="file" ref={profileRef} onChange={handleImageUpload} accept="image/*" hidden />
+                                            <div className="grid gap-3">
+                                                <Label className="flex justify-start" htmlFor="name-1">Profile</Label>
+                                                <div className="flex justify-center">
+                                                    <div className="relative">
+                                                        <img className="w-50 h-50 rounded-full object-cover" src={formData.profile} alt="" />
+                                                        <Button variant={'following'} className="absolute right-0 bottom-6 rounded-full w-10"
+                                                            onClick={() => profileRef?.current?.click()} type="button"><Pencil /></Button>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <hr />
                                             <div className="grid gap-3">
                                                 <Label htmlFor="name-1">Full Name</Label>
                                                 <Input onChange={(e) => setFormData({ ...formData, fullname: e.target.value })} value={formData.fullname} />
                                             </div>
+                                            <hr />
                                             <div className="grid gap-3">
                                                 <Label htmlFor="username-1">Username</Label>
                                                 <Input onChange={(e) => setFormData({ ...formData, username: e.target.value })} value={formData.username} />
                                             </div>
+                                            <hr />
                                         </div>
                                         <DialogFooter>
                                             <DialogClose asChild>
                                                 <Button type="button" variant="outline">Cancel</Button>
                                             </DialogClose>
-                                            <Button type="submit">Save changes</Button>
+                                            <Button type="submit" disabled={isUpdatingProfile}>
+                                                <div className="flex flex-row gap-1 items-center">
+                                                {isUpdatingProfile && <Loader className="animate-spin"/>}
+                                                <span>Save changes</span>
+                                                </div></Button>
                                         </DialogFooter>
                                     </form>
                                 </DialogContent>
