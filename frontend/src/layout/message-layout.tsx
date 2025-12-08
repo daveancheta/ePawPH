@@ -7,6 +7,15 @@ import { Send, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import ChatContainer from './chat-container'
 import { UseAuthStore } from '@/store/UseAuthStore'
+import { MoreHorizontalIcon } from "lucide-react"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 type User = {
     _id: string,
@@ -16,10 +25,7 @@ type User = {
 
 function MessageLayout() {
     const { userList, users } = UseUserStore() as { userList: User[], users: any }
-    const { getChats, chats, setSelectedUser, selectedUser } = UseMessageStore() as {
-        getChats: any, chats: any, setSelectedUser: any,
-        getConversation: any, conversation: any, selectedUser: any
-    }
+    const { getChats, chats, setSelectedUser, selectedUser } = UseMessageStore()
     const { onlineUsers } = UseAuthStore()
     const getInitials = useInitials()
     const [chatContainer, setChatContiner] = useState("")
@@ -63,9 +69,31 @@ function MessageLayout() {
                 ${chatContainer === "open" ? "opacity-100 scale-100" : "opacity-0 scale-0"}`} hidden={selectedUser}>
                     <div className='flex justify-between items-center py-4 px-6 '>
                         <h1 className='font-bold'>Messages</h1>
-                        <button onClick={() => setChatContiner("")}>
-                            <X />
-                        </button>
+                        <div className='flex flex-row items-center'>
+                            <div>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="ghost" aria-label="Open menu" size="icon-sm">
+                                            <MoreHorizontalIcon />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent className="w-40" align="end">
+                                        <DropdownMenuLabel>Chat Settings</DropdownMenuLabel>
+                                        <DropdownMenuGroup>
+                                            <DropdownMenuItem>
+                                                Message Requet
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                Archive
+                                            </DropdownMenuItem>
+                                        </DropdownMenuGroup>
+                                    </DropdownMenuContent>
+                                </DropdownMenu></div>
+                            <button onClick={() => setChatContiner("")}>
+                                <X />
+                            </button>
+                        </div>
+
                     </div>
                     <hr />
                     <div className='flex flex-col gap-0'>
@@ -76,16 +104,16 @@ function MessageLayout() {
                                 onClick={() =>
                                     setSelectedUser(chats)
                                 }>
-                                    <div className='relative'>
-                                <Avatar className="w-15 h-15">
-                                    {chats.followerId.profile?.length > 0 ? (
-                                        <img className="rounded-full object-cover" src={chats.followerId.profile} />
-                                    ) : (
-                                        <AvatarFallback className="text-white cursor-pointer border rounded-full">
-                                            {getInitials(chats.followerId.fullname)}
-                                        </AvatarFallback>
-                                    )}
-                                </Avatar>
+                                <div className='relative'>
+                                    <Avatar className="w-15 h-15">
+                                        {chats.followerId.profile?.length > 0 ? (
+                                            <img className="rounded-full object-cover" src={chats.followerId.profile} />
+                                        ) : (
+                                            <AvatarFallback className="text-white cursor-pointer border rounded-full">
+                                                {getInitials(chats.followerId.fullname)}
+                                            </AvatarFallback>
+                                        )}
+                                    </Avatar>
                                     <div className={`absolute bottom-1 right-0 w-3 h-3 rounded-full ${onlineUsers.includes(chats.followerId._id) ? "bg-green-500" : "bg-neutral-700"}`}></div>
                                 </div>
                                 <h1 className='capitalize'>{chats.followerId.fullname}</h1>

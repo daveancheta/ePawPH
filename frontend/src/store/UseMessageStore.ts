@@ -13,6 +13,7 @@ interface MessageState {
     sendMessage: any,
     unsubscribeFromMessages: any,
     subscribeToMessages: any
+    getChats: any
 }
 
 export const UseMessageStore = create<MessageState>((set, get) => ({
