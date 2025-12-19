@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { UseAuthStore } from '@/store/UseAuthStore';
-import { Eye, EyeOff, Lock, MessageCircle, UserRound } from 'lucide-react'
+import { Divide, Eye, EyeOff, Lock, MessageCircle, UserRound } from 'lucide-react'
 import { useState } from 'react';
 import { LoaderIcon } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
@@ -25,6 +25,19 @@ function Login() {
   }
   return (
     <div className='m-20'>
+     {isMobile ?<div className="flex min-h-screen items-center justify-center">
+  <div className="max-w-md rounded-xl p-6 text-center flex justify-center flex-col items-center gap-2 shadow-lg">
+      <div><img className='rounded-full w-20 h-20' src="/logo(2).png" alt="" /></div>
+    <p className="text-sm font-medium text-slate-200">
+      ePawPH is currently available on desktop only.
+    </p>
+    <p className="mt-2 text-xs text-slate-400">
+      Mobile support will be available soon.
+    </p>
+  </div>
+</div>
+
+ : 
       <div className={isMobile ? 'hidden' : 'bg-neutral-800 min-h-160 w-full rounded-lg flex flex-col md:flex-row items-center justify-center'}>
 
         {/* Left Side */}
@@ -94,7 +107,7 @@ function Login() {
             />
           </div>
         </div>
-      </div>
+      </div>}
     </div>
   )
 }
