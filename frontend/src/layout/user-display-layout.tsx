@@ -101,7 +101,7 @@ function UserDisplayLayout() {
                                     <div className='flex flex-row gap-2 items-center'>
                                         <Avatar key={users._id} className='w-12 h-12 rounded-full'>
                                             {users.profile.length > 0 ?
-                                                <img src={users.profile} alt="" /> :
+                                                <img className="object-cover" src={users.profile} alt="" /> :
                                                 <AvatarFallback className='text-white cursor-pointer border truncate whitespace-nowrap rounded-full'>
                                                     {getInitials(users.fullname)}
                                                 </AvatarFallback>}

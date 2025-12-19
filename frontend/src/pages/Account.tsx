@@ -229,7 +229,7 @@ function Account() {
                                                         <div className="flex flex-row items-center gap-2">
                                                             <Avatar key={following._id} className='w-12 h-12 rounded-full'>
                                                                 {following.followerId.profile.length > 0 ?
-                                                                    <img src={following.followerId.profile} alt="" /> :
+                                                                    <img className="object-cover" src={following.followerId.profile} alt="" /> :
                                                                     <AvatarFallback className='text-white cursor-pointer border truncate whitespace-nowrap rounded-full'>
                                                                         {getInitials(following.followerId.fullname)}
                                                                     </AvatarFallback>}
@@ -294,7 +294,7 @@ function Account() {
                                                         <div className="flex flex-row items-center gap-2">
                                                             <Avatar key={follower._id} className='w-12 h-12 rounded-full'>
                                                                 {follower.followingId.profile.length > 0 ?
-                                                                    <img src={follower.followingId.profile} alt="" /> :
+                                                                    <img className="object-cover" src={follower.followingId.profile} alt="" /> :
                                                                     <AvatarFallback className='text-white cursor-pointer border truncate whitespace-nowrap rounded-full'>
                                                                         {getInitials(follower.followingId.fullname)}
                                                                     </AvatarFallback>}
