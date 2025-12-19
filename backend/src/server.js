@@ -15,7 +15,13 @@ import { app, server } from "./lib/socket.js";
 dotenv.config();
 
 app.use(express.json({ limit: '10mb' }))
-app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
+app.use(cors({ origin: [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://epawph-dvztkb52c-daveanchetas-projects.vercel.app',
+    'https://*.vercel.app',
+    'https://*.railway.app' 
+  ], credentials: true }));
 app.use(cookieParser())
 
 const __dirname = path.resolve();
