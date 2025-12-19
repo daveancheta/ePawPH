@@ -45,9 +45,13 @@ function ChatContainer() {
     const messageRef = useRef<HTMLDivElement>(null)
     const [open, setOpen] = useState(false)
     const [previewImage, setPreviewImage] = useState("")
+    const getUserId = () => selectedUser?.followerId?._id || selectedUser?._id
+    const getProfile = () => selectedUser?.followerId?.profile || selectedUser?.profile
+    const getFullname = () => selectedUser?.followerId?.fullname || selectedUser?.fullname
 
     useEffect(() => {
-        getConversation(selectedUser?.followerId?._id)
+        console.log(selectedUser)
+        getConversation(getUserId())
         subscribeToMessages();
 
         return () => unsubscribeFromMessages();
@@ -72,19 +76,19 @@ function ChatContainer() {
             <div className="flex justify-between items-center py-4 px-6">
                 <div className="flex flex-row items-center gap-2">
                     <Avatar className="w-15 h-15">
-                        {selectedUser.followerId.profile?.length > 0 ? (
-                            <img className="rounded-full object-cover" src={selectedUser.followerId.profile} />
+                        {getProfile().length > 0 ? (
+                            <img className="rounded-full object-cover" src={getProfile()} />
                         ) : (
                             <AvatarFallback className="text-white cursor-pointer border rounded-full w-15 h-15 flex items-center justify-center">
-                                {getInitials(selectedUser.followerId.fullname)}
+                                {getInitials(getFullname())}
                             </AvatarFallback>
                         )}
                     </Avatar>
                     <div className='flex flex-col'>
-                        <h1 className="font-bold capitalize">{selectedUser?.followerId.fullname}</h1>
+                        <h1 className="font-bold capitalize">{getFullname()}</h1>
                         <div className='flex flex-row items-center gap-1'>
-                            <div className={`w-2 h-2 rounded-full ${onlineUsers.includes(selectedUser.followerId._id) ? "bg-green-500" : "bg-neutral-700"}`}></div>
-                            <span className='text-muted-foreground text-xs'>{onlineUsers.includes(selectedUser.followerId._id) ? "Online" : "Offline"}</span>
+                            <div className={`w-2 h-2 rounded-full ${onlineUsers.includes(getUserId()) ? "bg-green-500" : "bg-neutral-700"}`}></div>
+                            <span className='text-muted-foreground text-xs'>{onlineUsers.includes(getUserId()) ? "Online" : "Offline"}</span>
                         </div>
                     </div>
                 </div>
@@ -146,7 +150,7 @@ function ChatContainer() {
                         </div>
 
                         <h1 className="mt-4 text-base font-semibold text-white">
-                            Start a conversation with <span className='capitalize'>{selectedUser?.followerId.fullname}</span>
+                            Start a conversation with <span className='capitalize'>{getFullname()}</span>
                         </h1>
 
                         <p className="mt-1 text-neutral-400 text-sm text-center">

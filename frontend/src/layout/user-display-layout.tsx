@@ -3,10 +3,12 @@ import { Button } from '@/components/ui/button'
 import { useInitials } from '@/hooks/use-initials'
 import { UseAuthStore } from '@/store/UseAuthStore'
 import { UseFollowStore } from '@/store/UseFollowStore'
+import { UseMessageStore } from '@/store/UseMessageStore'
 import { UsePostStore } from '@/store/UsePostStore'
 import { UseUserStore } from '@/store/UseUserStore'
 import { LayoutGrid, Loader, Send, UserRoundCheck, UserRoundPlus } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import ChatContainer from './chat-container'
 
 type User = {
     _id: string,
@@ -34,13 +36,13 @@ function UserDisplayLayout() {
     const { auth, onlineUsers } = UseAuthStore()
     const { userList, users } = UseUserStore() as {
         userList: User[]
-        usersCount: number
         users: any
     }
     const getInitials = useInitials()
     const [container, setContainer] = useState("")
     const { isFollowing, handleFollow, isFollowed, followings, isUnFollowing, handleUnfollow } = UseFollowStore()
     const { posts, post } = UsePostStore() as { posts: Post[], post: any }
+    const { selectedUser, setSelectedUser } = UseMessageStore()
 
     useEffect(() => {
         post()
@@ -81,7 +83,7 @@ function UserDisplayLayout() {
                                 <div className='relative'>
                                     <Avatar key={users._id} className='w-8 h-8 rounded-full'>
                                         {users.profile.length > 0 ?
-                                            <img src={users.profile} alt="" className='object-cover'/> :
+                                            <img src={users.profile} alt="" className='object-cover' /> :
                                             <AvatarFallback className='text-white cursor-pointer border truncate whitespace-nowrap rounded-full'>
                                                 {getInitials(users.fullname)}
                                             </AvatarFallback>}
@@ -158,14 +160,17 @@ function UserDisplayLayout() {
                                                 className='bg-[#58C185] text-[#2F2F2F] hover:bg-[#58C185]/90 cursor-pointer w-full'
                                                 disabled={isFollowing}><Loader className={isFollowing ? "animate-spin" : "hidden"} /><UserRoundPlus />Follow</Button>
                                         </form>}
-                                    <Button className='cursor-pointer flex-1'><Send />Message</Button>
+                                    <Button className='cursor-pointer flex-1'
+                                        onClick={() => setSelectedUser(users)}><Send />Message</Button>
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div> : ""}
-
+            {selectedUser &&
+                <ChatContainer />}
         </div>
+
     )
 }
 
