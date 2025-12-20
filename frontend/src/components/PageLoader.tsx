@@ -1,9 +1,7 @@
-import { Loader } from 'lucide-react'
-
 function Pageloader() {
   return (
     <div className='min-h-screen w-full flex items-center justify-center'>
-        <Loader className='animate-spin'/>
+        <img className='w-30 h-30 rounded-sm animate-pulse' src="logo(2).png" alt="" />
     </div>
   )
 }
