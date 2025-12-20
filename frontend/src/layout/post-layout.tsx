@@ -99,8 +99,8 @@ function PostLayout() {
                 <button><Bell className="fresh-green fill-[#58C185]" /></button>
               </div>
               </div>
-            </div>
             <hr />
+            </div>
             <div className={`flex flex-row gap-5 items-center bg-neutral-900 border p-4 px-10 rounded-md my-5 ${isMobile && 'hidden'}`}>
               <div className="flex flex-row items-center gap-2">
                 <Avatar>
@@ -152,7 +152,7 @@ function PostLayout() {
 
                   {posts.map(posts => (
                     <div key={posts._id}>
-                      <div className="flex flex-col gap-4">
+                      <div className="flex flex-col gap-4 mt-4">
                         <div className="flex flex-row justify-between items-center px-4">
                           <div className="flex flex-row gap-2 items-center">
                             <Avatar className="w-8 h-8">
