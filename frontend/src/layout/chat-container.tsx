@@ -165,7 +165,7 @@ function ChatContainer() {
 
             <hr />
 
-            <div>
+            <div className='mb-16'>
                 <ChatInput />
             </div>
         </div>

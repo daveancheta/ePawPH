@@ -42,7 +42,7 @@ export function ChatInput() {
     }
 
     return (
-        <div className="px-0 py-0 pb-16">
+        <div className="px-0 py-0">
             <form onSubmit={handleSendMessage}>
                 <InputGroup className={`rounded-none rounded-b-sm border-none ${isMobile ? "w-full" : "max-w-120"} wrap-break-word`}>
                     {formData.image &&
