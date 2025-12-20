@@ -8,9 +8,11 @@ import {
 import { UseMessageStore } from "@/store/UseMessageStore"
 import { useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 export function ChatInput() {
-    const { sendMessage, selectedUser } = UseMessageStore() 
+    const isMobile = useIsMobile()
+    const { sendMessage, selectedUser } = UseMessageStore()
     const [formData, setFormData] = useState({
         receiverId: selectedUser.followerId,
         text: "",
@@ -40,9 +42,9 @@ export function ChatInput() {
     }
 
     return (
-        <div className=" px-0 py-0">
+        <div className="px-0 py-0">
             <form onSubmit={handleSendMessage}>
-                <InputGroup className="rounded-none rounded-b-sm border-none max-w-120 wrap-break-word">
+                <InputGroup className={`rounded-none rounded-b-sm border-none ${isMobile ? "w-full" : "max-w-120"} wrap-break-word`}>
                     {formData.image &&
                         <div className="w-full p-2 flex">
                             <div className="relative">
@@ -54,7 +56,7 @@ export function ChatInput() {
                                 </button>
                             </div>
                         </div>}
-                    <InputGroupTextarea placeholder="Ask, Search or Chat..."
+                    <InputGroupTextarea placeholder="Aa"
                         onChange={(e) => setFormData({ ...formData, text: e.target.value })} value={formData.text} />
                     <input type="file" ref={imageFileRef} accept="image/*" onChange={handleImageUpload} hidden />
                     <InputGroupAddon align="block-end">
@@ -68,17 +70,17 @@ export function ChatInput() {
                         </InputGroupButton>
                         <div className="flex-1" />
                         <Button
-                        variant={'outline'}
+                            variant={'outline'}
                             className="rounded-full cursor-pointer"
                             hidden={!formData.text && !formData.image}
 
                         >
-                            <ArrowUpIcon className="text-white"/>
+                            <ArrowUpIcon className="text-white" />
                             <span className="sr-only">Send</span>
                         </Button>
 
                         <Button
-                        variant={'outline'}
+                            variant={'outline'}
                             className="rounded-full cursor-pointer"
                             hidden={formData.text || formData.image}
                             onClick={() => setFormData({ ...formData, text: "heart" })}

@@ -14,6 +14,7 @@ import {
     Dialog,
     DialogContent,
 } from "@/components/ui/dialog"
+import { useIsMobile } from '@/hooks/use-mobile'
 
 
 dayjs.extend(relativeTime);
@@ -38,6 +39,7 @@ dayjs.updateLocale('en', {
 });
 
 function ChatContainer() {
+    const isMobile = useIsMobile()
     const { setSelectedUser, selectedUser, getConversation,
         conversation, isLoadingMessages, subscribeToMessages, unsubscribeFromMessages } = UseMessageStore()
     const { auth, onlineUsers } = UseAuthStore()
@@ -65,7 +67,7 @@ function ChatContainer() {
 
 
     return (
-        <div className="fixed bottom-10 right-10 rounded-sm min-h-160 max-h-160 min-w-120 max-w-120 bg-neutral-950 border origin-bottom-right transition-all duration-300 flex flex-col select-none">
+        <div className={`fixed z-50 ${isMobile ? "min-h-screen min-w-screen top-0 right-0" : "bottom-10 right-10"} rounded-sm min-h-160 max-h-160 min-w-120 max-w-120 bg-neutral-950 border flex flex-col select-none`}>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent className="">
                     <div className='mt-5'>
