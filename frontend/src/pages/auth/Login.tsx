@@ -24,9 +24,9 @@ function Login() {
   return (
     <div className='min-h-screen w-full rounded-lg flex flex-col md:flex-row items-center justify-center'>
 
-      <div className="flex items-center justify-center min-w-120 gap-10">
+      <div className="flex items-center justify-center w-full max-w-md md:max-w-lg gap-10">
         <div className='w-full'>
-          <div className='flex flex-col gap-2 items-center justify-center mb-10 text-white'>
+          <div className='flex flex-col gap-2 items-center justify-center mb-10 text-white text-center'>
             <img className='w-20 h-20 rounded-full' src="logo(2).png" alt="" />
             <h1 className='text-2xl font-medium'>Login to your account</h1>
             <p className='text-sm font-normal'>Enter your email below to login to your account</p>
