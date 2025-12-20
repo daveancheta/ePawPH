@@ -315,7 +315,7 @@ function Account() {
                                                                         {getInitials(follower.followingId.fullname)}
                                                                     </AvatarFallback>}
                                                             </Avatar>
-                                                             <div className="flex flex-col">
+                                                            <div className="flex flex-col">
                                                                 {isMobile ?
                                                                     <h1 className="font-medium capitalize">
                                                                         {follower.followingId.fullname.length > 9 ?
@@ -382,7 +382,7 @@ function Account() {
                             const post = posts.filter((post: Post) => post.posterId._id === auth._id)
 
                             return post.length > 0 ? (
-                                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1 my-10'>
+                                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1 my-10 pb-10'>
                                     {post.map((post: Post) => (
                                         <div key={post._id}>
                                             {post.posterId._id === auth._id && <div>

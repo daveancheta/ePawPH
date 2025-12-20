@@ -16,7 +16,7 @@ import { useEffect } from "react"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
-import { Bookmark, Globe, Heart, History, Home, InboxIcon, MessageCircle, MessageCircleMore, MoreHorizontalIcon, Send, Share2 } from "lucide-react"
+import { Bookmark, Heart, History, InboxIcon, MessageCircle, MoreHorizontalIcon, Share2 } from "lucide-react"
 import { PostSkeleton } from "@/components/post-skeleton"
 import {
   DropdownMenu,
@@ -213,43 +213,7 @@ function PostLayout() {
                     </div>
                   </div>
                 ))}
-                <div className="fixed bottom-0 left-0 w-full bg-neutral-900 border-t shadow-md z-50 md:hidden">
-                  <div className="flex items-center justify-between px-6 h-16">
-
-                    <Link to="/" className="flex items-center justify-center">
-                      <Home className="size-6 text-white" />
-                    </Link>
-
-                    <Link to="/messages" className="flex items-center justify-center">
-                      <MessageCircleMore className="size-6 text-white" />
-                    </Link>
-
-                    <button className="">
-                      <Send className="size-6 text-white" />
-                    </button>
-
-                    <Link to="/news" className="flex items-center justify-center">
-                      <Globe className="size-6 text-white" />
-                    </Link>
-
-                    <Link to="/account" className="flex items-center justify-center">
-                      <Avatar className="w-8 h-8">
-                        {auth.profile.length > 0 ? (
-                          <img
-                            className="rounded-full object-cover"
-                            src={auth.profile}
-                            alt="profile"
-                          />
-                        ) : (
-                          <AvatarFallback>
-                            {getInitials(auth.fullname)}
-                          </AvatarFallback>
-                        )}
-                      </Avatar>
-                    </Link>
-
-                  </div>
-                </div>
+                
 
               </div>
             </div> :
