@@ -1,4 +1,4 @@
-import { ArrowUpIcon, Heart, Image, X } from "lucide-react"
+import { ArrowUpIcon, Heart, Image, TreePalmIcon, X } from "lucide-react"
 import {
     InputGroup,
     InputGroupAddon,
@@ -41,6 +41,14 @@ export function ChatInput() {
         }
     }
 
+    const handleKeyPress = (e: any) => {
+        if (!formData.text.trim() && !formData.image.trim()) {
+            return;
+        } else if(e.key === 'Enter') {
+                handleSendMessage(e);
+        }
+    }
+
     return (
         <div className="px-0 py-0">
             <form onSubmit={handleSendMessage}>
@@ -56,7 +64,7 @@ export function ChatInput() {
                                 </button>
                             </div>
                         </div>}
-                    <InputGroupTextarea placeholder="Aa"
+                    <InputGroupTextarea onKeyDown={handleKeyPress} placeholder="Aa"
                         onChange={(e) => setFormData({ ...formData, text: e.target.value })} value={formData.text} />
                     <input type="file" ref={imageFileRef} accept="image/*" onChange={handleImageUpload} hidden />
                     <InputGroupAddon align="block-end">
@@ -72,7 +80,7 @@ export function ChatInput() {
                         <Button
                             variant={'outline'}
                             className="rounded-full cursor-pointer"
-                            hidden={!formData.text && !formData.image}
+                            hidden={!formData.text.trim() && !formData.image}
 
                         >
                             <ArrowUpIcon className="text-white" />
@@ -80,9 +88,10 @@ export function ChatInput() {
                         </Button>
 
                         <Button
+                            type="submit"
                             variant={'outline'}
                             className="rounded-full cursor-pointer"
-                            hidden={formData.text || formData.image}
+                            hidden={formData.text.trim() || formData.image}
                             onClick={() => setFormData({ ...formData, text: "heart" })}
                         >
                             <Heart className="fill-red-400 text-red-400" />
