@@ -130,7 +130,7 @@ function Account() {
 
                     <Avatar className="w-32 h-32 sm:w-60 sm:h-60">
                         {auth.profile?.length > 0 ? (
-                            <img className="rounded-full object-cover w-60 h-60" src={auth.profile} />
+                            <img className="rounded-full object-cover sm:w-60 sm:h-60" src={auth.profile} />
                         ) : (
                             <AvatarFallback className="text-white cursor-pointer border rounded-full">
                                 {getInitials(auth.fullname)}
