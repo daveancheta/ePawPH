@@ -8,6 +8,7 @@ import UserRoutes from "./routes/UserRoutes.route.js";
 import FollowRoutes from "./routes/FollowRoutes.route.js";
 import MessageRoutes from "./routes/MessageRoutes.route.js";
 import path from "path";
+import { fileURLToPath } from "url";
 import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser"
 import { app, server } from "./lib/socket.js";
@@ -24,7 +25,8 @@ app.use(cors({ origin: [
   ], credentials: true }));
 app.use(cookieParser())
 
-const __dirname = path.resolve();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const PORT = ENV.PORT || 3000;
 
@@ -34,14 +36,14 @@ app.use("/api/user", UserRoutes);
 app.use("/api/follow", FollowRoutes);
 app.use("/api/message", MessageRoutes);
 
-if (ENV.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "../frontend/dist")));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-    app.get("*", (_, res) => {
-        res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
-    });
+  // Regex works in Express 5.x
+  app.get(/^\/.*$/, (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+  });
 }
-
 
 server.listen(PORT, () => {
     console.log("Server is running on port", PORT);
