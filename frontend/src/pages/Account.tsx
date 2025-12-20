@@ -18,6 +18,7 @@ import { UsePostStore } from "@/store/UsePostStore"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { DialogClose } from "@radix-ui/react-dialog"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 type Post = {
     _id: string
@@ -35,6 +36,7 @@ type posterId = {
 }
 
 function Account() {
+    const isMobile = useIsMobile()
     const { auth, updateProfile, isUpdatingProfile } = UseAuthStore()
     const getInitials = useInitials()
     const { followingCount, countFollower, countFollowing,
@@ -235,8 +237,22 @@ function Account() {
                                                                     </AvatarFallback>}
                                                             </Avatar>
                                                             <div className="flex flex-col">
-                                                                <h1 className="font-medium capitalize">{following.followerId.fullname}</h1>
-                                                                <span className="text-muted-foreground">{following.followerId.username}</span>
+                                                                {isMobile ?
+                                                                    <h1 className="font-medium capitalize">
+                                                                        {following.followerId.fullname.length > 9 ?
+                                                                            following.followerId.fullname.slice(0, 9) + '...' : following.followerId.fullname}
+                                                                    </h1> :
+                                                                    <h1 className="font-medium capitalize">
+                                                                        {following.followerId.fullname}
+                                                                    </h1>
+                                                                }
+                                                                {isMobile ?
+                                                                    <span className="text-muted-foreground">{following.followerId.username.length > 9 ?
+                                                                        following.followerId.username.slice(0, 9) + '...'
+                                                                        : following.followerId.username}</span>
+                                                                    :
+                                                                    <span className="text-muted-foreground">{following.followerId.username}</span>
+                                                                }
                                                             </div>
                                                         </div>
 
@@ -299,9 +315,23 @@ function Account() {
                                                                         {getInitials(follower.followingId.fullname)}
                                                                     </AvatarFallback>}
                                                             </Avatar>
-                                                            <div className="flex flex-col">
-                                                                <h1 className="font-medium capitalize">{follower.followingId.fullname}</h1>
-                                                                <span className="text-muted-foreground">{follower.followingId.username}</span>
+                                                             <div className="flex flex-col">
+                                                                {isMobile ?
+                                                                    <h1 className="font-medium capitalize">
+                                                                        {follower.followingId.fullname.length > 9 ?
+                                                                            follower.followingId.fullname.slice(0, 9) + '...' : follower.followingId.fullname}
+                                                                    </h1> :
+                                                                    <h1 className="font-medium capitalize">
+                                                                        {follower.followingId.fullname}
+                                                                    </h1>
+                                                                }
+                                                                {isMobile ?
+                                                                    <span className="text-muted-foreground">{follower.followingId.username.length > 9 ?
+                                                                        follower.followingId.username.slice(0, 9) + '...'
+                                                                        : follower.followingId.username}</span>
+                                                                    :
+                                                                    <span className="text-muted-foreground">{follower.followingId.username}</span>
+                                                                }
                                                             </div>
                                                         </div>
 
