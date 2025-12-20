@@ -9,7 +9,7 @@ import { UseMessageStore } from "@/store/UseMessageStore"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { auth } = UseAuthStore()
-  const { setChatContainer, selectedUser } = UseMessageStore()
+  const { setChatContainer } = UseMessageStore()
   const getInitials = useInitials()
   return (
     <SidebarProvider>
@@ -23,7 +23,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="flex flex-1 flex-col gap-4 pt-0 bg-neutral-900">
           <div className="flex rounded-xl justify-center min-h-min" >
             {children}
-            <div className={`fixed bottom-0 left-0 w-full bg-neutral-900 border-t shadow-md z-50 md:hidden ${selectedUser && "hidden"}`}>
+            <div className={`fixed bottom-0 left-0 w-full bg-neutral-900 border-t shadow-md z-50 md:hidden`}>
               <div className="flex items-center justify-between px-6 h-16">
                 <Link to="/" className="flex items-center justify-center">
                   <HomeIcon className="size-6 text-white" />
