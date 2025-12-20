@@ -5,9 +5,11 @@ import { Globe, HomeIcon, MessageCircleMore, Send } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { UseAuthStore } from "@/store/UseAuthStore"
 import { useInitials } from "@/hooks/use-initials"
+import { UseMessageStore } from "@/store/UseMessageStore"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
    const { auth } = UseAuthStore()
+   const { setChatContainer } = UseMessageStore()
   const getInitials = useInitials()
   return (
     <SidebarProvider>
@@ -27,9 +29,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       <HomeIcon className="size-6 text-white" />
                     </Link>
 
-                    <Link to="/messages" className="flex items-center justify-center">
+                    <button onClick={() => setChatContainer("open")} className="flex items-center justify-center">
                       <MessageCircleMore className="size-6 text-white" />
-                    </Link>
+                    </button>
 
                     <button className="">
                       <Send className="size-6 text-white" />

@@ -4,7 +4,7 @@ import { useInitials } from '@/hooks/use-initials'
 import { UseMessageStore } from '@/store/UseMessageStore'
 import { UseUserStore } from '@/store/UseUserStore'
 import { Send, X } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import ChatContainer from './chat-container'
 import { UseAuthStore } from '@/store/UseAuthStore'
 import { MoreHorizontalIcon } from "lucide-react"
@@ -27,10 +27,9 @@ type User = {
 function MessageLayout() {
     const isMobile = useIsMobile()
     const { userList, users } = UseUserStore() as { userList: User[], users: any }
-    const { getChats, chats, setSelectedUser, selectedUser } = UseMessageStore()
+    const { getChats, chats, setSelectedUser, selectedUser, chatContainer, setChatContainer } = UseMessageStore()
     const { onlineUsers } = UseAuthStore()
     const getInitials = useInitials()
-    const [chatContainer, setChatContiner] = useState("")
 
     useEffect(() => {
         users()
@@ -43,7 +42,7 @@ function MessageLayout() {
     return (
         <div>
             <div className='relative'>
-                <Button onClick={() => setChatContiner("open")} className={`fixed bottom-10 right-10 rounded-full cursor-pointer p-6 ${isMobile && 'hidden'}`} variant={'default'}>
+                <Button onClick={() => setChatContainer("open")} className={`fixed bottom-10 right-10 rounded-full cursor-pointer p-6 ${isMobile && 'hidden'}`} variant={'default'}>
                     <div className='flex justify-between space-x-10'>
                         <div className='flex flex-row items-center text-md gap-1'>
                             <Send className='size-6' /> <span className='font-bold'>Messages</span>
@@ -66,8 +65,8 @@ function MessageLayout() {
                 </Button>
 
                 <div
-                    className={`fixed bottom-10 right-10 rounded-sm cursor-pointer min-h-130 min-w-100 bg-neutral-950 border 
-                origin-bottom-right transition-all duration-300 
+                    className={`fixed rounded-sm cursor-pointer min-h-130 min-w-100 bg-neutral-950 border 
+                 transition-all duration-300 ${isMobile ? "min-h-screen min-w-screen z-50 top-0 right-0 origin-bottom" : "bottom-10 right-10 origin-bottom-right"}
                 ${chatContainer === "open" ? "opacity-100 scale-100" : "opacity-0 scale-0"}`} hidden={selectedUser}>
                     <div className='flex justify-between items-center py-4 px-6 '>
                         <h1 className='font-bold'>Messages</h1>
@@ -91,7 +90,7 @@ function MessageLayout() {
                                         </DropdownMenuGroup>
                                     </DropdownMenuContent>
                                 </DropdownMenu></div>
-                            <button onClick={() => setChatContiner("")}>
+                            <button onClick={() => setChatContainer("")}>
                                 <X />
                             </button>
                         </div>

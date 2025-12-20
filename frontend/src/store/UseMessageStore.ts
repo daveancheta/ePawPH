@@ -12,8 +12,10 @@ interface MessageState {
     getConversation: any,
     sendMessage: any,
     unsubscribeFromMessages: any,
-    subscribeToMessages: any
-    getChats: any
+    subscribeToMessages: any,
+    getChats: any,
+    chatContainer: any,
+    setChatContainer: any,
 }
 
 export const UseMessageStore = create<MessageState>((set, get) => ({
@@ -21,8 +23,10 @@ export const UseMessageStore = create<MessageState>((set, get) => ({
     conversation: [],
     selectedUser: null,
     isLoadingMessages: false,
+    chatContainer: null,
 
     setSelectedUser: (selectedUser: string) => set({ selectedUser: selectedUser }),
+    setChatContainer: (chatContainer: string) => set({ chatContainer: chatContainer }),
 
     getChats: async () => {
         try {
