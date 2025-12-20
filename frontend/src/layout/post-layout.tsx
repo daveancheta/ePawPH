@@ -16,7 +16,7 @@ import { useEffect } from "react"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
-import { Bookmark, Heart, History, InboxIcon, MessageCircle, MoreHorizontalIcon, Share2 } from "lucide-react"
+import { Bell, Bookmark, Heart, History, InboxIcon, MessageCircle, MoreHorizontalIcon, Search, Share2 } from "lucide-react"
 import { PostSkeleton } from "@/components/post-skeleton"
 import {
   DropdownMenu,
@@ -84,8 +84,21 @@ function PostLayout() {
   return (
     <div className="flex w-full">
       <div className="flex overflow-auto">
-        <div className="flex flex-col gap-4 items-center">
-          <div className="flex flex-row gap-5 items-center bg-neutral-900 border p-4 px-10 rounded-md my-5">
+        <div className="flex flex-col gap-4">
+          <div className={`flex justify-between items-center mx-4 ${!isMobile && 'hidden'}`}>
+            <div>
+              <div className="truncate font-extrabold">
+                <span className="text-4xl fresh-green">e</span>
+                <span className="text-4xl text-white">Paw</span>
+                <span className="text-xs">PH</span>
+              </div>
+            </div>
+            <div className="flex flex-row gap-2">
+              <button><Search /></button>
+              <button><Bell className="fresh-green fill-[#58C185]"/></button>
+            </div>
+          </div>
+          <div className={`flex flex-row gap-5 items-center bg-neutral-900 border p-4 px-10 rounded-md my-5 ${isMobile && 'hidden'}`}>
             <div className="flex flex-row items-center gap-2">
               <Avatar>
                 {auth.profile.length > 0 ? <img className="rounded-full object-cover" src={auth.profile} /> :
@@ -213,7 +226,7 @@ function PostLayout() {
                     </div>
                   </div>
                 ))}
-                
+
 
               </div>
             </div> :
