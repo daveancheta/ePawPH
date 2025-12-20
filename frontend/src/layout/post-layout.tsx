@@ -187,7 +187,7 @@ function PostLayout() {
                       </div>
                     </div>
                     <div>
-                      <img className="w-full h-full rounded-sm" src={posts.petPicture} alt="" />
+                      <img className={`w-full h-full rounded-sm ${isMobile && 'rounded-none'}`} src={posts.petPicture} alt="" />
                     </div>
                     <div className="flex flex-row justify-between mx-4">
                       <div className="flex flex-row gap-6 items-center">

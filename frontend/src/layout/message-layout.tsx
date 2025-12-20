@@ -16,6 +16,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useIsMobile } from '@/hooks/use-mobile'
 
 type User = {
     _id: string,
@@ -24,6 +25,7 @@ type User = {
 }
 
 function MessageLayout() {
+    const isMobile = useIsMobile()
     const { userList, users } = UseUserStore() as { userList: User[], users: any }
     const { getChats, chats, setSelectedUser, selectedUser } = UseMessageStore()
     const { onlineUsers } = UseAuthStore()
@@ -41,7 +43,7 @@ function MessageLayout() {
     return (
         <div>
             <div className='relative'>
-                <Button onClick={() => setChatContiner("open")} className='fixed bottom-10 right-10 rounded-full cursor-pointer p-6' variant={'default'}>
+                <Button onClick={() => setChatContiner("open")} className={`fixed bottom-10 right-10 rounded-full cursor-pointer p-6 ${isMobile && 'hidden'}`} variant={'default'}>
                     <div className='flex justify-between space-x-10'>
                         <div className='flex flex-row items-center text-md gap-1'>
                             <Send className='size-6' /> <span className='font-bold'>Messages</span>
