@@ -228,11 +228,11 @@ function PostLayout() {
                       <Send className="size-6 text-white" />
                     </button>
 
-                    <Link to="/explore" className="flex items-center justify-center">
+                    <Link to="/news" className="flex items-center justify-center">
                       <Globe className="size-6 text-white" />
                     </Link>
 
-                    <Link to="/profile" className="flex items-center justify-center">
+                    <Link to="/account" className="flex items-center justify-center">
                       <Avatar className="w-8 h-8">
                         {auth.profile.length > 0 ? (
                           <img
