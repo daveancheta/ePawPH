@@ -17,11 +17,12 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Link } from 'react-router-dom'
+import NavMobile from '@/components/nav-mobile'
 
 function MessageMobile() {
     const { users } = UseUserStore() as { users: any }
     const { getChats, chats, setSelectedUser, selectedUser, chatContainer, setChatContainer } = UseMessageStore()
-    const { onlineUsers } = UseAuthStore()
+    const { onlineUsers} = UseAuthStore()
     const getInitials = useInitials()
 
     useEffect(() => {
@@ -40,8 +41,8 @@ function MessageMobile() {
         <div>
             <div className='relative'>
                 <div
-                    className={`fixed rounded-sm cursor-pointer bg-neutral-950 border 
-                 transition-all duration-300  min-h-screen min-w-screen z-50 top-0 right-0
+                    className={`fixed rounded-sm cursor-pointer bg-neutral-900 border 
+                 transition-all duration-300  min-h-screen min-w-screen z-30 top-0 right-0
                 opacity-100 scale-100`} hidden={selectedUser}>
                     <div className='flex justify-between items-center py-4 px-6 '>
                         <h1 className='font-bold'>Messages</h1>
@@ -99,6 +100,7 @@ function MessageMobile() {
                             </div>
                         ))}
                     </div>
+                    <NavMobile/>
                 </div>
 
                 {selectedUser &&
