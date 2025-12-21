@@ -99,8 +99,8 @@ function MessageMobile() {
 
                             </div>
                         ))}
+                         <NavMobile/>
                     </div>
-                    <NavMobile/>
                 </div>
 
                 {selectedUser &&
