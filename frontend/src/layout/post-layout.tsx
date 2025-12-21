@@ -101,7 +101,7 @@ function PostLayout() {
               </div>
             <hr />
             </div>
-            <div className={`flex flex-row gap-5 items-center bg-neutral-900 border p-4 px-10 rounded-md my-5 ${isMobile && 'hidden'}`}>
+            <div className={`flex flex-row gap-5 items-center bg-neutral-900 border p-4 px-10 rounded-md my-5 justify-center ${isMobile && 'hidden'}`}>
               <div className="flex flex-row items-center gap-2">
                 <Avatar>
                   {auth.profile.length > 0 ? <img className="rounded-full object-cover" src={auth.profile} /> :
