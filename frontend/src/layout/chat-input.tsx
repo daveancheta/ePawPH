@@ -42,10 +42,11 @@ export function ChatInput() {
     }
 
     const handleKeyPress = (e: any) => {
-        if (!formData.text.trim() && !formData.image.trim()) {
-            return;
-        } else if(e.key === 'Enter') {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault()
+            if (formData.text.trim() || formData.image) {
                 handleSendMessage(e);
+            }
         }
     }
 
@@ -65,7 +66,7 @@ export function ChatInput() {
                             </div>
                         </div>}
                     <InputGroupTextarea onKeyDown={handleKeyPress} placeholder="Aa"
-                        onChange={(e) => setFormData({ ...formData, text: e.target.value })} value={formData.text} />
+                        onChange={(e) => setFormData({ ...formData, text: e.target.value })} value={formData.text} rows={1} />
                     <input type="file" ref={imageFileRef} accept="image/*" onChange={handleImageUpload} hidden />
                     <InputGroupAddon align="block-end">
                         <InputGroupButton
