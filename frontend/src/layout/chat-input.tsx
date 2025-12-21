@@ -8,10 +8,8 @@ import {
 import { UseMessageStore } from "@/store/UseMessageStore"
 import { useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { useIsMobile } from "@/hooks/use-mobile"
 
 export function ChatInput() {
-    const isMobile = useIsMobile()
     const { sendMessage, selectedUser } = UseMessageStore()
     const [formData, setFormData] = useState({
         receiverId: selectedUser.followerId,
