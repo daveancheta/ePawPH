@@ -94,7 +94,7 @@ function MessageLayout() {
                                         </DropdownMenuGroup>
                                     </DropdownMenuContent>
                                 </DropdownMenu></div>
-                            <button onClick={() => setChatContainer("")}>
+                            <button className='cursor-pointer' onClick={() => setChatContainer("")}>
                                 <X />
                             </button>
                         </div>

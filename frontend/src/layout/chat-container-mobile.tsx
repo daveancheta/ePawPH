@@ -65,7 +65,7 @@ function MessageMobile() {
                                         </DropdownMenuGroup>
                                     </DropdownMenuContent>
                                 </DropdownMenu></div>
-                            <button onClick={() => setChatContainer("")}>
+                            <button className='cursor-pointer' onClick={() => setChatContainer("")}>
                                 <Link to={'/'}>
                                 <X />
                                 </Link>
