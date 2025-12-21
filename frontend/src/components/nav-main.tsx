@@ -32,7 +32,7 @@ export function NavMain({
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
-      <SidebarMenu>
+      <SidebarMenu className="space-y-4">
         {items.map((item) => (
           <Collapsible
             key={item.title}
@@ -42,11 +42,14 @@ export function NavMain({
           >
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
-              <Link to={item.url}>
-                <SidebarMenuButton tooltip={item.title}>
-                  {item.icon && <item.icon />}
-                  <span>{item.title}</span>
-                </SidebarMenuButton>
+                <Link to={item.url}>
+                  <SidebarMenuButton tooltip={item.title}>
+                    {item.icon &&
+                      <div className="w-8 h-8">
+                        <item.icon className="w-full h-full" />
+                      </div>}
+                    <span className="text-lg">{item.title}</span>
+                  </SidebarMenuButton>
                 </Link>
               </CollapsibleTrigger>
             </SidebarMenuItem>
