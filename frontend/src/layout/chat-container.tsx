@@ -68,9 +68,9 @@ function ChatContainer() {
     return (
         <div className={`fixed z-50 ${isMobile ? "w-screen top-0 bottom-0" : "bottom-10 right-10 min-h-160 max-h-160 min-w-120 max-w-120"} rounded-sm bg-neutral-950 border flex flex-col select-none`}>
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogContent className="">
-                    <div className='mt-5'>
-                        <img src={previewImage} alt="" />
+                <DialogContent className={`${isMobile && "max-h-screen max-w-screen"}`}>
+                    <div className='mt-5  object-cover'>
+                        <img className='flex justify-center' src={previewImage} alt="" />
                     </div>
                 </DialogContent>
             </Dialog>
