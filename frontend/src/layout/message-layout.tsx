@@ -40,7 +40,7 @@ function MessageLayout() {
     }, [getChats])
 
     useEffect(() => {
-        chatContainer === "open" ? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'auto'
+        selectedUser ? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'auto'
     })
 
     return (
