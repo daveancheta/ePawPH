@@ -14,6 +14,7 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
 import { Link } from "react-router-dom"
+import { UseMessageStore } from "@/store/UseMessageStore"
 
 export function NavMain({
   items,
@@ -29,6 +30,8 @@ export function NavMain({
     }[]
   }[]
 }) {
+
+  const { setChatContainer } = UseMessageStore()
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -42,10 +45,16 @@ export function NavMain({
           >
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
-                <Link to={item.url}>
-                  <SidebarMenuButton tooltip={item.title}>
+                <Link to={item.url === "/messages" ? "" : item.url}>
+                  <SidebarMenuButton tooltip={item.title}
+                    className="py-4 cursor-pointer"
+                    onClick={() => {
+                      if (item.url === "/messages") {
+                        setChatContainer("open")
+                      }
+                    }}>
                     {item.icon &&
-                      <div className="w-8 h-8">
+                      <div className="w-6 h-6">
                         <item.icon className="w-full h-full" />
                       </div>}
                     <span className="text-lg">{item.title}</span>
