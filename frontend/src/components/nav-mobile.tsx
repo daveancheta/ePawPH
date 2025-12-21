@@ -1,5 +1,5 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, Globe, HomeIcon, LogOut, MessageCircleMore, Send, Sparkles } from 'lucide-react'
+import { BadgeCheck, Bell, CreditCard, Globe, HomeIcon, LogOut, MessageCircleMore, Send, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useInitials } from '@/hooks/use-initials'
 import { UseAuthStore } from '@/store/UseAuthStore'
@@ -17,7 +17,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { SidebarMenuButton } from "./ui/sidebar"
 import { useIsMobile } from "@/hooks/use-mobile"
 
 
