@@ -67,7 +67,7 @@ function ChatContainer() {
 
 
     return (
-        <div className={`fixed z-50 ${isMobile ? "min-h-screen min-w-screen inset-0" : "bottom-10 right-10 min-h-160 max-h-160 min-w-120 max-w-120"} rounded-sm bg-neutral-950 border flex flex-col select-none`}>
+        <div className={`fixed ${isMobile ? "inset-0 h-screen w-screen z-50" : "bottom-10 right-10 h-[40rem] w-[30rem]"} rounded-sm bg-neutral-950 border flex flex-col select-none`}>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent className="">
                     <div className='mt-5'>
@@ -75,7 +75,8 @@ function ChatContainer() {
                     </div>
                 </DialogContent>
             </Dialog>
-            <div className="flex justify-between items-center py-4 px-6">
+            
+            <div className="flex-shrink-0 flex justify-between items-center py-4 px-6">
                 <div className="flex flex-row items-center gap-2">
                     <Avatar className="w-15 h-15">
                         {getProfile().length > 0 ? (
@@ -100,53 +101,55 @@ function ChatContainer() {
                 </button>
             </div>
 
-            <hr />
+            <hr className="flex-shrink-0" />
 
             {isLoadingMessages ? <MessageSkeleton /> :
-                conversation.length > 0 ? (<div className="flex-1 overflow-auto scrollbar-hide px-4 py-2 gap-6 flex flex-col">
-                    {conversation.map((convo: any) => (
-                        <div
-                            key={convo._id}
-                            className={`flex w-full ${auth._id === convo.senderId ? "justify-end" : "justify-start"}`}
-                        >
-                            <div className="relative">
-                                <div
-                                    className={`${auth._id === convo.senderId
-                                        ? `${convo.text === "heart" ? "" : "bg-[#58C185] text-[#2F2F2F]"}`
-                                        : `${convo.text === "heart" ? "" : "bg-gray-700 text-white]"}`
-                                        } rounded-xl px-4 py-2 max-w-xs wrap-break-word`}
-                                >
-                                    {convo.image &&
-                                        <button className='cursor-pointer' onClick={() => {
-                                            setOpen(true)
-                                            setPreviewImage(convo.image)
-                                        }}>
-                                            <img className='rounded-sm' src={convo.image} />
-                                        </button>
-                                    }
+                conversation.length > 0 ? (
+                    <div className="flex-1 overflow-y-auto scrollbar-hide px-4 py-2 gap-6 flex flex-col min-h-0">
+                        {conversation.map((convo: any) => (
+                            <div
+                                key={convo._id}
+                                className={`flex w-full ${auth._id === convo.senderId ? "justify-end" : "justify-start"}`}
+                            >
+                                <div className="relative">
+                                    <div
+                                        className={`${auth._id === convo.senderId
+                                            ? `${convo.text === "heart" ? "" : "bg-[#58C185] text-[#2F2F2F]"}`
+                                            : `${convo.text === "heart" ? "" : "bg-gray-700 text-white]"}`
+                                            } rounded-xl px-4 py-2 max-w-xs break-words`}
+                                    >
+                                        {convo.image &&
+                                            <button className='cursor-pointer' onClick={() => {
+                                                setOpen(true)
+                                                setPreviewImage(convo.image)
+                                            }}>
+                                                <img className='rounded-sm' src={convo.image} />
+                                            </button>
+                                        }
 
-                                    {convo.text === "heart" ?
-                                        <Heart className="fill-red-400 text-red-400 size-8" /> :
-                                        convo.text}
+                                        {convo.text === "heart" ?
+                                            <Heart className="fill-red-400 text-red-400 size-8" /> :
+                                            convo.text}
+                                    </div>
+
+                                    <p
+                                        className={`text-xs text-muted-foreground absolute flex flex-row gap-1 items-center mt-1 truncate ${auth._id === convo.senderId ? "right-2" : "left-2"
+                                            }`}
+                                    >
+                                        <History className="size-3" />
+                                        <span>
+                                            {dayjs(convo.createdAt).fromNow() === "seconds ago"
+                                                ? "Just now"
+                                                : dayjs(convo.createdAt).fromNow()}
+                                        </span>
+                                    </p>
                                 </div>
-
-                                <p
-                                    className={`text-xs text-muted-foreground absolute flex flex-row gap-1 items-center mt-1 truncate ${auth._id === convo.senderId ? "right-2" : "left-2"
-                                        }`}
-                                >
-                                    <History className="size-3" />
-                                    <span>
-                                        {dayjs(convo.createdAt).fromNow() === "seconds ago"
-                                            ? "Just now"
-                                            : dayjs(convo.createdAt).fromNow()}
-                                    </span>
-                                </p>
                             </div>
-                        </div>
-                    ))}
-                    <div ref={messageRef}></div>
-                </div>) : (
-                    <div className="flex-1 overflow-auto scrollbar-hide px-4 py-2 gap-1 flex flex-col justify-center items-center">
+                        ))}
+                        <div ref={messageRef}></div>
+                    </div>
+                ) : (
+                    <div className="flex-1 overflow-y-auto scrollbar-hide px-4 py-2 gap-1 flex flex-col justify-center items-center min-h-0">
                         <div className="p-4 bg-neutral-800/80 rounded-full flex justify-center items-center w-16 h-16 animate-pulse">
                             <MessageCircle className="size-10 text-neutral-300 animate-pulse" />
                         </div>
@@ -159,17 +162,15 @@ function ChatContainer() {
                             Once you send a message, your conversation will appear here.
                         </p>
                     </div>
-
                 )
             }
 
-            <hr />
+            <hr className="flex-shrink-0" />
 
-            <div className={`${isMobile && ""} z-50`}>
+            <div className="flex-shrink-0 z-50">
                 <ChatInput />
             </div>
         </div>
-
     )
 }
 

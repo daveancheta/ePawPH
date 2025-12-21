@@ -1,4 +1,4 @@
-import { ArrowUpIcon, Heart, Image, TreePalmIcon, X } from "lucide-react"
+import { ArrowUpIcon, Heart, Image, X } from "lucide-react"
 import {
     InputGroup,
     InputGroupAddon,
@@ -56,7 +56,7 @@ export function ChatInput() {
                     {formData.image &&
                         <div className="w-full p-2 flex">
                             <div className="relative">
-                                <img className="w-30 h-30 flex justify-start rounded-sm" src={formData.image} alt="" />
+                                <img className="w-30 h-30 flex justify-start rounded-sm object-cover" src={formData.image} alt="" />
                                 <button className="absolute top-0 right-0 m-1 cursor-pointer"
                                     onClick={() => setFormData({ ...formData, image: "" })
                                     }>
