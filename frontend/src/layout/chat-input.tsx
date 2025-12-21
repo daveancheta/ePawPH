@@ -75,7 +75,7 @@ export function ChatInput() {
                         className="flex-1 min-w-0 resize-none"
                     />
                     <input type="file" ref={imageFileRef} accept="image/*" onChange={handleImageUpload} hidden />
-                    <InputGroupAddon align="block-end" className="flex-shrink-0">
+                    <InputGroupAddon align="block-end" className="shrink-0">
                         <InputGroupButton
                             type="button"
                             variant="outline"
