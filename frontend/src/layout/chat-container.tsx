@@ -67,7 +67,7 @@ function ChatContainer() {
 
 
     return (
-        <div className={`fixed z-50 ${isMobile ? "min-h-screen min-w-screen top-0 bottom-0" : "bottom-10 right-10 min-h-160 max-h-160 min-w-120 max-w-120"} rounded-sm bg-neutral-950 border flex flex-col select-none`}>
+        <div className={`fixed z-50 ${isMobile ? "w-screen top-0 bottom-0" : "bottom-10 right-10 min-h-160 max-h-160 min-w-120 max-w-120"} rounded-sm bg-neutral-950 border flex flex-col select-none`}>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent className="">
                     <div className='mt-5'>

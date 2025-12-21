@@ -51,25 +51,35 @@ export function ChatInput() {
     }
 
     return (
-        <div className="px-0 py-0">
-            <form onSubmit={handleSendMessage}>
-                <InputGroup className={`rounded-none rounded-b-sm border-none ${isMobile ? "w-full" : "max-w-120"} wrap-break-word`}>
+        <div className="w-full">
+            <form onSubmit={handleSendMessage} className="w-full">
+                <InputGroup className="rounded-none rounded-b-sm border-none w-full">
                     {formData.image &&
                         <div className="w-full p-2 flex">
                             <div className="relative">
                                 <img className="w-30 h-30 flex justify-start rounded-sm object-cover" src={formData.image} alt="" />
-                                <button className="absolute top-0 right-0 m-1 cursor-pointer"
-                                    onClick={() => setFormData({ ...formData, image: "" })
-                                    }>
+                                <button 
+                                    type="button"
+                                    className="absolute top-0 right-0 m-1 cursor-pointer"
+                                    onClick={() => setFormData({ ...formData, image: "" })}
+                                >
                                     <X className="text-black" />
                                 </button>
                             </div>
-                        </div>}
-                    <InputGroupTextarea onKeyDown={handleKeyPress} placeholder="Aa"
-                        onChange={(e) => setFormData({ ...formData, text: e.target.value })} value={formData.text} rows={1} />
+                        </div>
+                    }
+                    <InputGroupTextarea 
+                        onKeyDown={handleKeyPress} 
+                        placeholder="Aa"
+                        onChange={(e) => setFormData({ ...formData, text: e.target.value })} 
+                        value={formData.text} 
+                        rows={1}
+                        className="flex-1 min-w-0 resize-none"
+                    />
                     <input type="file" ref={imageFileRef} accept="image/*" onChange={handleImageUpload} hidden />
-                    <InputGroupAddon align="block-end">
+                    <InputGroupAddon align="block-end" className="flex-shrink-0">
                         <InputGroupButton
+                            type="button"
                             variant="outline"
                             className="rounded-full cursor-pointer"
                             size="icon-sm"
@@ -79,10 +89,10 @@ export function ChatInput() {
                         </InputGroupButton>
                         <div className="flex-1" />
                         <Button
+                            type="submit"
                             variant={'outline'}
                             className="rounded-full cursor-pointer"
                             hidden={!formData.text.trim() && !formData.image}
-
                         >
                             <ArrowUpIcon className="text-white" />
                             <span className="sr-only">Send</span>
