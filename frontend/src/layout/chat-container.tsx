@@ -101,7 +101,7 @@ function ChatContainer() {
 
             <hr />
 
-            {true ? <MessageSkeleton /> :
+            {isLoadingMessages ? <MessageSkeleton /> :
                 conversation.length > 0 ? (<div className="flex-1 overflow-auto scrollbar-hide px-4 py-2 gap-6 flex flex-col">
                     {conversation.map((convo: any) => (
                         <div
