@@ -22,7 +22,7 @@ import NavMobile from '@/components/nav-mobile'
 function MessageMobile() {
     const { users } = UseUserStore() as { users: any }
     const { getChats, chats, setSelectedUser, selectedUser, chatContainer, setChatContainer } = UseMessageStore()
-    const { onlineUsers} = UseAuthStore()
+    const { onlineUsers } = UseAuthStore()
     const getInitials = useInitials()
 
     useEffect(() => {
@@ -68,7 +68,7 @@ function MessageMobile() {
                                 </DropdownMenu></div>
                             <button className='cursor-pointer' onClick={() => setChatContainer("")}>
                                 <Link to={'/'}>
-                                <X />
+                                    <X />
                                 </Link>
                             </button>
                         </div>
@@ -99,15 +99,15 @@ function MessageMobile() {
 
                             </div>
                         ))}
-                         <NavMobile/>
                     </div>
                 </div>
+                <NavMobile />
 
                 {selectedUser &&
                     <ChatContainer />}
             </div>
         </div>
     )
-}
+}   
 
 export default MessageMobile
