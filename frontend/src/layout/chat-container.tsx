@@ -109,24 +109,22 @@ function ChatContainer() {
                             className={`flex w-full ${auth._id === convo.senderId ? "justify-end" : "justify-start"}`}
                         >
                             <div className="relative">
-                                <div
-                                    className={`${auth._id === convo.senderId
-                                        ? `${convo.text === "heart" ? "" : "bg-[#58C185] text-[#2F2F2F]"}`
-                                        : `${convo.text === "heart" ? "" : "bg-gray-700 text-white]"}`
-                                        } rounded-xl px-4 py-2 max-w-xs wrap-break-word`}
-                                >
+                                <div className={`flex flex-col ${auth._id === convo.senderId ? "items-end" : "items-start"}`}>
                                     {convo.image &&
                                         <button className='cursor-pointer' onClick={() => {
                                             setOpen(true)
                                             setPreviewImage(convo.image)
                                         }}>
-                                            <img className='rounded-sm' src={convo.image} />
+                                            <img className='rounded-sm max-w-xs' src={convo.image} />
                                         </button>
                                     }
 
                                     {convo.text === "heart" ?
                                         <Heart className="fill-red-400 text-red-400 size-8" /> :
-                                        convo.text}
+                                        <span className={`${auth._id === convo.senderId
+                                            ? "bg-[#58C185] text-[#2F2F2F]"
+                                            : "bg-gray-700 text-white"} 
+                                            rounded-xl px-4 py-2 max-w-xs w-fit wrap-break-word ${convo.text.length === 0 && "hidden"}`}>{convo.text}</span>}
                                 </div>
 
                                 <p
