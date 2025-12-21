@@ -8,6 +8,7 @@ import { Toaster } from "react-hot-toast"
 import Pageloader from "./components/PageLoader.tsx";
 import Lost from "./pages/post/Lost.tsx";
 import Account from "./pages/Account.tsx";
+import MessageMobile from "./layout/chat-container-mobile.tsx";
 
 function App() {
   const { checkAuth, auth, isCheckingAuth } = UseAuthStore();
@@ -27,6 +28,7 @@ function App() {
           <Route path='/signup' element={auth ? <Home /> : <SignUp />}></Route>
           <Route path='/lost' element={auth ? <Lost /> : <Login />}></Route>
           <Route path='/account' element={auth ? <Account /> : <Login />}></Route>
+          <Route path='/messages' element={auth ? <MessageMobile /> : <Login />}></Route>
         </Routes>
       </BrowserRouter>
 
