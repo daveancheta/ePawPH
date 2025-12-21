@@ -6,8 +6,8 @@ export function MessageSkeleton() {
     return (
        <div className="flex-1 overflow-auto scrollbar-hide px-4 py-2 gap-1 flex flex-col">
         {isMobile ?  <div>
-            {[1, 2].map((index) => (
-                <div key={index}>
+            {[1, 2, 3].map((index) => (
+                <div key={index} className="space-y-4">
                     <div className="flex justify-start">
                         <Skeleton className="h-12 w-50 rounded-xl" />
                     </div>
