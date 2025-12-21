@@ -48,7 +48,7 @@ function ChatContainer() {
     const [open, setOpen] = useState(false)
     const [previewImage, setPreviewImage] = useState("")
     const getUserId = () => selectedUser?.followerId?._id || selectedUser?._id
-    const getProfile = () => selectedUser?.followerId?.profile || selectedUser?.profile
+    const getProfile = () => selectedUser?.followerId?.profile || selectedUser?.profile || ""
     const getFullname = () => selectedUser?.followerId?.fullname || selectedUser?.fullname
 
     useEffect(() => {
@@ -65,7 +65,6 @@ function ChatContainer() {
         }
     })
 
-
     return (
         <div className={`fixed z-50 ${isMobile ? "w-screen top-0 bottom-0" : "bottom-10 right-10 min-h-160 max-h-160 min-w-120 max-w-120"} rounded-sm bg-neutral-950 border flex flex-col select-none`}>
             <Dialog open={open} onOpenChange={setOpen}>
@@ -81,7 +80,7 @@ function ChatContainer() {
                         {getProfile().length > 0 ? (
                             <img className="rounded-full object-cover" src={getProfile()} />
                         ) : (
-                            <AvatarFallback className="text-white cursor-pointer border rounded-full w-15 h-15 flex items-center justify-center">
+                            <AvatarFallback className="bg-neutral-800 text-white cursor-pointer border rounded-full w-15 h-15 flex items-center justify-center">
                                 {getInitials(getFullname())}
                             </AvatarFallback>
                         )}
