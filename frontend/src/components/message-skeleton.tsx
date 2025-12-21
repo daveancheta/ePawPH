@@ -11,10 +11,10 @@ export function MessageSkeleton() {
                     <div className="flex justify-start">
                         <Skeleton className="h-12 w-50 rounded-xl" />
                     </div>
-                    <br/>
                     <div className="flex justify-end">
                         <Skeleton className="h-12 w-50 rounded-xl" />
                     </div>
+                    <br/>
                 </div>
             ))}
         </div> : 
