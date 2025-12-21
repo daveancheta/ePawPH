@@ -11,7 +11,7 @@ export function MessageSkeleton() {
                     <div className="flex justify-start">
                         <Skeleton className="h-12 w-50 rounded-xl" />
                     </div>
-                    <div className="flex justify-end">
+                    <div className="flex justify-end mb-2">
                         <Skeleton className="h-12 w-50 rounded-xl" />
                     </div>
                 </div>
